@@ -1,0 +1,11 @@
+[
+{
+  "modid": "customparticles",
+  "name": "Custom Particles",
+  "description": "Create your own particles with custom textures and behaviors",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "authorList": ["Laike_Endaril"],
+  "credits": ""
+}
+]
