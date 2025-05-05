@@ -47,6 +47,7 @@ public abstract class CustomParticleFactory
 
     public PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
     public boolean useFoliageColor = false;
+    public int maxRenderDistanceSquared = -1;
 
 
     public void useBlockLight(boolean useBlockLight)
@@ -73,6 +74,11 @@ public abstract class CustomParticleFactory
     public void setTexture(String texture)
     {
         particleRenderData = new PathedParticleSharedRenderData(particleRenderData.useBlockLight, particleRenderData.sourceFactor, particleRenderData.destFactor, texture);
+    }
+
+    public void setMaxRenderDistance(int maxRenderDistance)
+    {
+        maxRenderDistanceSquared = maxRenderDistance >= (Integer.MAX_VALUE >> 1) ? Integer.MAX_VALUE : maxRenderDistance << 1;
     }
 
 
