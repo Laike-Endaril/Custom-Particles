@@ -26,6 +26,7 @@ public class LeafFactory extends CustomParticleFactory
     public LeafFactory()
     {
         useFoliageColor = true;
+        useBlockLight(true);
 
         setTexture(MODID + ":textures/particles.png");
 
