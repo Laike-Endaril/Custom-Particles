@@ -17,10 +17,8 @@ public class LeafFactory extends CustomParticleFactory
     protected double startingRotationMin, startingRotationMax, spinRate;
     public int leafFadeTicks;
     public CPath
-            pathTerminalVelocity = new CPathLinear(0, 0, 0),
             pathFall = new CPathAccelerateToTerminalVel(1000, 0, 0, 0),
             pathFade = new CPathLinear(0).add(new CPathConstant(2)).highLimit(new CPathConstant(1));
-    //TODO find a way to smooth the transition from acceleration to terminal velocity
 
 
     public LeafFactory()
