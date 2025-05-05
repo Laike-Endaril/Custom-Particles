@@ -5,7 +5,7 @@ import com.fantasticsource.mctools.particles.PathedParticleFactory;
 import com.fantasticsource.tools.SpriteMetaData;
 import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.component.path.CPath;
-import com.fantasticsource.tools.component.path.CPathAccelerative;
+import com.fantasticsource.tools.component.path.CPathAccelerateToTerminalVel;
 import com.fantasticsource.tools.component.path.CPathConstant;
 import com.fantasticsource.tools.component.path.CPathLinear;
 import net.minecraft.util.math.Vec3d;
@@ -14,12 +14,13 @@ public class LeafFactory extends CustomParticleFactory
 {
     public SpriteMetaData spriteMetaData;
     public PathedParticleFactory fallingLeafFactory, groundLeafFactory;
-    protected double startingRotationMin, startingRotationMax, spinMultiplier = 1;
-    public int leafFadeTicks = 0;
+    protected double startingRotationMin, startingRotationMax, spinRate;
+    public int leafFadeTicks;
     public CPath
             pathTerminalVelocity = new CPathLinear(0, 0, 0),
-            pathFall = new CPathAccelerative(0, 0, 0).lowLimit(pathTerminalVelocity),
+            pathFall = new CPathAccelerateToTerminalVel(1000, 0, 0, 0),
             pathFade = new CPathLinear(0).add(new CPathConstant(2)).highLimit(new CPathConstant(1));
+    //TODO find a way to smooth the transition from acceleration to terminal velocity
 
 
     public LeafFactory()
@@ -28,10 +29,13 @@ public class LeafFactory extends CustomParticleFactory
 
 
         spriteMetaData = new SpriteMetaData(128, 128, 0, 0, 8, 8);
-        setStartingAngle(0, 90);
         setOnGroundFadeTicks(40);
-        setGravityMultiplier(1);
+
+        setStartingAngle(0, 90);
+        setMaxSpinRate(Math.PI * 2);
+
         setTerminalVelocityMultiplier(1);
+        setTerminalVelocityDelayMultiplier(1);
 
 
         groundLeafFactory = args ->
@@ -65,7 +69,10 @@ public class LeafFactory extends CustomParticleFactory
             particle.spriteMetaData = spriteMetaData;
             particle.useFoliageColor = useFoliageColor;
 
-            particle.rotationPath(new CPathConstant(startingRotationMin + Tools.random(startingRotationMax - startingRotationMin)));
+            double rotationPercent = Math.random();
+            double startingRotation = startingRotationMin + rotationPercent * (startingRotationMax - startingRotationMin);
+            particle.rotationPath(new CPathConstant(startingRotation));
+            particle.rotationPath(new CPathLinear(2 * (rotationPercent - 0.5) * Tools.random(spinRate)));
 
             particle.dieOnSolidsAndLiquids();
 
@@ -82,9 +89,9 @@ public class LeafFactory extends CustomParticleFactory
         startingRotationMax = -Tools.degtorad(maxDegrees);
     }
 
-    public void setSpinRates(double minDegreesPerSecond, double maxDegreesPerSecond)
+    public void setMaxSpinRate(double spinRate)
     {
-
+        this.spinRate = spinRate;
     }
 
     public void setOnGroundFadeTicks(int leafFadeTicks)
@@ -94,14 +101,14 @@ public class LeafFactory extends CustomParticleFactory
         ((CPathLinear) pathFade).motionPerSecond.values[0] = -40d / leafFadeTicks;
     }
 
-    public void setGravityMultiplier(double multiplier)
-    {
-        ((CPathAccelerative) pathFall).motionPerSecondPerSecond.values[1] = -0.8 * Math.abs(multiplier);
-    }
-
     public void setTerminalVelocityMultiplier(double multiplier)
     {
-        ((CPathLinear) pathTerminalVelocity).motionPerSecond.values[1] = -0.8 * Math.abs(multiplier);
+        ((CPathAccelerateToTerminalVel) pathFall).terminalVelocity.values[1] = -0.6 * multiplier;
+    }
+
+    public void setTerminalVelocityDelayMultiplier(long multiplier)
+    {
+        ((CPathAccelerateToTerminalVel) pathFall).timeToTerminalVelocity = 1000 * multiplier;
     }
 
 
