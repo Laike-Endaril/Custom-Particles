@@ -32,8 +32,8 @@ public class LeafFactory extends CustomParticleFactory
         spriteMetaData = new SpriteMetaData(128, 128, 0, 0, 8, 8);
         setOnGroundFadeTicks(40);
 
-        setStartingAngle(0, 90);
-        setMaxSpinRate(Math.PI * 2);
+        setStartingAngle(45 - 30, 45 + 30);
+        setMaxSpinRate(180);
 
         setTerminalVelocityMultiplier(1);
         setTerminalVelocityDelayMultiplier(1);
@@ -75,7 +75,7 @@ public class LeafFactory extends CustomParticleFactory
             double rotationPercent = Math.random();
             double startingRotation = startingRotationMin + rotationPercent * (startingRotationMax - startingRotationMin);
             particle.rotationPath(new CPathConstant(startingRotation));
-            particle.rotationPath(new CPathLinear(2 * (rotationPercent - 0.5) * Tools.random(spinRate)));
+            particle.rotationPath(new CPathLinear(-spinRate * 2 * (rotationPercent - 0.5)));
 
             particle.dieOnSolidsAndLiquids();
 
@@ -94,7 +94,7 @@ public class LeafFactory extends CustomParticleFactory
 
     public void setMaxSpinRate(double spinRate)
     {
-        this.spinRate = spinRate;
+        this.spinRate = Tools.degtorad(Math.abs(spinRate));
     }
 
     public void setOnGroundFadeTicks(int leafFadeTicks)
