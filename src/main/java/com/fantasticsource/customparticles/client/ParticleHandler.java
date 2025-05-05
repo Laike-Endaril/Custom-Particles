@@ -10,8 +10,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import static com.fantasticsource.customparticles.CustomParticles.MODID;
-
 @SideOnly(Side.CLIENT)
 public class ParticleHandler
 {
@@ -25,11 +23,7 @@ public class ParticleHandler
         if (event.phase != TickEvent.Phase.END || world == null) return;
 
 
-        if (leafFactory == null)
-        {
-            leafFactory = new LeafFactory();
-            leafFactory.setTexture(MODID + ":textures/particles.png");
-        }
+        if (leafFactory == null) leafFactory = new LeafFactory();
 
         EntityPlayer player = Minecraft.getMinecraft().player;
         if (!Minecraft.getMinecraft().isGamePaused())

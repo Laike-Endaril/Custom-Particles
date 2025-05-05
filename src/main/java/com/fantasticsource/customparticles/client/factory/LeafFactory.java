@@ -10,6 +10,8 @@ import com.fantasticsource.tools.component.path.CPathConstant;
 import com.fantasticsource.tools.component.path.CPathLinear;
 import net.minecraft.util.math.Vec3d;
 
+import static com.fantasticsource.customparticles.CustomParticles.MODID;
+
 public class LeafFactory extends CustomParticleFactory
 {
     public SpriteMetaData spriteMetaData;
@@ -25,6 +27,7 @@ public class LeafFactory extends CustomParticleFactory
     {
         useFoliageColor = true;
 
+        setTexture(MODID + ":textures/particles.png");
 
         spriteMetaData = new SpriteMetaData(128, 128, 0, 0, 8, 8);
         setOnGroundFadeTicks(40);
