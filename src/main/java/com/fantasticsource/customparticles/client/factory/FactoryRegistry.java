@@ -33,7 +33,7 @@ public class FactoryRegistry extends FileWordParser
 
     public void activateTemplate(ArrayList<String> args)
     {
-        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for template function");
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for factory template!");
 
         if (args.size() > 1)
         {

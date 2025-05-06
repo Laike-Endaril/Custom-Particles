@@ -42,7 +42,7 @@ public abstract class FileWordParser
                 line = line.replaceAll("//.*", "");
 
 
-                for (String word : Tools.fixedSplit(line, "[ ,:;]"))
+                for (String word : Tools.fixedSplit(line, "[ ]"))
                 {
                     if (function.equals("")) function = word;
                     else args.add(word);

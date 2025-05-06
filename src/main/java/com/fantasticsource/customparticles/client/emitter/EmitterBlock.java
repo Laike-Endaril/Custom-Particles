@@ -17,11 +17,13 @@ public class EmitterBlock extends CustomParticleEmitter
     public RegistryRegexBlockFilter blockFilter;
 
 
-    public EmitterBlock(boolean isWhitelist, RegistryRegexBlockFilter filter, OffsetMode... modes)
+    public EmitterBlock(boolean isWhitelist, RegistryRegexBlockFilter filter)
     {
         this.isWhitelist = isWhitelist;
         this.blockFilter = filter;
-        addOffsetModes(modes);
+        System.out.println(blockFilter.domainRegex);
+        System.out.println(blockFilter.blockRegex);
+        System.out.println(blockFilter.metaRegex);
     }
 
 

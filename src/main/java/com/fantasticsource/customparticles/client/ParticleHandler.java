@@ -62,7 +62,7 @@ public class ParticleHandler
 
 
             //Falling leaves
-            EmitterBlock emitter = new EmitterBlock(true, new RegistryRegexBlockFilter(".*", ".*leaves.*", ".*"));
+            CustomParticleEmitter emitter = EmitterRegistry.EMITTERS.get("leaves");
             emitter.addOffsetModes(EmitterBlock.OffsetMode.BOTTOM);
             emitter.addFactory(FactoryRegistry.FACTORIES.get("leaves"));
 
