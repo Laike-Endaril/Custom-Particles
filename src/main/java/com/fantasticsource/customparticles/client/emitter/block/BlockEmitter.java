@@ -7,32 +7,14 @@ import com.fantasticsource.tools.Tools;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class BlockEmitter extends CustomParticleEmitter
 {
-    public static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
-
-    public enum OffsetMode
-    {
-        TOP,
-        BOTTOM,
-        NORTH,
-        SOUTH,
-        WEST,
-        EAST,
-        INSIDE
-    }
-
+    private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
 
     public RegistryRegexBlockFilter blockFilter;
-    public final ArrayList<OffsetMode> modes = new ArrayList<>();
 
 
     public BlockEmitter(RegistryRegexBlockFilter filter, OffsetMode... modes)
@@ -41,23 +23,17 @@ public class BlockEmitter extends CustomParticleEmitter
         addOffsetModes(modes);
     }
 
-    public void addOffsetModes(OffsetMode... modes)
-    {
-        this.modes.addAll(Arrays.asList(modes));
-    }
-
 
     @Override
     public boolean clientTick(int x, int y, int z, Object obj)
     {
+        if (!super.clientTick(x, y, z, obj)) return false;
+
+
         if (!(obj instanceof IBlockState) || !blockFilter.matches((IBlockState) obj)) return false;
 
 
-        EntityPlayer player = Minecraft.getMinecraft().player;
         World world = Minecraft.getMinecraft().world;
-        if (player == null || world == null) return false;
-
-
         boolean spawned = false;
         IBlockState adjacent;
         for (CustomParticleFactory factory : factories)

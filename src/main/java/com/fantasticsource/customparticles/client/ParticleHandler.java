@@ -23,7 +23,8 @@ public class ParticleHandler
 {
     public static final LinkedHashMap<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> EMITTERS = new LinkedHashMap<>();
     public static boolean initialized = false;
-    public static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
+
+    private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
 
 
     @SideOnly(Side.CLIENT)
@@ -36,9 +37,20 @@ public class ParticleHandler
 
         if (!initialized)
         {
-            BlockEmitter emitter = new BlockEmitter(new RegistryRegexBlockFilter("minecraft", "leaves.*", ".*"));
+            //TODO remove this test code and add code to parse factories and emitters from config files
+
+            BlockEmitter emitter = new BlockEmitter(new RegistryRegexBlockFilter(".*", ".*leaves.*", ".*"));
             emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
             emitter.addFactory(new LeafFactory());
+
+
+//            LeafFactory slimeFactory = new LeafFactory();
+//            slimeFactory.setTexture();
+
+//            emitter = new BlockEmitter(new RegistryRegexBlockFilter(".*", ".*", ".*"));
+//            emitter.addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
+//            emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
+//            emitter.addFactory(slimeFactory);
 
             initialized = true;
         }
