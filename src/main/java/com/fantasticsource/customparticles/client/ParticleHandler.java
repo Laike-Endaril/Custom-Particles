@@ -4,6 +4,7 @@ import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
 import com.fantasticsource.customparticles.client.emitter.block.BlockEmitter;
 import com.fantasticsource.customparticles.client.factory.LeafFactory;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
+import com.fantasticsource.tools.SpriteMetaData;
 import com.fantasticsource.tools.Tools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,7 +46,13 @@ public class ParticleHandler
 
 
             LeafFactory slimeFactory = new LeafFactory();
-//            slimeFactory.setTexture();
+            slimeFactory.spriteMetaData = new SpriteMetaData(128, 128, 0, 8, 8, 16);
+
+            slimeFactory.useFoliageColor = false;
+            slimeFactory.setStartingAngle(0, 0);
+            slimeFactory.setMaxSpinRate(0);
+            slimeFactory.setTerminalVelocityMultiplier(10);
+            slimeFactory.setTerminalVelocityDelayMultiplier(4);
 
             emitter = new BlockEmitter(false, new RegistryRegexBlockFilter("minecraft", "air", ".*"));
             emitter.addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);

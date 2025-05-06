@@ -1,6 +1,7 @@
 package com.fantasticsource.customparticles.client.factory;
 
 import com.fantasticsource.mctools.particles.PathedParticleSharedRenderData;
+import com.fantasticsource.tools.SpriteMetaData;
 import net.minecraft.client.renderer.GlStateManager;
 
 import java.util.LinkedHashMap;
@@ -45,19 +46,16 @@ public abstract class CustomParticleFactory
     }
 
 
-    public PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
+    public SpriteMetaData spriteMetaData;
     public boolean useFoliageColor = false;
-    public int maxRenderDistanceSquared = -1;
+
+    protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
+    protected int maxRenderDistanceSquared = -1;
 
 
     public void useBlockLight(boolean useBlockLight)
     {
         particleRenderData = new PathedParticleSharedRenderData(useBlockLight, particleRenderData.sourceFactor, particleRenderData.destFactor, particleRenderData.textureString);
-    }
-
-    public void useFoliageColor(boolean useFoliageColor)
-    {
-        this.useFoliageColor = useFoliageColor;
     }
 
     public void setBlendSourceFactor(String sourceFactor)
@@ -80,6 +78,7 @@ public abstract class CustomParticleFactory
     {
         particleRenderData = new PathedParticleSharedRenderData(particleRenderData.useBlockLight, particleRenderData.sourceFactor, particleRenderData.destFactor, texture);
     }
+
 
     public void setMaxRenderDistance(int maxRenderDistance)
     {

@@ -14,7 +14,6 @@ import static com.fantasticsource.customparticles.CustomParticles.MODID;
 
 public class LeafFactory extends CustomParticleFactory
 {
-    public SpriteMetaData spriteMetaData;
     public PathedParticleFactory fallingLeafFactory, groundLeafFactory;
     protected double startingRotationMin, startingRotationMax, spinRate;
     public int leafFadeTicks;
