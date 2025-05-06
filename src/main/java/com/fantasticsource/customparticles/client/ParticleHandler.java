@@ -29,7 +29,6 @@ import static com.fantasticsource.customparticles.CustomParticles.MODID;
 public class ParticleHandler
 {
     public static final File
-            PATHS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "paths"),
             FACTORIES_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "factories"),
             EMITTERS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "emitters");
 
@@ -52,10 +51,10 @@ public class ParticleHandler
         if (!initialized)
         {
             FACTORIES_DIR.mkdirs();
-            FactoryRegistry.tryLoad(FACTORIES_DIR);
+            new FactoryRegistry().tryLoad(FACTORIES_DIR);
 
             EMITTERS_DIR.mkdirs();
-            EmitterRegistry.tryLoad(EMITTERS_DIR);
+            new EmitterRegistry().tryLoad(EMITTERS_DIR);
 
 
             //TODO remove this test code and add code to parse factories and emitters from config files
@@ -82,13 +81,6 @@ public class ParticleHandler
             emitter.addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
             emitter.addOffsetModes(EmitterBlock.OffsetMode.BOTTOM);
             emitter.addFactory(slimeFactory);
-
-
-            FACTORIES_DIR.mkdirs();
-            FactoryRegistry.tryLoad(FACTORIES_DIR);
-
-            EMITTERS_DIR.mkdirs();
-            EmitterRegistry.tryLoad(EMITTERS_DIR);
 
 
             initialized = true;
