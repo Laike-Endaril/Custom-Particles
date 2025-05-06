@@ -1,7 +1,7 @@
 package com.fantasticsource.customparticles.client;
 
+import com.fantasticsource.customparticles.client.emitter.BlockEmitter;
 import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
-import com.fantasticsource.customparticles.client.emitter.block.BlockEmitter;
 import com.fantasticsource.customparticles.client.factory.LeafFactory;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 import com.fantasticsource.tools.SpriteMetaData;

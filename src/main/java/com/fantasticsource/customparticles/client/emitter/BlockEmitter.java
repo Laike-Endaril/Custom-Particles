@@ -1,6 +1,5 @@
-package com.fantasticsource.customparticles.client.emitter.block;
+package com.fantasticsource.customparticles.client.emitter;
 
-import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
 import com.fantasticsource.customparticles.client.factory.CustomParticleFactory;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 import com.fantasticsource.tools.Tools;
