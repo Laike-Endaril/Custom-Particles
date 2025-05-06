@@ -1,6 +1,6 @@
-package com.fantasticsource.customparticles.client.registry;
+package com.fantasticsource.customparticles.client.emitter;
 
-import com.fantasticsource.mctools.particles.PathedParticleFactory;
+import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,9 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
-public class FactoryRegistry
+public class EmitterRegistry
 {
-    public static final LinkedHashMap<String, PathedParticleFactory> FACTORIES = new LinkedHashMap<>();
+    public static final LinkedHashMap<String, CustomParticleEmitter> EMITTERS = new LinkedHashMap<>();
 
 
     public static void tryLoad(File file)

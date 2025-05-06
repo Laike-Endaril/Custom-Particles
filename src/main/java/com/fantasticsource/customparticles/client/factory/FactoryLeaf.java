@@ -12,7 +12,7 @@ import net.minecraft.util.math.Vec3d;
 
 import static com.fantasticsource.customparticles.CustomParticles.MODID;
 
-public class LeafFactory extends CustomParticleFactory
+public class FactoryLeaf extends CustomParticleFactory
 {
     public PathedParticleFactory fallingLeafFactory, groundLeafFactory;
     protected double startingRotationMin, startingRotationMax, spinRate;
@@ -22,7 +22,7 @@ public class LeafFactory extends CustomParticleFactory
             pathFade = new CPathLinear(0).add(new CPathConstant(2)).highLimit(new CPathConstant(1));
 
 
-    public LeafFactory()
+    public FactoryLeaf()
     {
         useFoliageColor = true;
         useBlockLight(true);

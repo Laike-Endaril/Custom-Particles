@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockEmitter extends CustomParticleEmitter
+public class EmitterBlock extends CustomParticleEmitter
 {
     private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
 
@@ -17,7 +17,7 @@ public class BlockEmitter extends CustomParticleEmitter
     public RegistryRegexBlockFilter blockFilter;
 
 
-    public BlockEmitter(boolean isWhitelist, RegistryRegexBlockFilter filter, OffsetMode... modes)
+    public EmitterBlock(boolean isWhitelist, RegistryRegexBlockFilter filter, OffsetMode... modes)
     {
         this.isWhitelist = isWhitelist;
         this.blockFilter = filter;

@@ -1,11 +1,10 @@
 package com.fantasticsource.customparticles.client;
 
-import com.fantasticsource.customparticles.client.emitter.BlockEmitter;
 import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
-import com.fantasticsource.customparticles.client.registry.EmitterRegistry;
-import com.fantasticsource.customparticles.client.registry.FactoryRegistry;
-import com.fantasticsource.customparticles.client.factory.LeafFactory;
-import com.fantasticsource.customparticles.client.registry.PathRegistry;
+import com.fantasticsource.customparticles.client.emitter.EmitterBlock;
+import com.fantasticsource.customparticles.client.emitter.EmitterRegistry;
+import com.fantasticsource.customparticles.client.factory.FactoryLeaf;
+import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 import com.fantasticsource.tools.SpriteMetaData;
@@ -52,17 +51,25 @@ public class ParticleHandler
 
         if (!initialized)
         {
+            FACTORIES_DIR.mkdirs();
+            FactoryRegistry.tryLoad(FACTORIES_DIR);
+
+            EMITTERS_DIR.mkdirs();
+            EmitterRegistry.tryLoad(EMITTERS_DIR);
+
+
             //TODO remove this test code and add code to parse factories and emitters from config files
             //TODO add command to reload settings during runtime, or do it automatically via file name / size detection
 
+
             //Falling leaves
-            BlockEmitter emitter = new BlockEmitter(true, new RegistryRegexBlockFilter(".*", ".*leaves.*", ".*"));
-            emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
-            emitter.addFactory(new LeafFactory());
+            EmitterBlock emitter = new EmitterBlock(true, new RegistryRegexBlockFilter(".*", ".*leaves.*", ".*"));
+            emitter.addOffsetModes(EmitterBlock.OffsetMode.BOTTOM);
+            emitter.addFactory(FactoryRegistry.FACTORIES.get("leaves"));
 
 
             //Slime dripping in slime chunks
-            LeafFactory slimeFactory = new LeafFactory();
+            FactoryLeaf slimeFactory = new FactoryLeaf();
             slimeFactory.spriteMetaData = new SpriteMetaData(128, 128, 0, 8, 8, 16);
 
             slimeFactory.useFoliageColor = false;
@@ -71,14 +78,11 @@ public class ParticleHandler
             slimeFactory.setTerminalVelocityMultiplier(10);
             slimeFactory.setTerminalVelocityDelayMultiplier(4);
 
-            emitter = new BlockEmitter(false, new RegistryRegexBlockFilter("minecraft", "air", ".*"));
+            emitter = new EmitterBlock(false, new RegistryRegexBlockFilter("minecraft", "air", ".*"));
             emitter.addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
-            emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
+            emitter.addOffsetModes(EmitterBlock.OffsetMode.BOTTOM);
             emitter.addFactory(slimeFactory);
 
-
-            PATHS_DIR.mkdirs();
-            PathRegistry.tryLoad(PATHS_DIR);
 
             FACTORIES_DIR.mkdirs();
             FactoryRegistry.tryLoad(FACTORIES_DIR);
@@ -96,7 +100,7 @@ public class ParticleHandler
             EntityPlayer player = Minecraft.getMinecraft().player;
             for (Map.Entry<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> entry : EMITTERS.entrySet())
             {
-                if (entry.getKey() == BlockEmitter.class)
+                if (entry.getKey() == EmitterBlock.class)
                 {
                     BlockPos playerPos = player.getPosition();
                     int x = playerPos.getX(), y = playerPos.getY(), z = playerPos.getZ(), eyeY = (int) (player.posY + player.eyeHeight);
