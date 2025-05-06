@@ -72,8 +72,8 @@ public abstract class CustomParticleEmitter
         if (world == null) return false;
 
 
-        if (dimensions.contains(world.provider.getDimension()) != dimensionsAreWhitelist) return false;
-        if (biomes.contains(world.getBiome(MUT_POS.setPos(x, y, z))) != biomesAreWhitelist) return false;
+        if (dimensions.size() > 0 && dimensions.contains(world.provider.getDimension()) != dimensionsAreWhitelist) return false;
+        if (biomes.size() > 0 && biomes.contains(world.getBiome(MUT_POS.setPos(x, y, z))) != biomesAreWhitelist) return false;
 
 
         for (Requirement requirement : requirements)
