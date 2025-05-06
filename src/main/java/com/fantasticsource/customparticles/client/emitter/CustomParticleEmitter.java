@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +38,10 @@ public abstract class CustomParticleEmitter
     public final ArrayList<CustomParticleFactory> factories = new ArrayList<>();
     public final ArrayList<OffsetMode> modes = new ArrayList<>();
     public final HashSet<Requirement> requirements = new HashSet<>();
+    public final HashSet<Integer> dimensions = new HashSet<>();
+    public final HashSet<Biome> biomes = new HashSet<>();
+
+    public boolean dimensionsAreWhitelist = true, biomesAreWhitelist = true;
 
 
     public CustomParticleEmitter()
@@ -65,6 +70,10 @@ public abstract class CustomParticleEmitter
     {
         World world = Minecraft.getMinecraft().world;
         if (world == null) return false;
+
+
+        if (dimensions.contains(world.provider.getDimension()) != dimensionsAreWhitelist) return false;
+        if (biomes.contains(world.getBiome(MUT_POS.setPos(x, y, z))) != biomesAreWhitelist) return false;
 
 
         for (Requirement requirement : requirements)
