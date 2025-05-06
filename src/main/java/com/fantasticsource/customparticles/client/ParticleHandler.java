@@ -2,7 +2,11 @@ package com.fantasticsource.customparticles.client;
 
 import com.fantasticsource.customparticles.client.emitter.BlockEmitter;
 import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
+import com.fantasticsource.customparticles.client.emitter.EmitterRegistry;
+import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.customparticles.client.factory.LeafFactory;
+import com.fantasticsource.customparticles.client.path.PathRegistry;
+import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 import com.fantasticsource.tools.SpriteMetaData;
 import com.fantasticsource.tools.Tools;
@@ -15,17 +19,27 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static com.fantasticsource.customparticles.CustomParticles.MODID;
+
 @SideOnly(Side.CLIENT)
 public class ParticleHandler
 {
-    public static final LinkedHashMap<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> EMITTERS = new LinkedHashMap<>();
-    public static boolean initialized = false;
+    public static final File
+            PATHS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "paths"),
+            FACTORIES_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "factories"),
+            EMITTERS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "emitters");
 
     private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
+
+    public static final LinkedHashMap<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> EMITTERS = new LinkedHashMap<>();
+
+
+    public static boolean initialized = false;
 
 
     @SideOnly(Side.CLIENT)
@@ -40,11 +54,13 @@ public class ParticleHandler
         {
             //TODO remove this test code and add code to parse factories and emitters from config files
 
+            //Falling leaves
             BlockEmitter emitter = new BlockEmitter(true, new RegistryRegexBlockFilter(".*", ".*leaves.*", ".*"));
             emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
             emitter.addFactory(new LeafFactory());
 
 
+            //Slime dripping in slime chunks
             LeafFactory slimeFactory = new LeafFactory();
             slimeFactory.spriteMetaData = new SpriteMetaData(128, 128, 0, 8, 8, 16);
 
@@ -58,6 +74,29 @@ public class ParticleHandler
             emitter.addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
             emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
             emitter.addFactory(slimeFactory);
+
+
+            PATHS_DIR.mkdirs();
+            File[] files = PATHS_DIR.listFiles();
+            if (files != null)
+            {
+                for (File file : files) PathRegistry.tryLoad(file);
+            }
+
+            FACTORIES_DIR.mkdirs();
+            files = FACTORIES_DIR.listFiles();
+            if (files != null)
+            {
+                for (File file : files) FactoryRegistry.tryLoad(file);
+            }
+
+            EMITTERS_DIR.mkdirs();
+            files = EMITTERS_DIR.listFiles();
+            if (files != null)
+            {
+                for (File file : files) EmitterRegistry.tryLoad(file);
+            }
+
 
             initialized = true;
         }
