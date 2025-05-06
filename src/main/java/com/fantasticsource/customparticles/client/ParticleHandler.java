@@ -39,18 +39,18 @@ public class ParticleHandler
         {
             //TODO remove this test code and add code to parse factories and emitters from config files
 
-            BlockEmitter emitter = new BlockEmitter(new RegistryRegexBlockFilter(".*", ".*leaves.*", ".*"));
+            BlockEmitter emitter = new BlockEmitter(true, new RegistryRegexBlockFilter(".*", ".*leaves.*", ".*"));
             emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
             emitter.addFactory(new LeafFactory());
 
 
-//            LeafFactory slimeFactory = new LeafFactory();
+            LeafFactory slimeFactory = new LeafFactory();
 //            slimeFactory.setTexture();
 
-//            emitter = new BlockEmitter(new RegistryRegexBlockFilter(".*", ".*", ".*"));
-//            emitter.addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
-//            emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
-//            emitter.addFactory(slimeFactory);
+            emitter = new BlockEmitter(false, new RegistryRegexBlockFilter("minecraft", "air", ".*"));
+            emitter.addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
+            emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
+            emitter.addFactory(slimeFactory);
 
             initialized = true;
         }
@@ -70,7 +70,7 @@ public class ParticleHandler
                     ArrayList<CustomParticleEmitter> list = new ArrayList<>();
                     CustomParticleEmitter emitter;
                     //Simulate vanilla to some extent, at least for now
-                    for (int i = 0; i < 667; i++)
+                    for (int i = 0; i < 100; i++)
                     {
                         xx = x - 16 + Tools.random(33);
                         yy = eyeY - 16 + Tools.random(33);

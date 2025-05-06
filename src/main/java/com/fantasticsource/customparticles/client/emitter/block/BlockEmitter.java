@@ -14,11 +14,13 @@ public class BlockEmitter extends CustomParticleEmitter
 {
     private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
 
+    public boolean isWhitelist;
     public RegistryRegexBlockFilter blockFilter;
 
 
-    public BlockEmitter(RegistryRegexBlockFilter filter, OffsetMode... modes)
+    public BlockEmitter(boolean isWhitelist, RegistryRegexBlockFilter filter, OffsetMode... modes)
     {
+        this.isWhitelist = isWhitelist;
         this.blockFilter = filter;
         addOffsetModes(modes);
     }
@@ -30,7 +32,8 @@ public class BlockEmitter extends CustomParticleEmitter
         if (!super.clientTick(x, y, z, obj)) return false;
 
 
-        if (!(obj instanceof IBlockState) || !blockFilter.matches((IBlockState) obj)) return false;
+        if (!(obj instanceof IBlockState)) return false;
+        if (blockFilter.matches((IBlockState) obj) != isWhitelist) return false;
 
 
         World world = Minecraft.getMinecraft().world;
