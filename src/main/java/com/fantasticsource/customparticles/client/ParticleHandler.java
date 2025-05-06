@@ -1,34 +1,102 @@
 package com.fantasticsource.customparticles.client;
 
+import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
+import com.fantasticsource.customparticles.client.emitter.block.BlockEmitter;
 import com.fantasticsource.customparticles.client.factory.LeafFactory;
+import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 import com.fantasticsource.tools.Tools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @SideOnly(Side.CLIENT)
 public class ParticleHandler
 {
-    public static LeafFactory leafFactory = null;
+    public static final LinkedHashMap<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> EMITTERS = new LinkedHashMap<>();
+    public static boolean initialized = false;
+    public static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
+
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public static void particleTest(TickEvent.ClientTickEvent event)
+    public static void clientTick(TickEvent.ClientTickEvent event)
     {
         World world = Minecraft.getMinecraft().world;
         if (event.phase != TickEvent.Phase.END || world == null) return;
 
 
-        if (leafFactory == null) leafFactory = new LeafFactory();
+        if (!initialized)
+        {
+            BlockEmitter emitter = new BlockEmitter(new RegistryRegexBlockFilter("minecraft", "leaves.*", ".*"));
+            emitter.addOffsetModes(BlockEmitter.OffsetMode.BOTTOM);
+            emitter.addFactory(new LeafFactory());
 
-        EntityPlayer player = Minecraft.getMinecraft().player;
+            initialized = true;
+        }
+
+
         if (!Minecraft.getMinecraft().isGamePaused())
         {
-            leafFactory.create(player.posX - 3 + Tools.random(6d), player.posY + player.height + 1, player.posZ - 3 + Tools.random(6d));
+            EntityPlayer player = Minecraft.getMinecraft().player;
+            for (Map.Entry<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> entry : EMITTERS.entrySet())
+            {
+                if (entry.getKey() == BlockEmitter.class)
+                {
+                    BlockPos playerPos = player.getPosition();
+                    int x = playerPos.getX(), y = playerPos.getY(), z = playerPos.getZ(), eyeY = (int) (player.posY + player.eyeHeight);
+                    int xx, yy, zz;
+                    Object obj;
+                    ArrayList<CustomParticleEmitter> list = new ArrayList<>();
+                    CustomParticleEmitter emitter;
+                    //Simulate vanilla to some extent, at least for now
+                    for (int i = 0; i < 667; i++)
+                    {
+                        xx = x - 16 + Tools.random(33);
+                        yy = eyeY - 16 + Tools.random(33);
+                        zz = z - 16 + Tools.random(33);
+                        obj = world.getBlockState(MUT_POS.setPos(xx, yy, zz));
+
+                        list.addAll(entry.getValue());
+                        while (list.size() > 0)
+                        {
+                            emitter = Tools.choose(list);
+                            if (emitter.clientTick(xx, yy, zz, obj))
+                            {
+                                list.clear();
+                                break;
+                            }
+                            else list.remove(emitter);
+                        }
+
+
+                        xx = x - 32 + Tools.random(65);
+                        yy = eyeY - 32 + Tools.random(65);
+                        zz = z - 32 + Tools.random(65);
+                        obj = world.getBlockState(MUT_POS.setPos(xx, yy, zz));
+
+                        list.addAll(entry.getValue());
+                        while (list.size() > 0)
+                        {
+                            emitter = Tools.choose(list);
+                            if (emitter.clientTick(xx, yy, zz, obj))
+                            {
+                                list.clear();
+                                break;
+                            }
+                            else list.remove(emitter);
+                        }
+                    }
+                }
+            }
         }
     }
 }

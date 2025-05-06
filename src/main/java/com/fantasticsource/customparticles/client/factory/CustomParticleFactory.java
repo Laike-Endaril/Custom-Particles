@@ -55,6 +55,11 @@ public abstract class CustomParticleFactory
         particleRenderData = new PathedParticleSharedRenderData(useBlockLight, particleRenderData.sourceFactor, particleRenderData.destFactor, particleRenderData.textureString);
     }
 
+    public void useFoliageColor(boolean useFoliageColor)
+    {
+        this.useFoliageColor = useFoliageColor;
+    }
+
     public void setBlendSourceFactor(String sourceFactor)
     {
         GlStateManager.SourceFactor result = SRC_BLEND_FUNCS.get(sourceFactor);
