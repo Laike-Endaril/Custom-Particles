@@ -2,10 +2,10 @@ package com.fantasticsource.customparticles.client;
 
 import com.fantasticsource.customparticles.client.emitter.BlockEmitter;
 import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
-import com.fantasticsource.customparticles.client.emitter.EmitterRegistry;
-import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
+import com.fantasticsource.customparticles.client.registry.EmitterRegistry;
+import com.fantasticsource.customparticles.client.registry.FactoryRegistry;
 import com.fantasticsource.customparticles.client.factory.LeafFactory;
-import com.fantasticsource.customparticles.client.path.PathRegistry;
+import com.fantasticsource.customparticles.client.registry.PathRegistry;
 import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 import com.fantasticsource.tools.SpriteMetaData;
@@ -53,6 +53,7 @@ public class ParticleHandler
         if (!initialized)
         {
             //TODO remove this test code and add code to parse factories and emitters from config files
+            //TODO add command to reload settings during runtime, or do it automatically via file name / size detection
 
             //Falling leaves
             BlockEmitter emitter = new BlockEmitter(true, new RegistryRegexBlockFilter(".*", ".*leaves.*", ".*"));
@@ -77,25 +78,13 @@ public class ParticleHandler
 
 
             PATHS_DIR.mkdirs();
-            File[] files = PATHS_DIR.listFiles();
-            if (files != null)
-            {
-                for (File file : files) PathRegistry.tryLoad(file);
-            }
+            PathRegistry.tryLoad(PATHS_DIR);
 
             FACTORIES_DIR.mkdirs();
-            files = FACTORIES_DIR.listFiles();
-            if (files != null)
-            {
-                for (File file : files) FactoryRegistry.tryLoad(file);
-            }
+            FactoryRegistry.tryLoad(FACTORIES_DIR);
 
             EMITTERS_DIR.mkdirs();
-            files = EMITTERS_DIR.listFiles();
-            if (files != null)
-            {
-                for (File file : files) EmitterRegistry.tryLoad(file);
-            }
+            EmitterRegistry.tryLoad(EMITTERS_DIR);
 
 
             initialized = true;
