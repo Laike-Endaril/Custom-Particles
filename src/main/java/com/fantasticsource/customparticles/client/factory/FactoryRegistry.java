@@ -19,7 +19,7 @@ public class FactoryRegistry extends FileWordParser
         switch (function)
         {
             case "template":
-                activateTemplate(args);
+                template(args);
                 break;
 
             case "":
@@ -31,7 +31,7 @@ public class FactoryRegistry extends FileWordParser
     }
 
 
-    public void activateTemplate(ArrayList<String> args)
+    public void template(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("Missing argument for factory template!");
 

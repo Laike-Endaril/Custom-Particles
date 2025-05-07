@@ -1,6 +1,7 @@
 package com.fantasticsource.customparticles.client.emitter;
 
 import com.fantasticsource.customparticles.FileWordParser;
+import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 
 import java.util.ArrayList;
@@ -19,7 +20,17 @@ public class EmitterRegistry extends FileWordParser
         switch (function)
         {
             case "template":
-                activateTemplate(args);
+                template(args);
+                break;
+
+            case "mode":
+            case "modes":
+                modes(args);
+                break;
+
+            case "factory":
+            case "factories":
+                factories(args);
                 break;
 
             case "":
@@ -31,7 +42,7 @@ public class EmitterRegistry extends FileWordParser
     }
 
 
-    public void activateTemplate(ArrayList<String> args)
+    public void template(ArrayList<String> args)
     {
         if (args.size() < 3) throw new IllegalArgumentException("Not enough arguments for emitter template!");
 
@@ -45,6 +56,28 @@ public class EmitterRegistry extends FileWordParser
 
             default:
                 throw new IllegalArgumentException("Invalid template name: " + args.get(0));
+        }
+    }
+
+
+    public void modes(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter modes!");
+
+        for (String arg : args)
+        {
+            currentEmitter.addOffsetModes(CustomParticleEmitter.OffsetMode.valueOf(arg.toUpperCase()));
+        }
+    }
+
+
+    public void factories(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter factories!");
+
+        for (String arg : args)
+        {
+            currentEmitter.addFactory(FactoryRegistry.FACTORIES.get(arg));
         }
     }
 }

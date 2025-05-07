@@ -59,12 +59,7 @@ public class ParticleHandler
 
             //TODO remove this test code and add code to parse factories and emitters from config files
             //TODO add command to reload settings during runtime, or do it automatically via file name / size detection
-
-
-            //Falling leaves
-            CustomParticleEmitter emitter = EmitterRegistry.EMITTERS.get("leaves");
-            emitter.addOffsetModes(EmitterBlock.OffsetMode.BOTTOM);
-            emitter.addFactory(FactoryRegistry.FACTORIES.get("leaves"));
+            //TODO add filename, line number, line printout for parsing errors
 
 
             //Slime dripping in slime chunks
@@ -77,7 +72,7 @@ public class ParticleHandler
             slimeFactory.setTerminalVelocityMultiplier(10);
             slimeFactory.setTerminalVelocityDelayMultiplier(4);
 
-            emitter = new EmitterBlock(false, new RegistryRegexBlockFilter("minecraft", "air", ".*"));
+            CustomParticleEmitter emitter = new EmitterBlock(false, new RegistryRegexBlockFilter("minecraft", "air", ".*"));
             emitter.addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
             emitter.addOffsetModes(EmitterBlock.OffsetMode.BOTTOM);
             emitter.addFactory(slimeFactory);
