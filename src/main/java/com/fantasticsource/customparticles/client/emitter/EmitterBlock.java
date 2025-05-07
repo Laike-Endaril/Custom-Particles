@@ -9,6 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 public class EmitterBlock extends CustomParticleEmitter
 {
     private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
@@ -37,10 +39,18 @@ public class EmitterBlock extends CustomParticleEmitter
         World world = Minecraft.getMinecraft().world;
         boolean spawned = false;
         IBlockState adjacent;
-        for (CustomParticleFactory factory : factories)
+        ArrayList<OffsetMode> modeQueue = new ArrayList<>();
+        ArrayList<CustomParticleFactory> factoryQueue = new ArrayList<>(factories);
+        while (!spawned && factoryQueue.size() > 0)
         {
-            for (OffsetMode mode : modes)
+            CustomParticleFactory factory = Tools.choose(factoryQueue);
+            factoryQueue.remove(factory);
+
+            modeQueue.addAll(modes);
+            while (!spawned && modeQueue.size() > 0)
             {
+                OffsetMode mode = Tools.choose(modes);
+                modeQueue.remove(mode);
                 switch (mode)
                 {
                     case TOP:
