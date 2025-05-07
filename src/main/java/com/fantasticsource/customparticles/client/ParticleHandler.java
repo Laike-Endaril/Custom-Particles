@@ -3,10 +3,8 @@ package com.fantasticsource.customparticles.client;
 import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
 import com.fantasticsource.customparticles.client.emitter.EmitterBlock;
 import com.fantasticsource.customparticles.client.emitter.EmitterRegistry;
-import com.fantasticsource.customparticles.client.factory.FactoryLeaf;
 import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.mctools.MCTools;
-import com.fantasticsource.tools.SpriteMetaData;
 import com.fantasticsource.tools.Tools;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -62,7 +60,6 @@ public class ParticleHandler
 
 
             //Slime dripping in slime chunks
-            ((FactoryLeaf) FactoryRegistry.FACTORIES.get("slime")).spriteMetaData = new SpriteMetaData(128, 128, 0, 8, 8, 16);
             EmitterRegistry.EMITTERS.get("slimechunk").addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
 
 

@@ -1,6 +1,7 @@
 package com.fantasticsource.customparticles.client.factory;
 
 import com.fantasticsource.customparticles.FileWordParser;
+import com.fantasticsource.tools.SpriteMetaData;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -66,6 +67,11 @@ public class FactoryRegistry extends FileWordParser
             case "culldistance":
             case "cullingdistance":
                 cullingDistance(args);
+                break;
+
+            case "spritemeta":
+            case "spritemetadata":
+                spriteMetaData(args);
                 break;
 
 
@@ -250,5 +256,21 @@ public class FactoryRegistry extends FileWordParser
         }
 
         currentFactory.setCullingDistance(Integer.parseInt(args.get(0)));
+    }
+
+    public void spriteMetaData(ArrayList<String> args)
+    {
+        if (args.size() < 6) throw new IllegalArgumentException("Not enough arguments for spriteMetaData!");
+
+        try
+        {
+            int[] pxVals = new int[args.size() - 2];
+            for (int i = 0; i < pxVals.length; i++) pxVals[i] = Integer.parseInt(args.get(i + 2));
+            currentFactory.spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), pxVals);
+        }
+        catch (NumberFormatException e)
+        {
+            currentFactory.spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), Integer.parseInt(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Integer.parseInt(args.get(5)), Boolean.parseBoolean(args.get(6)), Integer.parseInt(args.get(7)));
+        }
     }
 }
