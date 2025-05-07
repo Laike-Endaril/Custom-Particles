@@ -34,6 +34,12 @@ public class FactoryRegistry extends FileWordParser
                 spinRate(args);
                 break;
 
+            case "terminalvelocitymultiplier":
+            case "terminalvelocitymult":
+                terminalVelocityMult(args);
+                break;
+
+
             case "":
                 break;
 
@@ -110,5 +116,21 @@ public class FactoryRegistry extends FileWordParser
         }
 
         currentFactory.setMaxSpinRate(Double.parseDouble(args.get(0)));
+    }
+
+    public void terminalVelocityMult(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for terminalVelocityMult!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'terminalVelocityMult' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+
+        ((FactoryLeaf) currentFactory).setTerminalVelocityMultiplier(Double.parseDouble(args.get(0)));
     }
 }

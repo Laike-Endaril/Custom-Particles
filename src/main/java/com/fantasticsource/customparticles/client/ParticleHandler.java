@@ -66,7 +66,6 @@ public class ParticleHandler
             FactoryLeaf slimeFactory = (FactoryLeaf) FactoryRegistry.FACTORIES.get("slime");
             slimeFactory.spriteMetaData = new SpriteMetaData(128, 128, 0, 8, 8, 16);
 
-            slimeFactory.setTerminalVelocityMultiplier(10);
             slimeFactory.setTerminalVelocityDelayMultiplier(4);
 
             CustomParticleEmitter emitter = new EmitterBlock(false, new RegistryRegexBlockFilter("minecraft", "air", ".*"));
