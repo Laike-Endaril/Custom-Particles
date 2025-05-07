@@ -23,6 +23,7 @@ public class FactoryRegistry extends FileWordParser
                 break;
 
             case "usefoliagecolor":
+                useFoliageColor(args);
                 break;
 
             case "":
