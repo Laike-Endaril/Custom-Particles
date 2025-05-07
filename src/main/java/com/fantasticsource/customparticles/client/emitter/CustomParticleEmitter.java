@@ -30,8 +30,8 @@ public abstract class CustomParticleEmitter
 
     public enum Requirement
     {
-        SLIME_CHUNK,
-        FULL_SOLID_BLOCK
+        SLIMECHUNK,
+        FULLSOLIDBLOCK
     }
 
 
@@ -80,11 +80,11 @@ public abstract class CustomParticleEmitter
         {
             switch (requirement)
             {
-                case SLIME_CHUNK:
+                case SLIMECHUNK:
                     if (y >= 40 || world.getChunkFromBlockCoords(MUT_POS.setPos(x, y, z)).getRandomWithSeed(987234911L).nextInt(10) != 0) return false;
                     break;
 
-                case FULL_SOLID_BLOCK:
+                case FULLSOLIDBLOCK:
                     IBlockState blockState = world.getBlockState(MUT_POS.setPos(x, y, z));
                     if (!blockState.getMaterial().blocksMovement() || !blockState.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB)) return false;
                     break;

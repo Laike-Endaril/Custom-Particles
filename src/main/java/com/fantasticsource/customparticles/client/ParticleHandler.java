@@ -47,21 +47,16 @@ public class ParticleHandler
 
         if (!initialized)
         {
+            //TODO parse dimension filtering
+            //TODO parse chunk filtering
+            //TODO add command to reload settings during runtime, or do it automatically via file name / size detection
+            //TODO add filename, line number, line printout for parsing errors
+
             FACTORIES_DIR.mkdirs();
             new FactoryRegistry().tryLoad(FACTORIES_DIR);
 
             EMITTERS_DIR.mkdirs();
             new EmitterRegistry().tryLoad(EMITTERS_DIR);
-
-
-            //TODO remove this test code and add code to parse factories and emitters from config files
-            //TODO add command to reload settings during runtime, or do it automatically via file name / size detection
-            //TODO add filename, line number, line printout for parsing errors
-
-
-            //Slime dripping in slime chunks
-            EmitterRegistry.EMITTERS.get("slimechunk").addRequirements(CustomParticleEmitter.Requirement.SLIME_CHUNK, CustomParticleEmitter.Requirement.FULL_SOLID_BLOCK);
-
 
             initialized = true;
         }

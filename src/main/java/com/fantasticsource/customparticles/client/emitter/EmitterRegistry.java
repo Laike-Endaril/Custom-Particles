@@ -34,6 +34,13 @@ public class EmitterRegistry extends FileWordParser
                 factories(args);
                 break;
 
+            case "require":
+            case "requires":
+            case "requirement":
+            case "requirements":
+                requirements(args);
+                break;
+
             case "":
                 break;
 
@@ -68,7 +75,6 @@ public class EmitterRegistry extends FileWordParser
         }
     }
 
-
     public void modes(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter modes!");
@@ -76,11 +82,17 @@ public class EmitterRegistry extends FileWordParser
         for (String arg : args) currentEmitter.addOffsetModes(CustomParticleEmitter.OffsetMode.valueOf(arg.toUpperCase()));
     }
 
-
     public void factories(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter factories!");
 
         for (String arg : args) currentEmitter.addFactory(FactoryRegistry.FACTORIES.get(arg));
+    }
+
+    public void requirements(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter requirements!");
+
+        for (String arg : args) currentEmitter.addRequirements(CustomParticleEmitter.Requirement.valueOf(arg.toUpperCase()));
     }
 }
