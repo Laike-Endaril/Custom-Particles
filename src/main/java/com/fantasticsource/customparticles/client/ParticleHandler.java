@@ -47,7 +47,6 @@ public class ParticleHandler
 
         if (!initialized)
         {
-            //TODO parse biome filtering
             //TODO add command to reload settings during runtime, or do it automatically via file name / size detection
             //TODO add filename, line number, line printout for parsing errors
 

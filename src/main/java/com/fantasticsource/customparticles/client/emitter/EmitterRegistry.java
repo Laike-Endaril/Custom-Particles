@@ -3,6 +3,8 @@ package com.fantasticsource.customparticles.client.emitter;
 import com.fantasticsource.customparticles.FileWordParser;
 import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,7 +20,7 @@ public class EmitterRegistry extends FileWordParser
     @Override
     public void handleFunction(String function, ArrayList<String> args)
     {
-        switch (function)
+        switch (function.toLowerCase())
         {
             case "template":
                 template(args);
@@ -48,6 +50,15 @@ public class EmitterRegistry extends FileWordParser
 
             case "dimensionsarewhitelist":
                 dimensionsAreWhitelist(args);
+                break;
+
+            case "biome":
+            case "biomes":
+                biomes(args);
+                break;
+
+            case "biomesarewhitelist":
+                biomesAreWhitelist(args);
                 break;
 
 
@@ -126,5 +137,27 @@ public class EmitterRegistry extends FileWordParser
         }
 
         currentEmitter.dimensionsAreWhitelist = Boolean.parseBoolean(args.get(0));
+    }
+
+    public void biomes(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter biomes!");
+
+        for (String arg : args) currentEmitter.biomes.add(ForgeRegistries.BIOMES.getValue(new ResourceLocation(arg)));
+    }
+
+    public void biomesAreWhitelist(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for biomesAreWhitelist!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'biomesAreWhitelist' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        currentEmitter.biomesAreWhitelist = Boolean.parseBoolean(args.get(0));
     }
 }
