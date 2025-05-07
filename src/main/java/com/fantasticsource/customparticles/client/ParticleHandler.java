@@ -128,26 +128,30 @@ public class ParticleHandler
 
     public static void generateInstructionsFile()
     {
-        File file = new File(MCTools.getConfigDir() + MODID + File.separator + "INSTRUCTIONS.txt");
-        while (!file.exists()) file.mkdirs();
-        while (file.exists()) file.delete();
-
-
-        try
+        File file;
+        for (String filename : new String[]{"TUTORIAL.txt"})
         {
-            InputStream in = Tools.getJarResourceStream(CustomParticles.class, "assets/" + MODID + "/INSTRUCTIONS.txt");
-            FileOutputStream out = new FileOutputStream(file);
+            file = new File(MCTools.getConfigDir() + MODID + File.separator + filename);
+            while (!file.exists()) file.mkdirs();
+            while (file.exists()) file.delete();
 
-            byte[] buf = new byte[8192];
-            int length;
-            while ((length = in.read(buf)) != -1) out.write(buf, 0, length);
 
-            in.close();
-            out.close();
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
+            try
+            {
+                InputStream in = Tools.getJarResourceStream(CustomParticles.class, "assets/" + MODID + "/" + filename);
+                FileOutputStream out = new FileOutputStream(file);
+
+                byte[] buf = new byte[8192];
+                int length;
+                while ((length = in.read(buf)) != -1) out.write(buf, 0, length);
+
+                in.close();
+                out.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 }

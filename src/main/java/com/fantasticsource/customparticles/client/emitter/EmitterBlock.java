@@ -13,14 +13,14 @@ public class EmitterBlock extends CustomParticleEmitter
 {
     private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
 
-    public boolean isWhitelist;
     public RegistryRegexBlockFilter blockFilter;
+    public boolean isWhitelist;
 
 
-    public EmitterBlock(boolean isWhitelist, RegistryRegexBlockFilter filter)
+    public EmitterBlock(RegistryRegexBlockFilter filter, boolean isWhitelist)
     {
-        this.isWhitelist = isWhitelist;
         this.blockFilter = filter;
+        this.isWhitelist = isWhitelist;
     }
 
 

@@ -87,7 +87,7 @@ public class EmitterRegistry extends FileWordParser
         {
             case "block":
             case "blocks":
-                currentEmitter = new EmitterBlock(Boolean.parseBoolean(args.get(1)), RegistryRegexBlockFilter.getInstance(args.get(2)));
+                currentEmitter = new EmitterBlock(RegistryRegexBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)));
                 EMITTERS.put(currentObjectName, currentEmitter);
                 break;
 
