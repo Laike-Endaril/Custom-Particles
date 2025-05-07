@@ -96,9 +96,9 @@ public class FactoryLeaf extends CustomParticleFactory
         ((CPathAccelerateToTerminalVel) pathFall).terminalVelocity.values[1] = -0.6 * multiplier;
     }
 
-    public void setTerminalVelocityDelayMultiplier(long multiplier)
+    public void setTerminalVelocityDelayMultiplier(double multiplier)
     {
-        ((CPathAccelerateToTerminalVel) pathFall).timeToTerminalVelocity = 1000 * multiplier;
+        ((CPathAccelerateToTerminalVel) pathFall).timeToTerminalVelocity = (long) (1000 * multiplier);
     }
 
 

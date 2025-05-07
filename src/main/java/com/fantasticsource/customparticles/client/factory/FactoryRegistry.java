@@ -39,6 +39,11 @@ public class FactoryRegistry extends FileWordParser
                 terminalVelocityMult(args);
                 break;
 
+            case "terminalvelocitydelaymultiplier":
+            case "terminalvelocitydelaymult":
+                terminalVelocityDelayMult(args);
+                break;
+
 
             case "":
                 break;
@@ -132,5 +137,21 @@ public class FactoryRegistry extends FileWordParser
 
 
         ((FactoryLeaf) currentFactory).setTerminalVelocityMultiplier(Double.parseDouble(args.get(0)));
+    }
+
+    public void terminalVelocityDelayMult(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for terminalVelocityDelayMult!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'terminalVelocityDelayMult' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+
+        ((FactoryLeaf) currentFactory).setTerminalVelocityDelayMultiplier(Double.parseDouble(args.get(0)));
     }
 }
