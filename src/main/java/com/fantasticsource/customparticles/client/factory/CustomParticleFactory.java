@@ -51,7 +51,7 @@ public abstract class CustomParticleFactory
     public boolean useFoliageColor = false;
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
-    protected int maxRenderDistanceSquared = -1;
+    protected int cullDistanceSquared = -1;
     protected double startingRotationMin, startingRotationMax, spinRate;
 
 
@@ -82,9 +82,9 @@ public abstract class CustomParticleFactory
     }
 
 
-    public void setMaxRenderDistance(int maxRenderDistance)
+    public void setCullingDistance(int cullDistance)
     {
-        maxRenderDistanceSquared = maxRenderDistance >= (Integer.MAX_VALUE >> 1) ? Integer.MAX_VALUE : maxRenderDistance << 1;
+        cullDistanceSquared = cullDistance >= (Integer.MAX_VALUE >> 1) ? Integer.MAX_VALUE : cullDistance << 1;
     }
 
 

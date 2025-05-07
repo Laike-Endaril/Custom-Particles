@@ -40,7 +40,7 @@ public class FactoryLeaf extends CustomParticleFactory
         groundLeafFactory = args ->
         {
             PathedParticle particle = new PathedParticle(leafFadeTicks, particleRenderData);
-            if (maxRenderDistanceSquared != -1) particle.maxRenderDistanceSquared = maxRenderDistanceSquared;
+            if (cullDistanceSquared != -1) particle.cullDistanceSquared = cullDistanceSquared;
 
             PathedParticle parent = (PathedParticle) args[0];
             Vec3d deathPos = parent.deathPos;
@@ -62,7 +62,7 @@ public class FactoryLeaf extends CustomParticleFactory
         fallingLeafFactory = args ->
         {
             PathedParticle particle = new PathedParticle(200, particleRenderData);
-            if (maxRenderDistanceSquared != -1) particle.maxRenderDistanceSquared = maxRenderDistanceSquared;
+            if (cullDistanceSquared != -1) particle.cullDistanceSquared = cullDistanceSquared;
 
             particle.positionPath(new CPathConstant((double) args[0], (double) args[1], (Double) args[2]));
             particle.positionPath(pathFall);
