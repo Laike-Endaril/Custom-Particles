@@ -1,4 +1,12 @@
+Fix jitter on particle animation
+Integer division?
+Change time values to doubles?
+Call nanos instead of millis?
+
 Make logo and release (beta for starters)
+
+Add "wind" function with minimum and maximum multipliers for how much it's affected
+Apply wind as a global system
 
 Make block emitters use the sides of the block's bounding boxes, and only check for space if they need to (if the face is touching an adjacent blockspace)
 
