@@ -128,7 +128,7 @@ public class ParticleHandler
     public static void generateInstructionsFile()
     {
         File file;
-        for (String filename : new String[]{"TUTORIAL.txt"})
+        for (String filename : new String[]{"TUTORIAL.txt", "Specifications.txt"})
         {
             file = new File(MCTools.getConfigDir() + MODID + File.separator + filename);
             while (!file.exists()) file.mkdirs();
