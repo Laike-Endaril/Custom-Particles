@@ -30,6 +30,10 @@ public class FactoryRegistry extends FileWordParser
                 startingAngle(args);
                 break;
 
+            case "spinrate":
+                spinRate(args);
+                break;
+
             case "":
                 break;
 
@@ -90,5 +94,21 @@ public class FactoryRegistry extends FileWordParser
         }
 
         if (args.size() == 1) currentFactory.setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(0)));
+        else currentFactory.setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(1)));
+    }
+
+    public void spinRate(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for spinRate!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'spinRate' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        currentFactory.setMaxSpinRate(Double.parseDouble(args.get(0)));
     }
 }
