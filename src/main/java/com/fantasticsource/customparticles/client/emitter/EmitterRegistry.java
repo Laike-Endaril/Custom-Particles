@@ -5,6 +5,7 @@ import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 public class EmitterRegistry extends FileWordParser
@@ -45,6 +46,14 @@ public class EmitterRegistry extends FileWordParser
     public void template(ArrayList<String> args)
     {
         if (args.size() < 3) throw new IllegalArgumentException("Not enough arguments for emitter template!");
+
+        if (args.size() > 3)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'template' function only takes 3 arguments!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
 
         switch (args.get(0))
         {

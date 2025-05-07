@@ -16,10 +16,13 @@ public class FactoryRegistry extends FileWordParser
     @Override
     public void handleFunction(String function, ArrayList<String> args)
     {
-        switch (function)
+        switch (function.toLowerCase())
         {
             case "template":
                 template(args);
+                break;
+
+            case "usefoliagecolor":
                 break;
 
             case "":
@@ -38,7 +41,7 @@ public class FactoryRegistry extends FileWordParser
         if (args.size() > 1)
         {
             Iterator<String> iterator = args.iterator();
-            String error = "Template function only takes one argument!  Arguments given: " + iterator.next();
+            String error = "'template' function only takes 1 argument!  Arguments given: " + iterator.next();
             while (iterator.hasNext()) error += ", " + iterator.next();
             throw new IllegalArgumentException(error);
         }
@@ -54,5 +57,20 @@ public class FactoryRegistry extends FileWordParser
             default:
                 throw new IllegalArgumentException("Invalid template name: " + args.get(0));
         }
+    }
+
+    public void useFoliageColor(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for useFoliageColor!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'useFoliageColor' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        currentFactory.useFoliageColor = Boolean.parseBoolean(args.get(0));
     }
 }

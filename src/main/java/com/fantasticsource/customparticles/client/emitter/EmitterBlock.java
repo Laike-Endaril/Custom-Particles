@@ -21,9 +21,6 @@ public class EmitterBlock extends CustomParticleEmitter
     {
         this.isWhitelist = isWhitelist;
         this.blockFilter = filter;
-        System.out.println(blockFilter.domainRegex);
-        System.out.println(blockFilter.blockRegex);
-        System.out.println(blockFilter.metaRegex);
     }
 
 

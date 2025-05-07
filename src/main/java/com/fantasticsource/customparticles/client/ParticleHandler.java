@@ -63,10 +63,9 @@ public class ParticleHandler
 
 
             //Slime dripping in slime chunks
-            FactoryLeaf slimeFactory = new FactoryLeaf();
+            FactoryLeaf slimeFactory = (FactoryLeaf) FactoryRegistry.FACTORIES.get("slime");
             slimeFactory.spriteMetaData = new SpriteMetaData(128, 128, 0, 8, 8, 16);
 
-            slimeFactory.useFoliageColor = false;
             slimeFactory.setStartingAngle(0, 0);
             slimeFactory.setMaxSpinRate(0);
             slimeFactory.setTerminalVelocityMultiplier(10);
