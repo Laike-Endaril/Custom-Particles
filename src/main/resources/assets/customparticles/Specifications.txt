@@ -1,0 +1,155 @@
+======================================================================================================================================================================
+========================================================================== WARNING! ==================================================================================
+======================================================================================================================================================================
+
+
+IF YOU HAVEN'T GONE THROUGH THE TUTORIAL YET, DO THAT FIRST!!!
+
+(See TUTORIAL.txt)
+
+
+
+
+
+======================================================================================================================================================================
+====================================================================== FACTORY FUNCTIONS =============================================================================
+======================================================================================================================================================================
+
+
+
+template
+leaf / leaves - A particle that can fall and spin.
+
+
+
+tex / texture
+Which texture to use for the particles from this factory.
+This can be a block texture (from the texture atlas) or a texture file.
+
+tex minecraft:blocks/obsidian
+Block texture layout.
+Uses the texture for obsidian (do not need to / should not specify spriteMetaData).
+
+tex minecraft:blocks/lava_flow
+Block texture layout.
+Uses the texture for flowing lava (including animation; do not need to / should not specify spriteMetaData).
+
+tex minecraft:textures/particle/particles.png
+PNG texture layout.
+Uses minecraft's built-in particle textures file.
+
+tex customparticles:textures/particles.png
+PNG texture layout.
+Uses this mod's built-in textures file.
+
+Any PNG from any mod or texture pack should be available with this layout, but for block textures, there is better performance using the block-based format above (it's also simpler).
+The only time that the PNG layout should be used for block textures is when you DO NOT want them synchronized with the general synced block animations...
+...or when you want to combine multiple block textures in a single animation.
+
+
+
+spriteMeta / spriteMetaData
+Defines the frame (part of the texture) to use, or multiple frames (animation).
+Note that when using the block texture layout, "spriteMetaData" generally does not need to be specified (generally SHOULD NOT be specified).
+Also note that for the PNG texture layout, if not specified, it will use the full texture.
+
+spriteMetaData 128 128 0 8 16 24
+Defines a frame from (0, 8) to (16, 24) for a texture that is 128x128 pixels overall.
+Technically this uses ratios, so if someone eg. replaces a texture with a larger one (and did so correctly) it will still work without needing to change the numbers.
+
+spriteMetaData 128 128 0 8 16 24 false 8
+Similar to the previous example, but only for the first frame.
+The last 2 arguments "false 8" allow for quickly creating more frames that are in sequential order in the texture file.
+"false" is whether the frame sequence is vertical, ie. in this case it is not vertical, ie. it is horizontal.
+"8" is how many frames total, including the first one that was specified.  It will automatically wrap when it hits the edge of the texture file.
+This can load any frame sequence that is orderd from (left to right, top to bottom) ("false"), or from (top to bottom, left to right) ("true").
+
+spriteMetaData 128 128 0 8 16 24 0 8 8 16
+Again, the first frame (first 6 arguments) are the same, but this time we have 4 additional arguments.
+In this case, all numbers after the first 2 (after "128 128") are (frame1x1, frame1y1, frame1x2, frame1y2, frame2x1, frame2y1, frame2x2, frame2y2, etc...).
+This format allows you to define animations that are not in a sequence in the texture file.
+
+
+
+useFoliageColor
+true / false
+Whether to use the biome foliage color.
+
+
+
+startingAngle 45
+Particles spawn rotated 45* (counter-clockwise).
+
+startingAngle 0 90
+Particles spawn rotated somewhere between 0* and 90*.
+
+
+
+spinRate 360
+If the particle spawned at the maximum possible angle, rotate 360* per second in that same direction (scales based on min starting angle -> actual randomized starting angle <- max starting angle).
+
+
+
+terminalVelocityMult / terminalVelocityMultiplier
+terminalVelocityMult 2
+Top speed is twice as fast as the default for the template being used.
+
+
+
+terminalVelocityDelayMult / terminalVelocityDelayMultiplier
+terminalVelocityDelayMult 2
+It takes twice as long to reach top speed compared to the default for the template being used.
+
+
+
+useBlockLight
+true / false
+Whether to use block lighting values (shadow / light when true) or not (fullbright when false).
+
+
+
+blendSrcFactor / blendSourceFactor
+GL_ZERO
+GL_ONE
+GL_SRC_COLOR
+GL_ONE_MINUS_SRC_COLOR
+GL_DST_COLOR
+GL_ONE_MINUS_DST_COLOR
+GL_SRC_ALPHA
+GL_ONE_MINUS_SRC_ALPHA
+GL_DST_ALPHA
+GL_ONE_MINUS_DST_ALPHA
+GL_CONSTANT_COLOR
+GL_ONE_MINUS_CONSTANT_COLOR
+GL_CONSTANT_ALPHA
+GL_ONE_MINUS_CONSTANT_ALPHA
+GL_SRC_ALPHA_SATURATE
+
+See https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBlendFunc.xhtml
+Or google "glblendfunc".
+
+
+
+blendDstFactor / blendDestinationFactor
+GL_ZERO
+GL_ONE
+GL_SRC_COLOR
+GL_ONE_MINUS_SRC_COLOR
+GL_DST_COLOR
+GL_ONE_MINUS_DST_COLOR
+GL_SRC_ALPHA
+GL_ONE_MINUS_SRC_ALPHA
+GL_DST_ALPHA
+GL_ONE_MINUS_DST_ALPHA
+GL_CONSTANT_COLOR
+GL_ONE_MINUS_CONSTANT_COLOR
+GL_CONSTANT_ALPHA
+GL_ONE_MINUS_CONSTANT_ALPHA
+
+See https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBlendFunc.xhtml
+Or google "glblendfunc".
+
+
+
+cullDistance / cullingDistance
+If the particle is at least this far away from the player, destroy it (default 30).

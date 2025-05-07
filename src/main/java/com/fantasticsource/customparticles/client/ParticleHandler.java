@@ -51,7 +51,7 @@ public class ParticleHandler
     public static void clientTick(TickEvent.ClientTickEvent event)
     {
         World world = Minecraft.getMinecraft().world;
-        if (event.phase != TickEvent.Phase.END || world == null) return;
+        if (event.phase != TickEvent.Phase.START || world == null) return;
 
 
         if (!initialized)
@@ -83,11 +83,13 @@ public class ParticleHandler
                     ArrayList<CustomParticleEmitter> list = new ArrayList<>();
                     CustomParticleEmitter emitter;
                     //Simulate vanilla to some extent, at least for now
+                    //Changing amount
+                    //Changing ranges, since the default culling distance on these is 30
                     for (int i = 0; i < 100; i++)
                     {
-                        xx = x - 16 + Tools.random(33);
-                        yy = eyeY - 16 + Tools.random(33);
-                        zz = z - 16 + Tools.random(33);
+                        xx = x - 15 + Tools.random(31);
+                        yy = eyeY - 15 + Tools.random(31);
+                        zz = z - 15 + Tools.random(31);
                         obj = world.getBlockState(MUT_POS.setPos(xx, yy, zz));
 
                         list.addAll(entry.getValue());
@@ -103,9 +105,9 @@ public class ParticleHandler
                         }
 
 
-                        xx = x - 32 + Tools.random(65);
-                        yy = eyeY - 32 + Tools.random(65);
-                        zz = z - 32 + Tools.random(65);
+                        xx = x - 30 + Tools.random(61);
+                        yy = eyeY - 30 + Tools.random(61);
+                        zz = z - 30 + Tools.random(61);
                         obj = world.getBlockState(MUT_POS.setPos(xx, yy, zz));
 
                         list.addAll(entry.getValue());

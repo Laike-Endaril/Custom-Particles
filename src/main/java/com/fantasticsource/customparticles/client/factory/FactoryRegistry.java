@@ -71,7 +71,9 @@ public class FactoryRegistry extends FileWordParser
 
             case "spritemeta":
             case "spritemetadata":
-                spriteMetaData(args);
+                //Needs to be applied after texture function in some cases to work correctly
+                ArrayList<String> args2 = new ArrayList<>(args);
+                delayedFunctions.add(() -> spriteMetaData(args2));
                 break;
 
 
@@ -240,6 +242,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
+        currentFactory.spriteMetaData = null;
         currentFactory.setTexture(args.get(0));
     }
 

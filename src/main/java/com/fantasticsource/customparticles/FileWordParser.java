@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public abstract class FileWordParser
 {
     protected String currentObjectName;
+    protected ArrayList<Runnable> delayedFunctions = new ArrayList<>();
 
     public void tryLoad(File file)
     {
@@ -60,6 +61,10 @@ public abstract class FileWordParser
         {
             e.printStackTrace();
         }
+
+
+        for (Runnable runnable : delayedFunctions) runnable.run();
+        delayedFunctions.clear();
     }
 
 
