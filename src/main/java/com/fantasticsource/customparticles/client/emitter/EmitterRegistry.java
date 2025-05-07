@@ -41,6 +41,16 @@ public class EmitterRegistry extends FileWordParser
                 requirements(args);
                 break;
 
+            case "dimension":
+            case "dimensions":
+                dimensions(args);
+                break;
+
+            case "dimensionsarewhitelist":
+                dimensionsAreWhitelist(args);
+                break;
+
+
             case "":
                 break;
 
@@ -94,5 +104,27 @@ public class EmitterRegistry extends FileWordParser
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter requirements!");
 
         for (String arg : args) currentEmitter.addRequirements(CustomParticleEmitter.Requirement.valueOf(arg.toUpperCase()));
+    }
+
+    public void dimensions(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter dimensions!");
+
+        for (String arg : args) currentEmitter.dimensions.add(Integer.parseInt(arg));
+    }
+
+    public void dimensionsAreWhitelist(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for dimensionsAreWhitelist!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'dimensionsAreWhitelist' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        currentEmitter.dimensionsAreWhitelist = Boolean.parseBoolean(args.get(0));
     }
 }
