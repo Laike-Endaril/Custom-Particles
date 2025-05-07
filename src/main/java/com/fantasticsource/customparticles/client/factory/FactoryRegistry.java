@@ -44,8 +44,18 @@ public class FactoryRegistry extends FileWordParser
                 terminalVelocityDelayMult(args);
                 break;
 
-            case "useBlockLight":
+            case "useblocklight":
                 useBlockLight(args);
+                break;
+
+            case "blendsrcfactor":
+            case "blendsourcefactor":
+                blendSourceFactor(args);
+                break;
+
+            case "blenddstfactor":
+            case "blenddestinationfactor":
+                blendDestinationFactor(args);
                 break;
 
 
@@ -170,5 +180,35 @@ public class FactoryRegistry extends FileWordParser
         }
 
         currentFactory.useBlockLight(Boolean.parseBoolean(args.get(0)));
+    }
+
+    public void blendSourceFactor(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for blendSourceFactor!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'blendSourceFactor' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        currentFactory.setBlendSourceFactor(args.get(0));
+    }
+
+    public void blendDestinationFactor(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for blendDestinationFactor!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'blendDestinationFactor' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        currentFactory.setBlendDestinationFactor(args.get(0));
     }
 }
