@@ -1,3 +1,9 @@
+Make logo and release (beta for starters)
+
+Make block emitters use the sides of the block's bounding boxes, and only check for space if they need to (if the face is touching an adjacent blockspace)
+
+Add support for paths and full-custom (raw) particle factory definitions
+
 Add command to reload settings during runtime, or do it automatically via file name / size detection
 
 Add filename, line number, line printout for parsing errors
