@@ -2,6 +2,7 @@ package com.fantasticsource.customparticles.client.factory;
 
 import com.fantasticsource.mctools.particles.PathedParticleSharedRenderData;
 import com.fantasticsource.tools.SpriteMetaData;
+import com.fantasticsource.tools.Tools;
 import net.minecraft.client.renderer.GlStateManager;
 
 import java.util.LinkedHashMap;
@@ -51,6 +52,7 @@ public abstract class CustomParticleFactory
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
     protected int maxRenderDistanceSquared = -1;
+    protected double startingRotationMin, startingRotationMax, spinRate;
 
 
     public void useBlockLight(boolean useBlockLight)
@@ -83,6 +85,18 @@ public abstract class CustomParticleFactory
     public void setMaxRenderDistance(int maxRenderDistance)
     {
         maxRenderDistanceSquared = maxRenderDistance >= (Integer.MAX_VALUE >> 1) ? Integer.MAX_VALUE : maxRenderDistance << 1;
+    }
+
+
+    public void setStartingAngle(double minDegrees, double maxDegrees)
+    {
+        startingRotationMin = -Tools.degtorad(minDegrees);
+        startingRotationMax = -Tools.degtorad(maxDegrees);
+    }
+
+    public void setMaxSpinRate(double spinRate)
+    {
+        this.spinRate = Tools.degtorad(Math.abs(spinRate));
     }
 
 

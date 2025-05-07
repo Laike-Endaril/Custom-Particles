@@ -26,6 +26,10 @@ public class FactoryRegistry extends FileWordParser
                 useFoliageColor(args);
                 break;
 
+            case "startingangle":
+                startingAngle(args);
+                break;
+
             case "":
                 break;
 
@@ -73,5 +77,18 @@ public class FactoryRegistry extends FileWordParser
         }
 
         currentFactory.useFoliageColor = Boolean.parseBoolean(args.get(0));
+    }
+
+    public void startingAngle(ArrayList<String> args)
+    {
+        if (args.size() > 2)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'startingAngle' function only takes 1 or 2 arguments!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        if (args.size() == 1) currentFactory.setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(0)));
     }
 }

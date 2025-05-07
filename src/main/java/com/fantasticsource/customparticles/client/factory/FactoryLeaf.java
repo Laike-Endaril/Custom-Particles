@@ -3,7 +3,6 @@ package com.fantasticsource.customparticles.client.factory;
 import com.fantasticsource.mctools.particles.PathedParticle;
 import com.fantasticsource.mctools.particles.PathedParticleFactory;
 import com.fantasticsource.tools.SpriteMetaData;
-import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.component.path.CPath;
 import com.fantasticsource.tools.component.path.CPathAccelerateToTerminalVel;
 import com.fantasticsource.tools.component.path.CPathConstant;
@@ -15,7 +14,6 @@ import static com.fantasticsource.customparticles.CustomParticles.MODID;
 public class FactoryLeaf extends CustomParticleFactory
 {
     public PathedParticleFactory fallingLeafFactory, groundLeafFactory;
-    protected double startingRotationMin, startingRotationMax, spinRate;
     public int leafFadeTicks;
     public CPath
             pathFall = new CPathAccelerateToTerminalVel(1000, 0, 0, 0),
@@ -85,17 +83,6 @@ public class FactoryLeaf extends CustomParticleFactory
         };
     }
 
-
-    public void setStartingAngle(double minDegrees, double maxDegrees)
-    {
-        startingRotationMin = -Tools.degtorad(minDegrees);
-        startingRotationMax = -Tools.degtorad(maxDegrees);
-    }
-
-    public void setMaxSpinRate(double spinRate)
-    {
-        this.spinRate = Tools.degtorad(Math.abs(spinRate));
-    }
 
     public void setOnGroundFadeTicks(int leafFadeTicks)
     {
