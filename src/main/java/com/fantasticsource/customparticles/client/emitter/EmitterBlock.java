@@ -62,23 +62,39 @@ public class EmitterBlock extends CustomParticleEmitter
                         break;
 
                     case NORTH:
-                        factory.create(x + Tools.random(1d), y + Tools.random(1d), z - 0.01);
-                        spawned = true;
+                        adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).north());
+                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        {
+                            factory.create(x + Tools.random(1d), y + Tools.random(1d), z - 0.01);
+                            spawned = true;
+                        }
                         break;
 
                     case SOUTH:
-                        factory.create(x + Tools.random(1d), y + Tools.random(1d), z + 1.01);
-                        spawned = true;
+                        adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).south());
+                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        {
+                            factory.create(x + Tools.random(1d), y + Tools.random(1d), z + 1.01);
+                            spawned = true;
+                        }
                         break;
 
                     case WEST:
-                        factory.create(x - 0.01, y + Tools.random(1d), z + Tools.random(1d));
-                        spawned = true;
+                        adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).west());
+                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        {
+                            factory.create(x - 0.01, y + Tools.random(1d), z + Tools.random(1d));
+                            spawned = true;
+                        }
                         break;
 
                     case EAST:
-                        factory.create(x + 1.01, y + Tools.random(1d), z + Tools.random(1d));
-                        spawned = true;
+                        adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).east());
+                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        {
+                            factory.create(x + 1.01, y + Tools.random(1d), z + Tools.random(1d));
+                            spawned = true;
+                        }
                         break;
 
                     case INSIDE:
