@@ -73,10 +73,7 @@ public class EmitterRegistry extends FileWordParser
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter modes!");
 
-        for (String arg : args)
-        {
-            currentEmitter.addOffsetModes(CustomParticleEmitter.OffsetMode.valueOf(arg.toUpperCase()));
-        }
+        for (String arg : args) currentEmitter.addOffsetModes(CustomParticleEmitter.OffsetMode.valueOf(arg.toUpperCase()));
     }
 
 
@@ -84,9 +81,6 @@ public class EmitterRegistry extends FileWordParser
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter factories!");
 
-        for (String arg : args)
-        {
-            currentEmitter.addFactory(FactoryRegistry.FACTORIES.get(arg));
-        }
+        for (String arg : args) currentEmitter.addFactory(FactoryRegistry.FACTORIES.get(arg));
     }
 }

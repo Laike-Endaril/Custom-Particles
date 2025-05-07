@@ -44,6 +44,10 @@ public class FactoryRegistry extends FileWordParser
                 terminalVelocityDelayMult(args);
                 break;
 
+            case "useBlockLight":
+                useBlockLight(args);
+                break;
+
 
             case "":
                 break;
@@ -135,7 +139,6 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-
         ((FactoryLeaf) currentFactory).setTerminalVelocityMultiplier(Double.parseDouble(args.get(0)));
     }
 
@@ -151,7 +154,21 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-
         ((FactoryLeaf) currentFactory).setTerminalVelocityDelayMultiplier(Double.parseDouble(args.get(0)));
+    }
+
+    public void useBlockLight(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for useBlockLight!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'useBlockLight' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        currentFactory.useBlockLight(Boolean.parseBoolean(args.get(0)));
     }
 }
