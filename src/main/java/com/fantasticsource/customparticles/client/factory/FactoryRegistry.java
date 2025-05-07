@@ -58,6 +58,11 @@ public class FactoryRegistry extends FileWordParser
                 blendDestinationFactor(args);
                 break;
 
+            case "tex":
+            case "texture":
+                texture(args);
+                break;
+
 
             case "":
                 break;
@@ -210,5 +215,20 @@ public class FactoryRegistry extends FileWordParser
         }
 
         currentFactory.setBlendDestinationFactor(args.get(0));
+    }
+
+    public void texture(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for texture!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'texture' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        currentFactory.setTexture(args.get(0));
     }
 }
