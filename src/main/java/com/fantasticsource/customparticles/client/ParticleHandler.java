@@ -1,5 +1,6 @@
 package com.fantasticsource.customparticles.client;
 
+import com.fantasticsource.customparticles.CustomParticles;
 import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
 import com.fantasticsource.customparticles.client.emitter.EmitterBlock;
 import com.fantasticsource.customparticles.client.emitter.EmitterRegistry;
@@ -16,6 +17,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,6 +39,11 @@ public class ParticleHandler
 
 
     public static boolean initialized = false;
+
+    static
+    {
+        generateInstructionsFile();
+    }
 
 
     @SideOnly(Side.CLIENT)
@@ -113,6 +122,32 @@ public class ParticleHandler
                     }
                 }
             }
+        }
+    }
+
+
+    public static void generateInstructionsFile()
+    {
+        File file = new File(MCTools.getConfigDir() + MODID + File.separator + "INSTRUCTIONS.txt");
+        while (!file.exists()) file.mkdirs();
+        while (file.exists()) file.delete();
+
+
+        try
+        {
+            InputStream in = Tools.getJarResourceStream(CustomParticles.class, "assets/" + MODID + "/INSTRUCTIONS.txt");
+            FileOutputStream out = new FileOutputStream(file);
+
+            byte[] buf = new byte[8192];
+            int length;
+            while ((length = in.read(buf)) != -1) out.write(buf, 0, length);
+
+            in.close();
+            out.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
         }
     }
 }
