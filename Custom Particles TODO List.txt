@@ -1,8 +1,3 @@
-Fix jitter on particle animation
-Integer division?
-Change time values to doubles?
-Call nanos instead of millis?
-
 Make logo and release (beta for starters)
 
 Add "wind" function with minimum and maximum multipliers for how much it's affected
