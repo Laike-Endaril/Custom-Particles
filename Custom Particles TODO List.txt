@@ -3,8 +3,6 @@ Start with just rotation paths and motion paths
 Make CustomParticleFactory non-abstract, and put all applicable initialization in its constructor, then call that constructor from subclasses OR...
 ...if that doesn't work out, add an init method and call that from subclasses' constructors and the base class's constructor
 
-Prevent any file from creating more than one of its type of object, since it would overwrite the previous with the new one (based on filename)
-
 Make logo and release
 
 Make block emitters use the sides of the block's bounding boxes, and only check for space if they need to (if the face is touching an adjacent blockspace)

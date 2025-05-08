@@ -11,77 +11,84 @@ public class FactoryRegistry extends FileWordParser
 {
     public static final LinkedHashMap<String, CustomParticleFactory> FACTORIES = new LinkedHashMap<>();
 
-    protected CustomParticleFactory currentFactory = null;
-
 
     @Override
     public void handleFunction(String function, ArrayList<String> args)
     {
-        switch (function.toLowerCase())
+        if (function.equals("template"))
         {
-            case "template":
-                template(args);
-                break;
+            if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
+            template(args);
+        }
+        else
+        {
+            if (currentObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");
+            switch (function)
+            {
+                case "template":
+                    template(args);
+                    break;
 
-            case "usefoliagecolor":
-                useFoliageColor(args);
-                break;
+                case "usefoliagecolor":
+                    useFoliageColor(args);
+                    break;
 
-            case "startingangle":
-                startingAngle(args);
-                break;
+                case "startingangle":
+                    startingAngle(args);
+                    break;
 
-            case "spinrate":
-                spinRate(args);
-                break;
+                case "spinrate":
+                    spinRate(args);
+                    break;
 
-            case "terminalvelocitymultiplier":
-            case "terminalvelocitymult":
-                terminalVelocityMult(args);
-                break;
+                case "terminalvelocitymultiplier":
+                case "terminalvelocitymult":
+                    terminalVelocityMult(args);
+                    break;
 
-            case "terminalvelocitydelaymultiplier":
-            case "terminalvelocitydelaymult":
-                terminalVelocityDelayMult(args);
-                break;
+                case "terminalvelocitydelaymultiplier":
+                case "terminalvelocitydelaymult":
+                    terminalVelocityDelayMult(args);
+                    break;
 
-            case "useblocklight":
-                useBlockLight(args);
-                break;
+                case "useblocklight":
+                    useBlockLight(args);
+                    break;
 
-            case "blendsrcfactor":
-            case "blendsourcefactor":
-                blendSourceFactor(args);
-                break;
+                case "blendsrcfactor":
+                case "blendsourcefactor":
+                    blendSourceFactor(args);
+                    break;
 
-            case "blenddstfactor":
-            case "blenddestinationfactor":
-                blendDestinationFactor(args);
-                break;
+                case "blenddstfactor":
+                case "blenddestinationfactor":
+                    blendDestinationFactor(args);
+                    break;
 
-            case "tex":
-            case "texture":
-                texture(args);
-                break;
+                case "tex":
+                case "texture":
+                    texture(args);
+                    break;
 
-            case "culldistance":
-            case "cullingdistance":
-                cullingDistance(args);
-                break;
+                case "culldistance":
+                case "cullingdistance":
+                    cullingDistance(args);
+                    break;
 
-            case "spritemeta":
-            case "spritemetadata":
-                //Needs to be applied after texture function in some cases to work correctly
-                ArrayList<String> args2 = new ArrayList<>(args);
-                delayedFunctions.add(() -> spriteMetaData(args2));
-                break;
+                case "spritemeta":
+                case "spritemetadata":
+                    //Needs to be applied after texture function in some cases to work correctly
+                    ArrayList<String> args2 = new ArrayList<>(args);
+                    delayedFunctions.add(() -> spriteMetaData(args2));
+                    break;
 
 
-            case "":
-                break;
+                case "":
+                    break;
 
-            default:
-                throw new IllegalArgumentException("Invalid function: " + function);
+                default:
+                    throw new IllegalArgumentException("Invalid function: " + function);
+            }
         }
     }
 
@@ -102,8 +109,8 @@ public class FactoryRegistry extends FileWordParser
         {
             case "leaf":
             case "leaves":
-                currentFactory = new FactoryLeaf();
-                FACTORIES.put(currentObjectName, currentFactory);
+                currentObject = new FactoryLeaf();
+                FACTORIES.put(currentObjectName, (CustomParticleFactory) currentObject);
                 break;
 
             default:
@@ -123,7 +130,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        currentFactory.useFoliageColor = Boolean.parseBoolean(args.get(0));
+        ((CustomParticleFactory) currentObject).useFoliageColor = Boolean.parseBoolean(args.get(0));
     }
 
     public void startingAngle(ArrayList<String> args)
@@ -136,8 +143,8 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        if (args.size() == 1) currentFactory.setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(0)));
-        else currentFactory.setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(1)));
+        if (args.size() == 1) ((CustomParticleFactory) currentObject).setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(0)));
+        else ((CustomParticleFactory) currentObject).setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(1)));
     }
 
     public void spinRate(ArrayList<String> args)
@@ -152,7 +159,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        currentFactory.setMaxSpinRate(Double.parseDouble(args.get(0)));
+        ((CustomParticleFactory) currentObject).setMaxSpinRate(Double.parseDouble(args.get(0)));
     }
 
     public void terminalVelocityMult(ArrayList<String> args)
@@ -167,7 +174,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((FactoryLeaf) currentFactory).setTerminalVelocityMultiplier(Double.parseDouble(args.get(0)));
+        ((FactoryLeaf) currentObject).setTerminalVelocityMultiplier(Double.parseDouble(args.get(0)));
     }
 
     public void terminalVelocityDelayMult(ArrayList<String> args)
@@ -182,7 +189,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((FactoryLeaf) currentFactory).setTerminalVelocityDelayMultiplier(Double.parseDouble(args.get(0)));
+        ((FactoryLeaf) currentObject).setTerminalVelocityDelayMultiplier(Double.parseDouble(args.get(0)));
     }
 
     public void useBlockLight(ArrayList<String> args)
@@ -197,7 +204,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        currentFactory.useBlockLight(Boolean.parseBoolean(args.get(0)));
+        ((CustomParticleFactory) currentObject).useBlockLight(Boolean.parseBoolean(args.get(0)));
     }
 
     public void blendSourceFactor(ArrayList<String> args)
@@ -212,7 +219,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        currentFactory.setBlendSourceFactor(args.get(0));
+        ((CustomParticleFactory) currentObject).setBlendSourceFactor(args.get(0));
     }
 
     public void blendDestinationFactor(ArrayList<String> args)
@@ -227,7 +234,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        currentFactory.setBlendDestinationFactor(args.get(0));
+        ((CustomParticleFactory) currentObject).setBlendDestinationFactor(args.get(0));
     }
 
     public void texture(ArrayList<String> args)
@@ -242,8 +249,8 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        currentFactory.spriteMetaData = null;
-        currentFactory.setTexture(args.get(0));
+        ((CustomParticleFactory) currentObject).spriteMetaData = null;
+        ((CustomParticleFactory) currentObject).setTexture(args.get(0));
     }
 
     public void cullingDistance(ArrayList<String> args)
@@ -258,7 +265,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        currentFactory.setCullingDistance(Integer.parseInt(args.get(0)));
+        ((CustomParticleFactory) currentObject).setCullingDistance(Integer.parseInt(args.get(0)));
     }
 
     public void spriteMetaData(ArrayList<String> args)
@@ -269,11 +276,11 @@ public class FactoryRegistry extends FileWordParser
         {
             int[] pxVals = new int[args.size() - 2];
             for (int i = 0; i < pxVals.length; i++) pxVals[i] = Integer.parseInt(args.get(i + 2));
-            currentFactory.spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), pxVals);
+            ((CustomParticleFactory) currentObject).spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), pxVals);
         }
         catch (NumberFormatException e)
         {
-            currentFactory.spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), Integer.parseInt(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Integer.parseInt(args.get(5)), Boolean.parseBoolean(args.get(6)), Integer.parseInt(args.get(7)));
+            ((CustomParticleFactory) currentObject).spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), Integer.parseInt(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Integer.parseInt(args.get(5)), Boolean.parseBoolean(args.get(6)), Integer.parseInt(args.get(7)));
         }
     }
 }

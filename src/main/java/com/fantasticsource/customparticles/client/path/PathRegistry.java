@@ -12,22 +12,22 @@ public class PathRegistry extends FileWordParser
 {
     public static final LinkedHashMap<String, CPath> PATHS = new LinkedHashMap<>();
 
-    protected CPath currentPath = null;
-
 
     @Override
     public void handleFunction(String function, ArrayList<String> args)
     {
-        switch (function.toLowerCase())
+        switch (function)
         {
             case "pos":
             case "position":
             case "constant":
+                if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
                 constant(args);
                 break;
 
             case "speed":
             case "linear":
+                if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
                 linear(args);
                 break;
 
@@ -48,8 +48,8 @@ public class PathRegistry extends FileWordParser
 
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
-        currentPath = new CPathConstant(doubles);
-        PATHS.put(currentObjectName, currentPath);
+        currentObject = new CPathConstant(doubles);
+        PATHS.put(currentObjectName, (CPath) currentObject);
     }
 
     public void linear(ArrayList<String> args)
@@ -59,7 +59,7 @@ public class PathRegistry extends FileWordParser
 
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
-        currentPath = new CPathLinear(doubles);
-        PATHS.put(currentObjectName, currentPath);
+        currentObject = new CPathLinear(doubles);
+        PATHS.put(currentObjectName, (CPath) currentObject);
     }
 }

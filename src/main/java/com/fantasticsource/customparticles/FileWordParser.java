@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public abstract class FileWordParser
 {
     protected String currentObjectName;
+    protected Object currentObject = null;
     protected ArrayList<Runnable> delayedFunctions = new ArrayList<>();
 
     public void tryLoad(File file)
@@ -49,6 +50,8 @@ public abstract class FileWordParser
                     else args.add(word);
                 }
 
+
+                function = function.toLowerCase();
                 handleFunction(function, args);
 
 
@@ -65,6 +68,7 @@ public abstract class FileWordParser
 
         for (Runnable runnable : delayedFunctions) runnable.run();
         delayedFunctions.clear();
+        currentObject = null;
     }
 
 
