@@ -21,13 +21,14 @@ public class PathRegistry extends FileWordParser
             case "pos":
             case "position":
             case "constant":
-                if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
+                if (mainObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 constant(args);
                 break;
 
             case "speed":
+            case "rate":
             case "linear":
-                if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
+                if (mainObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 linear(args);
                 break;
 
@@ -48,8 +49,8 @@ public class PathRegistry extends FileWordParser
 
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
-        currentObject = new CPathConstant(doubles);
-        PATHS.put(currentObjectName, (CPath) currentObject);
+        mainObject = new CPathConstant(doubles);
+        PATHS.put(currentObjectName, (CPath) mainObject);
     }
 
     public void linear(ArrayList<String> args)
@@ -59,7 +60,7 @@ public class PathRegistry extends FileWordParser
 
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
-        currentObject = new CPathLinear(doubles);
-        PATHS.put(currentObjectName, (CPath) currentObject);
+        mainObject = new CPathLinear(doubles);
+        PATHS.put(currentObjectName, (CPath) mainObject);
     }
 }

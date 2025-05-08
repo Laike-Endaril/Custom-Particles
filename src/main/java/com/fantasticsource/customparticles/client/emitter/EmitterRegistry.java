@@ -20,12 +20,12 @@ public class EmitterRegistry extends FileWordParser
     {
         if (function.equals("template"))
         {
-            if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
+            if (mainObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
             template(args);
         }
         else
         {
-            if (currentObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");
+            if (mainObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");
             switch (function)
             {
                 case "mode":
@@ -90,8 +90,8 @@ public class EmitterRegistry extends FileWordParser
         {
             case "block":
             case "blocks":
-                currentObject = new EmitterBlock(RegistryRegexBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)));
-                EMITTERS.put(currentObjectName, (CustomParticleEmitter) currentObject);
+                mainObject = new EmitterBlock(RegistryRegexBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)));
+                EMITTERS.put(currentObjectName, (CustomParticleEmitter) mainObject);
                 break;
 
             default:
@@ -103,28 +103,28 @@ public class EmitterRegistry extends FileWordParser
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter modes!");
 
-        for (String arg : args) ((CustomParticleEmitter) currentObject).addOffsetModes(CustomParticleEmitter.OffsetMode.valueOf(arg.toUpperCase()));
+        for (String arg : args) ((CustomParticleEmitter) mainObject).addOffsetModes(CustomParticleEmitter.OffsetMode.valueOf(arg.toUpperCase()));
     }
 
     public void factories(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter factories!");
 
-        for (String arg : args) ((CustomParticleEmitter) currentObject).addFactory(FactoryRegistry.FACTORIES.get(arg));
+        for (String arg : args) ((CustomParticleEmitter) mainObject).addFactory(FactoryRegistry.FACTORIES.get(arg));
     }
 
     public void requirements(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter requirements!");
 
-        for (String arg : args) ((CustomParticleEmitter) currentObject).addRequirements(CustomParticleEmitter.Requirement.valueOf(arg.toUpperCase()));
+        for (String arg : args) ((CustomParticleEmitter) mainObject).addRequirements(CustomParticleEmitter.Requirement.valueOf(arg.toUpperCase()));
     }
 
     public void dimensions(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter dimensions!");
 
-        for (String arg : args) ((CustomParticleEmitter) currentObject).dimensions.add(Integer.parseInt(arg));
+        for (String arg : args) ((CustomParticleEmitter) mainObject).dimensions.add(Integer.parseInt(arg));
     }
 
     public void dimensionsAreWhitelist(ArrayList<String> args)
@@ -139,14 +139,14 @@ public class EmitterRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleEmitter) currentObject).dimensionsAreWhitelist = Boolean.parseBoolean(args.get(0));
+        ((CustomParticleEmitter) mainObject).dimensionsAreWhitelist = Boolean.parseBoolean(args.get(0));
     }
 
     public void biomes(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("No arguments specified for emitter biomes!");
 
-        for (String arg : args) ((CustomParticleEmitter) currentObject).biomes.add(ForgeRegistries.BIOMES.getValue(new ResourceLocation(arg)));
+        for (String arg : args) ((CustomParticleEmitter) mainObject).biomes.add(ForgeRegistries.BIOMES.getValue(new ResourceLocation(arg)));
     }
 
     public void biomesAreWhitelist(ArrayList<String> args)
@@ -161,6 +161,6 @@ public class EmitterRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleEmitter) currentObject).biomesAreWhitelist = Boolean.parseBoolean(args.get(0));
+        ((CustomParticleEmitter) mainObject).biomesAreWhitelist = Boolean.parseBoolean(args.get(0));
     }
 }
