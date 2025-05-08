@@ -1,0 +1,27 @@
+======================================================================================================================================================================
+========================================================================== WARNING! ==================================================================================
+======================================================================================================================================================================
+
+
+IF YOU HAVEN'T GONE THROUGH THE TUTORIAL OR MESSED WITH THE NORMAL SPECIFICATIONS YET, DO THOSE FIRST!!!
+
+(See TUTORIAL.txt and Specifications.txt)
+
+
+
+
+
+======================================================================================================================================================================
+======================================================================== PATH FUNCTIONS ==============================================================================
+======================================================================================================================================================================
+
+
+
+constant / position / pos
+Defines a constant path, ie a position.  Effectively an N-dimensional point.
+You can technically add as many numbers to it as you want, but most likely only 1 or 3 numbers will get used, depending on what you pass it to.
+
+
+linear
+Defines a linear path, ie constant speed.  Effectively an N-dimensional point.
+You can technically add as many numbers to it as you want, but most likely only 1 or 3 numbers will get used, depending on what you pass it to.

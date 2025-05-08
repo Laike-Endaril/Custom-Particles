@@ -1,0 +1,65 @@
+package com.fantasticsource.customparticles.client.path;
+
+import com.fantasticsource.customparticles.FileWordParser;
+import com.fantasticsource.tools.component.path.CPath;
+import com.fantasticsource.tools.component.path.CPathConstant;
+import com.fantasticsource.tools.component.path.CPathLinear;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+
+public class PathRegistry extends FileWordParser
+{
+    public static final LinkedHashMap<String, CPath> PATHS = new LinkedHashMap<>();
+
+    protected CPath currentPath = null;
+
+
+    @Override
+    public void handleFunction(String function, ArrayList<String> args)
+    {
+        switch (function.toLowerCase())
+        {
+            case "pos":
+            case "position":
+            case "constant":
+                constant(args);
+                break;
+
+            case "speed":
+            case "linear":
+                linear(args);
+                break;
+
+
+            case "":
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid function: " + function);
+        }
+    }
+
+
+    public void constant(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for path!");
+
+
+        double[] doubles = new double[args.size()];
+        for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
+        currentPath = new CPathConstant(doubles);
+        PATHS.put(currentObjectName, currentPath);
+    }
+
+    public void linear(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for path!");
+
+
+        double[] doubles = new double[args.size()];
+        for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
+        currentPath = new CPathLinear(doubles);
+        PATHS.put(currentObjectName, currentPath);
+    }
+}

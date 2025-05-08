@@ -1,12 +1,19 @@
-Make logo and release (beta for starters)
+Add support for paths
+Start with just rotation paths and motion paths
+Make CustomParticleFactory non-abstract, and put all applicable initialization in its constructor, then call that constructor from subclasses OR...
+...if that doesn't work out, add an init method and call that from subclasses' constructors and the base class's constructor
 
-Add "wind" function with minimum and maximum multipliers for how much it's affected
-Apply wind as a global system
+Prevent any file from creating more than one of its type of object, since it would overwrite the previous with the new one (based on filename)
+
+Make logo and release
 
 Make block emitters use the sides of the block's bounding boxes, and only check for space if they need to (if the face is touching an adjacent blockspace)
-
-Add support for paths and full-custom (raw) particle factory definitions
 
 Add command to reload settings during runtime, or do it automatically via file name / size detection
 
 Add filename, line number, line printout for parsing errors
+
+
+
+Make Winds of Time mod (wind mechanics API) and hook into it
+Add wind multipliers for particles (random between min and max)

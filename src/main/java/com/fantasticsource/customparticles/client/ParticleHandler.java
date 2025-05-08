@@ -5,6 +5,7 @@ import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
 import com.fantasticsource.customparticles.client.emitter.EmitterBlock;
 import com.fantasticsource.customparticles.client.emitter.EmitterRegistry;
 import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
+import com.fantasticsource.customparticles.client.path.PathRegistry;
 import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.tools.Tools;
 import net.minecraft.client.Minecraft;
@@ -30,6 +31,7 @@ import static com.fantasticsource.customparticles.CustomParticles.MODID;
 public class ParticleHandler
 {
     public static final File
+            PATHS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "paths"),
             FACTORIES_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "factories"),
             EMITTERS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "emitters");
 
@@ -56,6 +58,9 @@ public class ParticleHandler
 
         if (!initialized)
         {
+            PATHS_DIR.mkdirs();
+            new PathRegistry().tryLoad(PATHS_DIR);
+
             FACTORIES_DIR.mkdirs();
             new FactoryRegistry().tryLoad(FACTORIES_DIR);
 
@@ -128,7 +133,7 @@ public class ParticleHandler
     public static void generateInstructionsFile()
     {
         File file;
-        for (String filename : new String[]{"TUTORIAL.txt", "Specifications.txt"})
+        for (String filename : new String[]{"TUTORIAL.txt", "Specifications.txt", "SpecificationsAdvanced.txt"})
         {
             file = new File(MCTools.getConfigDir() + MODID + File.separator + filename);
             while (!file.exists()) file.mkdirs();
