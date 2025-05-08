@@ -17,12 +17,12 @@ public class FactoryRegistry extends FileWordParser
     {
         if (function.equals("template"))
         {
-            if (mainObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
+            if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
             template(args);
         }
         else
         {
-            if (mainObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");
+            if (currentObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");
             switch (function)
             {
                 case "template":
@@ -109,8 +109,8 @@ public class FactoryRegistry extends FileWordParser
         {
             case "leaf":
             case "leaves":
-                mainObject = new FactoryLeaf();
-                FACTORIES.put(currentObjectName, (CustomParticleFactory) mainObject);
+                currentObject = new FactoryLeaf();
+                FACTORIES.put(currentObjectName, (CustomParticleFactory) currentObject);
                 break;
 
             default:
@@ -130,7 +130,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) mainObject).useFoliageColor = Boolean.parseBoolean(args.get(0));
+        ((CustomParticleFactory) currentObject).useFoliageColor = Boolean.parseBoolean(args.get(0));
     }
 
     public void startingAngle(ArrayList<String> args)
@@ -143,8 +143,8 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        if (args.size() == 1) ((CustomParticleFactory) mainObject).setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(0)));
-        else ((CustomParticleFactory) mainObject).setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(1)));
+        if (args.size() == 1) ((CustomParticleFactory) currentObject).setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(0)));
+        else ((CustomParticleFactory) currentObject).setStartingAngle(Double.parseDouble(args.get(0)), Double.parseDouble(args.get(1)));
     }
 
     public void spinRate(ArrayList<String> args)
@@ -159,7 +159,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) mainObject).setMaxSpinRate(Double.parseDouble(args.get(0)));
+        ((CustomParticleFactory) currentObject).setMaxSpinRate(Double.parseDouble(args.get(0)));
     }
 
     public void terminalVelocityMult(ArrayList<String> args)
@@ -174,7 +174,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((FactoryLeaf) mainObject).setTerminalVelocityMultiplier(Double.parseDouble(args.get(0)));
+        ((FactoryLeaf) currentObject).setTerminalVelocityMultiplier(Double.parseDouble(args.get(0)));
     }
 
     public void terminalVelocityDelayMult(ArrayList<String> args)
@@ -189,7 +189,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((FactoryLeaf) mainObject).setTerminalVelocityDelayMultiplier(Double.parseDouble(args.get(0)));
+        ((FactoryLeaf) currentObject).setTerminalVelocityDelayMultiplier(Double.parseDouble(args.get(0)));
     }
 
     public void useBlockLight(ArrayList<String> args)
@@ -204,7 +204,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) mainObject).useBlockLight(Boolean.parseBoolean(args.get(0)));
+        ((CustomParticleFactory) currentObject).useBlockLight(Boolean.parseBoolean(args.get(0)));
     }
 
     public void blendSourceFactor(ArrayList<String> args)
@@ -219,7 +219,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) mainObject).setBlendSourceFactor(args.get(0));
+        ((CustomParticleFactory) currentObject).setBlendSourceFactor(args.get(0));
     }
 
     public void blendDestinationFactor(ArrayList<String> args)
@@ -234,7 +234,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) mainObject).setBlendDestinationFactor(args.get(0));
+        ((CustomParticleFactory) currentObject).setBlendDestinationFactor(args.get(0));
     }
 
     public void texture(ArrayList<String> args)
@@ -249,8 +249,8 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) mainObject).spriteMetaData = null;
-        ((CustomParticleFactory) mainObject).setTexture(args.get(0));
+        ((CustomParticleFactory) currentObject).spriteMetaData = null;
+        ((CustomParticleFactory) currentObject).setTexture(args.get(0));
     }
 
     public void cullingDistance(ArrayList<String> args)
@@ -265,7 +265,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) mainObject).setCullingDistance(Integer.parseInt(args.get(0)));
+        ((CustomParticleFactory) currentObject).setCullingDistance(Integer.parseInt(args.get(0)));
     }
 
     public void spriteMetaData(ArrayList<String> args)
@@ -276,11 +276,11 @@ public class FactoryRegistry extends FileWordParser
         {
             int[] pxVals = new int[args.size() - 2];
             for (int i = 0; i < pxVals.length; i++) pxVals[i] = Integer.parseInt(args.get(i + 2));
-            ((CustomParticleFactory) mainObject).spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), pxVals);
+            ((CustomParticleFactory) currentObject).spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), pxVals);
         }
         catch (NumberFormatException e)
         {
-            ((CustomParticleFactory) mainObject).spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), Integer.parseInt(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Integer.parseInt(args.get(5)), Boolean.parseBoolean(args.get(6)), Integer.parseInt(args.get(7)));
+            ((CustomParticleFactory) currentObject).spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), Integer.parseInt(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Integer.parseInt(args.get(5)), Boolean.parseBoolean(args.get(6)), Integer.parseInt(args.get(7)));
         }
     }
 }

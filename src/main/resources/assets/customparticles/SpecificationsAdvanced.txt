@@ -25,3 +25,6 @@ You can technically add as many numbers to it as you want, but most likely only 
 linear / speed / rate
 Defines a linear path, ie speed or rate.
 You can technically add as many numbers to it as you want, but most likely only 1 or 3 numbers will get used, depending on what you pass it to.
+
+
+add

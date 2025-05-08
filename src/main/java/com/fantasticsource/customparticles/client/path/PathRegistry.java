@@ -7,10 +7,12 @@ import com.fantasticsource.tools.component.path.CPathLinear;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Stack;
 
 public class PathRegistry extends FileWordParser
 {
     public static final LinkedHashMap<String, CPath> PATHS = new LinkedHashMap<>();
+    public static final Stack<CPath> PATH_STACK = new Stack<>();
 
 
     @Override
@@ -21,14 +23,14 @@ public class PathRegistry extends FileWordParser
             case "pos":
             case "position":
             case "constant":
-                if (mainObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
+                if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 constant(args);
                 break;
 
             case "speed":
             case "rate":
             case "linear":
-                if (mainObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
+                if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 linear(args);
                 break;
 
@@ -49,8 +51,9 @@ public class PathRegistry extends FileWordParser
 
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
-        mainObject = new CPathConstant(doubles);
-        PATHS.put(currentObjectName, (CPath) mainObject);
+        currentObject = new CPathConstant(doubles);
+        PATHS.put(currentObjectName, (CPath) currentObject);
+        PATH_STACK.push((CPath) currentObject);
     }
 
     public void linear(ArrayList<String> args)
@@ -60,7 +63,8 @@ public class PathRegistry extends FileWordParser
 
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
-        mainObject = new CPathLinear(doubles);
-        PATHS.put(currentObjectName, (CPath) mainObject);
+        currentObject = new CPathLinear(doubles);
+        PATHS.put(currentObjectName, (CPath) currentObject);
+        PATH_STACK.push((CPath) currentObject);
     }
 }

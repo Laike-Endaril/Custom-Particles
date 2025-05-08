@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public abstract class FileWordParser
 {
     protected String currentObjectName;
-    protected Object mainObject = null;
+    protected Object currentObject = null;
     protected ArrayList<Runnable> delayedFunctions = new ArrayList<>();
 
     public void tryLoad(File file)
@@ -77,7 +77,7 @@ public abstract class FileWordParser
 
         for (Runnable runnable : delayedFunctions) runnable.run();
         delayedFunctions.clear();
-        mainObject = null;
+        currentObject = null;
     }
 
 
