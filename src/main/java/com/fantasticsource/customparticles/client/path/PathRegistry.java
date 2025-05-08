@@ -21,13 +21,13 @@ public class PathRegistry extends FileWordParser
             case "pos":
             case "position":
             case "constant":
-                if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
+                if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 constant(args);
                 break;
 
             case "speed":
             case "linear":
-                if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
+                if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 linear(args);
                 break;
 

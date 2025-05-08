@@ -1,6 +1,7 @@
 package com.fantasticsource.customparticles;
 
 import com.fantasticsource.tools.Tools;
+import net.minecraft.util.text.TextFormatting;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -52,7 +53,15 @@ public abstract class FileWordParser
 
 
                 function = function.toLowerCase();
-                handleFunction(function, args);
+                try
+                {
+                    handleFunction(function, args);
+                }
+                catch (Exception e)
+                {
+                    System.err.println(TextFormatting.RED + "Exception occurred while parsing file: " + file.getAbsolutePath());
+                    throw e;
+                }
 
 
                 line = reader.readLine();
