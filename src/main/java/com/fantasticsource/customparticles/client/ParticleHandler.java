@@ -44,10 +44,6 @@ public class ParticleHandler
 
     static
     {
-        PATHS_DIR.mkdirs();
-        new PathRegistry().tryLoad(PATHS_DIR);
-
-        for (int i = 0; i <= 10; i++) System.out.println(PathRegistry.PATHS.get("test").getRelativePosition(i * 100));
         generateInstructionsFile();
     }
 
@@ -64,8 +60,6 @@ public class ParticleHandler
         {
             PATHS_DIR.mkdirs();
             new PathRegistry().tryLoad(PATHS_DIR);
-
-            for (int i = 0; i <= 10; i++) System.out.println(PathRegistry.PATHS.get("test").getRelativePosition(i * 100));
 
             FACTORIES_DIR.mkdirs();
             new FactoryRegistry().tryLoad(FACTORIES_DIR);
