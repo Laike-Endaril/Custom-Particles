@@ -5,7 +5,6 @@ import com.fantasticsource.mctools.particles.PathedParticleSharedRenderData;
 import com.fantasticsource.tools.SpriteMetaData;
 import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.component.path.CPath;
-import com.fantasticsource.tools.component.path.CPathConstant;
 import net.minecraft.client.renderer.GlStateManager;
 
 import java.util.ArrayList;
@@ -110,19 +109,8 @@ public abstract class CustomParticleFactory
         PathedParticle particle = create(x, y, z);
 
         if (cullDistanceSquared != -1) particle.cullDistanceSquared = cullDistanceSquared;
-
-        if (positionPaths.size() > 0)
-        {
-            particle.positionData.paths.clear();
-            particle.positionData.paths.add(new CPathConstant(x, y, z));
-            particle.positionData.paths.addAll(positionPaths);
-        }
-
-        if (rotationPaths.size() > 0)
-        {
-            particle.rotationData.paths.clear();
-            particle.rotationData.paths.addAll(rotationPaths);
-        }
+        particle.positionData.paths.addAll(positionPaths);
+        particle.rotationData.paths.addAll(rotationPaths);
     }
 
     public abstract PathedParticle create(double x, double y, double z);

@@ -73,8 +73,8 @@ public class FactoryLeaf extends CustomParticleFactory
         fallingLeafFactory = args ->
         {
             PathedParticle particle = new PathedParticle(200, particleRenderData);
-
             particle.positionPath(new CPathConstant((double) args[0], (double) args[1], (Double) args[2]));
+
             particle.positionPath(pathFall);
 
             particle.spriteMetaData = spriteMetaData;
