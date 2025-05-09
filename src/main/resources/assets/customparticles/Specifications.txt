@@ -90,18 +90,6 @@ If the particle spawned at the maximum possible angle, rotate 360* per second in
 
 
 
-terminalVelocityMult / terminalVelocityMultiplier
-terminalVelocityMult 2
-Top speed is twice as fast as the default for the template being used.
-
-
-
-terminalVelocityDelayMult / terminalVelocityDelayMultiplier
-terminalVelocityDelayMult 2
-It takes twice as long to reach top speed compared to the default for the template being used.
-
-
-
 useBlockLight
 true / false
 Whether to use block lighting values (shadow / light when true) or not (fullbright when false).
@@ -156,6 +144,20 @@ If the particle is at least this far away from the player, destroy it (default 3
 
 
 
+terminalVelocityMult / terminalVelocityMultiplier
+terminalVelocityMult 2
+For leaf factories
+Top speed is twice as fast as the default.
+
+
+
+terminalVelocityDelayMult / terminalVelocityDelayMultiplier
+terminalVelocityDelayMult 2
+For leaf factories
+It takes twice as long to reach top speed compared to the default.
+
+
+
 
 
 ======================================================================================================================================================================
@@ -197,8 +199,8 @@ east
 inside
 
 Defines details about how or where particles should spawn.
-For blocks, the directional modes will spawn particles on that side of the block UNLESS OBSTRUCTED.
-For blocks, "inside" will spawn particles INSIDE THAT BLOCK, EVEN IF OBSTRUCTED.
+For block emitters, the directional modes will spawn particles on that side of the block UNLESS OBSTRUCTED.
+For block emitters, "inside" will spawn particles INSIDE THAT BLOCK, EVEN IF OBSTRUCTED.
 
 
 
@@ -208,7 +210,7 @@ fullSolidBlock
 
 Sets additional requirements for the emitter to be able to trigger.
 slimeChunk makes an emitter only spawn particles when inside a slime chunk, and below y=40.
-For blocks, fullSolidBlock makes an emitter only spawn particles if the emitter is attached to a full, solid block (via the block filter).
+For block emitters, fullSolidBlock makes an emitter only spawn particles if the emitter is attached to a full, solid block (via the block filter).
 
 
 

@@ -77,9 +77,6 @@ public class FactoryLeaf extends CustomParticleFactory
 
             particle.positionPath(pathFall);
 
-            particle.spriteMetaData = spriteMetaData;
-            particle.useFoliageColor = useFoliageColor;
-
             double rotationPercent = Math.random();
             double startingRotation = startingRotationMin + rotationPercent * (startingRotationMax - startingRotationMin);
             particle.rotationPath(new CPathConstant(startingRotation));

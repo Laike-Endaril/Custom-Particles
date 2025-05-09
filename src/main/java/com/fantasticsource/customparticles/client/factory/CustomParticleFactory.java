@@ -109,8 +109,13 @@ public abstract class CustomParticleFactory
         PathedParticle particle = create(x, y, z);
 
         if (cullDistanceSquared != -1) particle.cullDistanceSquared = cullDistanceSquared;
+
+        particle.spriteMetaData = spriteMetaData;
+
         particle.positionData.paths.addAll(positionPaths);
         particle.rotationData.paths.addAll(rotationPaths);
+
+        particle.useFoliageColor = useFoliageColor;
     }
 
     public abstract PathedParticle create(double x, double y, double z);
