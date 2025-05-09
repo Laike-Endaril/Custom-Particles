@@ -27,9 +27,9 @@ public class EmitterBlock extends CustomParticleEmitter
 
 
     @Override
-    public boolean clientTick(int x, int y, int z, Object obj)
+    public boolean triggerFactories(int x, int y, int z, Object obj)
     {
-        if (!super.clientTick(x, y, z, obj)) return false;
+        if (!super.triggerFactories(x, y, z, obj)) return false;
 
 
         if (!(obj instanceof IBlockState)) return false;

@@ -79,7 +79,7 @@ public class ParticleHandler
                 if (entry.getKey() == EmitterBlock.class)
                 {
                     BlockPos playerPos = player.getPosition();
-                    int x = playerPos.getX(), y = playerPos.getY(), z = playerPos.getZ(), eyeY = (int) (player.posY + player.eyeHeight);
+                    int x = playerPos.getX(), z = playerPos.getZ(), eyeY = (int) (player.posY + player.eyeHeight);
                     int xx, yy, zz;
                     Object obj;
                     ArrayList<CustomParticleEmitter> list = new ArrayList<>();
@@ -98,7 +98,7 @@ public class ParticleHandler
                         while (list.size() > 0)
                         {
                             emitter = Tools.choose(list);
-                            if (emitter.clientTick(xx, yy, zz, obj))
+                            if (emitter.triggerFactories(xx, yy, zz, obj))
                             {
                                 list.clear();
                                 break;
@@ -116,7 +116,7 @@ public class ParticleHandler
                         while (list.size() > 0)
                         {
                             emitter = Tools.choose(list);
-                            if (emitter.clientTick(xx, yy, zz, obj))
+                            if (emitter.triggerFactories(xx, yy, zz, obj))
                             {
                                 list.clear();
                                 break;
