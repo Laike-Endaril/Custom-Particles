@@ -109,6 +109,8 @@ public abstract class CustomParticleFactory
     {
         PathedParticle particle = create(x, y, z);
 
+        if (cullDistanceSquared != -1) particle.cullDistanceSquared = cullDistanceSquared;
+
         if (positionPaths.size() > 0)
         {
             particle.positionData.paths.clear();
