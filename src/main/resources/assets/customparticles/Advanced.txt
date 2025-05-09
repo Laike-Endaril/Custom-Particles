@@ -101,3 +101,22 @@ Mathematical: 1s * ((1s + 2) * -1s), where s is seconds
 
 add
 mult
+
+
+
+
+
+======================================================================================================================================================================
+================================================================ PATH-BASED FACTORY FUNCTIONS ========================================================================
+======================================================================================================================================================================
+
+
+
+These are functions not for path files, but for factory files.
+These are factory functions that allow you to apply paths to different aspects of the particles the factory will create.
+Unless otherwise noted, for functions in this section which can take multiple paths, all paths given will run simultaneously, and their results will be added together before being applied.
+
+
+
+positionPath / positionPaths <pathname, pathname...>
+Sets one or more paths which will control the motion of the particles.  The paths run simultaneously and their results are added together.

@@ -182,7 +182,7 @@ Regex and oredict can be combined in all ways.
 
 
 
-factory / factories
+factory / factories <factoryname, factoryname...>
 Tells the emitter which factories to use for spawning particles (see TUTORIAL.txt)
 
 

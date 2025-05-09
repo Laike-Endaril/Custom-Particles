@@ -1,6 +1,7 @@
 package com.fantasticsource.customparticles.client.factory;
 
 import com.fantasticsource.customparticles.FileWordParser;
+import com.fantasticsource.customparticles.client.path.PathRegistry;
 import com.fantasticsource.tools.SpriteMetaData;
 
 import java.util.ArrayList;
@@ -82,6 +83,11 @@ public class FactoryRegistry extends FileWordParser
                     delayedFunctions.add(() -> spriteMetaData(args2));
                     break;
 
+
+                case "positionpath":
+                case "positionpaths":
+                    positionPaths(args);
+                    break;
 
                 case "":
                     break;
@@ -282,5 +288,13 @@ public class FactoryRegistry extends FileWordParser
         {
             ((CustomParticleFactory) currentObject).spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), Integer.parseInt(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Integer.parseInt(args.get(5)), Boolean.parseBoolean(args.get(6)), Integer.parseInt(args.get(7)));
         }
+    }
+
+
+    public void positionPaths(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+
+        for (String arg : args) ((CustomParticleFactory) currentObject).positionPaths.add(PathRegistry.PATHS.get(arg));
     }
 }

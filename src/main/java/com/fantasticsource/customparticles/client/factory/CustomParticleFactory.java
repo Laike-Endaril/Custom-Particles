@@ -1,10 +1,14 @@
 package com.fantasticsource.customparticles.client.factory;
 
+import com.fantasticsource.mctools.particles.PathedParticle;
 import com.fantasticsource.mctools.particles.PathedParticleSharedRenderData;
 import com.fantasticsource.tools.SpriteMetaData;
 import com.fantasticsource.tools.Tools;
+import com.fantasticsource.tools.component.path.CPath;
+import com.fantasticsource.tools.component.path.CPathConstant;
 import net.minecraft.client.renderer.GlStateManager;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public abstract class CustomParticleFactory
@@ -49,6 +53,7 @@ public abstract class CustomParticleFactory
 
     public SpriteMetaData spriteMetaData;
     public boolean useFoliageColor = false;
+    public final ArrayList<CPath> positionPaths = new ArrayList<>();
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
     protected int cullDistanceSquared = -1;
@@ -100,5 +105,17 @@ public abstract class CustomParticleFactory
     }
 
 
-    public abstract void create(double x, double y, double z);
+    public final void createInternal(double x, double y, double z)
+    {
+        PathedParticle particle = create(x, y, z);
+
+        if (positionPaths.size() > 0)
+        {
+            particle.positionData.paths.clear();
+            particle.positionData.paths.add(new CPathConstant(x, y, z));
+            particle.positionData.paths.addAll(positionPaths);
+        }
+    }
+
+    public abstract PathedParticle create(double x, double y, double z);
 }

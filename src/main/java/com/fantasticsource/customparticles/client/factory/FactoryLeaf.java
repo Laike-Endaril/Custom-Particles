@@ -7,6 +7,7 @@ import com.fantasticsource.tools.component.path.CPath;
 import com.fantasticsource.tools.component.path.CPathAccelerateToTerminalVel;
 import com.fantasticsource.tools.component.path.CPathConstant;
 import com.fantasticsource.tools.component.path.CPathLinear;
+import com.fantasticsource.tools.datastructures.VectorN;
 import net.minecraft.util.math.Vec3d;
 
 import static com.fantasticsource.customparticles.CustomParticles.MODID;
@@ -44,9 +45,19 @@ public class FactoryLeaf extends CustomParticleFactory
 
             PathedParticle parent = (PathedParticle) args[0];
             Vec3d deathPos = parent.deathPos;
-            double y = parent.deathPos.y;
-            if (parent.getAge() != parent.maxAge) y += 0.01;
-            particle.positionPath(new CPathConstant(deathPos.x, y, deathPos.z));
+            double x = parent.deathPos.x, y = parent.deathPos.y, z = parent.deathPos.z;
+            if (parent.getAge() != parent.maxAge)
+            {
+                VectorN prevPos = parent.getAge() > 0 ? parent.prevPosition(0) : parent.currentPos(0);
+                if (prevPos.values[0] < x) x -= 0.01;
+                else if (prevPos.values[0] > x) x += 0.01;
+                if (prevPos.values[1] < y) y -= 0.01;
+                else if (prevPos.values[1] > y) y += 0.01;
+                if (prevPos.values[2] < z) z -= 0.01;
+                else if (prevPos.values[2] > z) z += 0.01;
+
+            }
+            particle.positionPath(new CPathConstant(x, y, z));
 
             particle.spriteMetaData = spriteMetaData;
             particle.useFoliageColor = useFoliageColor;
@@ -103,8 +114,8 @@ public class FactoryLeaf extends CustomParticleFactory
 
 
     @Override
-    public void create(double x, double y, double z)
+    public PathedParticle create(double x, double y, double z)
     {
-        fallingLeafFactory.create(x, y, z);
+        return fallingLeafFactory.create(x, y, z);
     }
 }

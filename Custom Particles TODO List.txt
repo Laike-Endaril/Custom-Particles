@@ -1,9 +1,8 @@
-Move path parser to library?
+Add errors similar to those in path parser to other 2 parsers (checks for currentObject state and whether it's added to the registry yet)
 
-Make CustomParticleFactory non-abstract, and put all applicable initialization in its constructor, then call that constructor from subclasses OR...
-...if that doesn't work out, add an init method and call that from subclasses' constructors and the base class's constructor
-Apply paths as motion
 Apply paths as rotation
+
+Move path parser to library?
 
 Add "simple" particle factory type
 Add "wisp" particle factory type
