@@ -44,6 +44,10 @@ public class ParticleHandler
 
     static
     {
+        PATHS_DIR.mkdirs();
+        new PathRegistry().tryLoad(PATHS_DIR);
+
+        for (int i = 0; i <= 10; i++) System.out.println(PathRegistry.PATHS.get("test").getRelativePosition(i * 100));
         generateInstructionsFile();
     }
 
@@ -60,6 +64,8 @@ public class ParticleHandler
         {
             PATHS_DIR.mkdirs();
             new PathRegistry().tryLoad(PATHS_DIR);
+
+            for (int i = 0; i <= 10; i++) System.out.println(PathRegistry.PATHS.get("test").getRelativePosition(i * 100));
 
             FACTORIES_DIR.mkdirs();
             new FactoryRegistry().tryLoad(FACTORIES_DIR);
@@ -133,7 +139,7 @@ public class ParticleHandler
     public static void generateInstructionsFile()
     {
         File file;
-        for (String filename : new String[]{"TUTORIAL.txt", "Specifications.txt", "SpecificationsAdvanced.txt"})
+        for (String filename : new String[]{"TUTORIAL.txt", "Specifications.txt", "Advanced.txt"})
         {
             file = new File(MCTools.getConfigDir() + MODID + File.separator + filename);
             while (!file.exists()) file.mkdirs();

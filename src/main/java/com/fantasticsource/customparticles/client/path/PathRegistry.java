@@ -11,8 +11,11 @@ import java.util.Stack;
 
 public class PathRegistry extends FileWordParser
 {
+    //Only allow direct creation of transforming paths; do NOT allow reference to PATHS map from a transformation (avoid circular logic and other complex issues)
     public static final LinkedHashMap<String, CPath> PATHS = new LinkedHashMap<>();
-    public static final Stack<CPath> PATH_STACK = new Stack<>();
+
+    protected final Stack<CPath> stack = new Stack<>();
+    protected CPath mostRecent;
 
 
     @Override
@@ -25,6 +28,7 @@ public class PathRegistry extends FileWordParser
             case "constant":
                 if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 constant(args);
+                if (!PATHS.containsKey(currentObjectName)) PATHS.put(currentObjectName, (CPath) currentObject);
                 break;
 
             case "speed":
@@ -32,6 +36,30 @@ public class PathRegistry extends FileWordParser
             case "linear":
                 if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 linear(args);
+                if (!PATHS.containsKey(currentObjectName)) PATHS.put(currentObjectName, (CPath) currentObject);
+                break;
+
+
+            case "add":
+                if (currentObject == null) throw new IllegalArgumentException("No main path is defined yet!");
+                add(args);
+                break;
+
+            case "multiply":
+            case "mult":
+                if (currentObject == null) throw new IllegalArgumentException("No main path is defined yet!");
+                mult(args);
+                break;
+
+
+            case "{":
+                stack.push((CPath) currentObject);
+                currentObject = mostRecent;
+                break;
+
+            case "}":
+                currentObject = stack.pop();
+                mostRecent = (CPath) currentObject;
                 break;
 
 
@@ -51,9 +79,8 @@ public class PathRegistry extends FileWordParser
 
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
-        currentObject = new CPathConstant(doubles);
-        PATHS.put(currentObjectName, (CPath) currentObject);
-        PATH_STACK.push((CPath) currentObject);
+        mostRecent = new CPathConstant(doubles);
+        currentObject = mostRecent;
     }
 
     public void linear(ArrayList<String> args)
@@ -63,8 +90,37 @@ public class PathRegistry extends FileWordParser
 
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
-        currentObject = new CPathLinear(doubles);
-        PATHS.put(currentObjectName, (CPath) currentObject);
-        PATH_STACK.push((CPath) currentObject);
+        mostRecent = new CPathLinear(doubles);
+        currentObject = mostRecent;
+    }
+
+
+    public void add(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument!");
+
+
+        ((CPath) currentObject).add(transformCurrent(args));
+    }
+
+    public void mult(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument!");
+
+
+        ((CPath) currentObject).mult(transformCurrent(args));
+    }
+
+
+    public CPath transformCurrent(ArrayList<String> args)
+    {
+        CPath oldPath = (CPath) currentObject;
+        currentObject = null;
+
+        handleFunction(args.remove(0), args);
+        CPath result = (CPath) currentObject;
+        currentObject = oldPath;
+
+        return result;
     }
 }

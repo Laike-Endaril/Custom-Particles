@@ -1,7 +1,12 @@
+Move path parser to library?
+
 Make CustomParticleFactory non-abstract, and put all applicable initialization in its constructor, then call that constructor from subclasses OR...
 ...if that doesn't work out, add an init method and call that from subclasses' constructors and the base class's constructor
 Apply paths as motion
 Apply paths as rotation
+
+Add "simple" particle factory type
+Add "wisp" particle factory type
 
 Make logo and release
 
