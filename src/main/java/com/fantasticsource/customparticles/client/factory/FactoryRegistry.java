@@ -29,10 +29,6 @@ public class FactoryRegistry extends FileWordParser
             if (currentObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");
             switch (function)
             {
-                case "template":
-                    template(args);
-                    break;
-
                 case "usefoliagecolor":
                     useFoliageColor(args);
                     break;
