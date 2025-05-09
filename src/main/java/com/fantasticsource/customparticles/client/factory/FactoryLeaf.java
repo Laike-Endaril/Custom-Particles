@@ -45,7 +45,7 @@ public class FactoryLeaf extends CustomParticleFactory
 
             PathedParticle parent = (PathedParticle) args[0];
             Vec3d deathPos = parent.deathPos;
-            double x = parent.deathPos.x, y = parent.deathPos.y, z = parent.deathPos.z;
+            double x = deathPos.x, y = deathPos.y, z = deathPos.z;
             if (parent.getAge() != parent.maxAge)
             {
                 VectorN prevPos = parent.getAge() > 0 ? parent.prevPosition(0) : parent.currentPos(0);

@@ -23,6 +23,9 @@ public class EmitterRegistry extends FileWordParser
             if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
             template(args);
         }
+        else if (function.equals(""))
+        {
+        }
         else
         {
             if (currentObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");

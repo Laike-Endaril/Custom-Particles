@@ -28,7 +28,8 @@ public class PathRegistry extends FileWordParser
             case "constant":
                 if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 constant(args);
-                if (!PATHS.containsKey(currentObjectName)) PATHS.put(currentObjectName, (CPath) currentObject);
+                if (currentObject == null) throw new IllegalArgumentException("Failed to load path: " + currentObjectName);
+                else if (!PATHS.containsKey(currentObjectName)) PATHS.put(currentObjectName, (CPath) currentObject);
                 break;
 
             case "speed":
@@ -36,7 +37,8 @@ public class PathRegistry extends FileWordParser
             case "linear":
                 if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 linear(args);
-                if (!PATHS.containsKey(currentObjectName)) PATHS.put(currentObjectName, (CPath) currentObject);
+                if (currentObject == null) throw new IllegalArgumentException("Failed to load path: " + currentObjectName);
+                else if (!PATHS.containsKey(currentObjectName)) PATHS.put(currentObjectName, (CPath) currentObject);
                 break;
 
 

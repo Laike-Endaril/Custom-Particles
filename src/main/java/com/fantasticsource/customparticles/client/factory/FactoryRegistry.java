@@ -21,6 +21,9 @@ public class FactoryRegistry extends FileWordParser
             if (currentObject != null) throw new IllegalArgumentException("Template function can only be called once per file!");
             template(args);
         }
+        else if (function.equals(""))
+        {
+        }
         else
         {
             if (currentObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");
@@ -88,6 +91,12 @@ public class FactoryRegistry extends FileWordParser
                 case "positionpaths":
                     positionPaths(args);
                     break;
+
+                case "rotationpath":
+                case "rotationpaths":
+                    rotationPaths(args);
+                    break;
+
 
                 case "":
                     break;
@@ -296,5 +305,13 @@ public class FactoryRegistry extends FileWordParser
         if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
 
         for (String arg : args) ((CustomParticleFactory) currentObject).positionPaths.add(PathRegistry.PATHS.get(arg));
+    }
+
+
+    public void rotationPaths(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+
+        for (String arg : args) ((CustomParticleFactory) currentObject).rotationPaths.add(PathRegistry.PATHS.get(arg));
     }
 }
