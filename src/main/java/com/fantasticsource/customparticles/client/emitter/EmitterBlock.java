@@ -39,7 +39,7 @@ public class EmitterBlock extends CustomParticleEmitter
     @Override
     public boolean triggerFactories(int x, int y, int z, Object obj)
     {
-        if (!canTriggerMainChecks(x, y, z, obj)) return false;
+        if (!canTriggerMainChecks(x, y, z)) return false;
 
 
         if (!(obj instanceof IBlockState)) return false;

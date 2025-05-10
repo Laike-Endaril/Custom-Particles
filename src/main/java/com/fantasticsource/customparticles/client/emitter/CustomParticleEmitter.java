@@ -66,7 +66,7 @@ public abstract class CustomParticleEmitter
     }
 
 
-    public final boolean canTriggerMainChecks(int x, int y, int z, Object obj)
+    public final boolean canTriggerMainChecks(int x, int y, int z)
     {
         World world = Minecraft.getMinecraft().world;
         if (world == null) return false;

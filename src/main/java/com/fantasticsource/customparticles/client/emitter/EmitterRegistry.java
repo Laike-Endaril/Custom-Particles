@@ -79,23 +79,42 @@ public class EmitterRegistry extends FileWordParser
 
     public void template(ArrayList<String> args)
     {
-        if (args.size() < 3) throw new IllegalArgumentException("Not enough arguments for emitter template!");
-
-        if (args.size() > 3)
-        {
-            Iterator<String> iterator = args.iterator();
-            String error = "'template' function only takes 3 arguments!  Arguments given: " + iterator.next();
-            while (iterator.hasNext()) error += ", " + iterator.next();
-            throw new IllegalArgumentException(error);
-        }
+        if (args.size() < 2) throw new IllegalArgumentException("Not enough arguments for emitter template!");
 
         switch (args.get(0))
         {
             case "block":
             case "blocks":
+                if (args.size() > 3)
+                {
+                    Iterator<String> iterator = args.iterator();
+                    iterator.next();
+                    String error = "'template " + args.get(0) + "' only takes 2 additional arguments!  Arguments given: " + iterator.next();
+                    while (iterator.hasNext()) error += ", " + iterator.next();
+                    throw new IllegalArgumentException(error);
+                }
+
                 currentObject = new EmitterBlock(RegistryRegexBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)));
                 EMITTERS.put(currentObjectName, (CustomParticleEmitter) currentObject);
                 break;
+
+            case "wallfall":
+            case "wallfaller":
+            case "falldownwall":
+            case "wallrain":
+                if (args.size() > 6)
+                {
+                    Iterator<String> iterator = args.iterator();
+                    iterator.next();
+                    String error = "'template " + args.get(0) + "' only takes 5 additional arguments!  Arguments given: " + iterator.next();
+                    while (iterator.hasNext()) error += ", " + iterator.next();
+                    throw new IllegalArgumentException(error);
+                }
+
+                currentObject = new EmitterWallFall(RegistryRegexBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Double.parseDouble(args.get(5)));
+                EMITTERS.put(currentObjectName, (CustomParticleEmitter) currentObject);
+                break;
+
 
             default:
                 throw new IllegalArgumentException("Invalid template name: " + args.get(0));
