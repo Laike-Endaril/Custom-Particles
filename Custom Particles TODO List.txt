@@ -2,7 +2,6 @@ Make logo and release
 
 Move path parser to library?
 
-Add "simple" particle factory type
 Add "wisp" particle factory type
 
 Make block emitters use the sides of the block's bounding boxes, and only check for space if they need to (if the face is touching an adjacent blockspace)
