@@ -1,3 +1,5 @@
+Rain strength and thunder strength filters (min OR min and max for each)
+
 Make logo and release
 
 Move path parser to library?

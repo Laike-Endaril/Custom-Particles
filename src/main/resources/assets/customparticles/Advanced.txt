@@ -29,6 +29,10 @@ linear / speed / rate
 For each argument, returns a scaled value.  At 0 seconds, returns 0 for all values.  At 1 second, returns the given arguments.  At 2 seconds, returns the given arguments multiplied by 2.
 
 
+randomConstant / randomPosition / randomPos
+Returns a set of random values between 0 and the given arguments.  Will always return the same values for the same calling particle.
+
+
 
 
 
@@ -120,20 +124,25 @@ Unless otherwise noted, for functions in this section which can take multiple pa
 
 
 
-motionPath / motionPaths <pathname, pathname...>
-Sets one or more paths which will control the motion of the particles.
+motionPath / motionPaths pathname, pathname...
+Controls motion.
 
 
-rotationPath / rotationPaths <pathname, pathname...>
-Sets one or more paths which will control the rotation of the particles.
+rotationPath / rotationPaths pathname, pathname...
+Controls rotation.
 Either all paths should be 1D, or all paths should be 3D.
 If they are 1D, then particles always face the player as normal, and rotation is applied to roll.
 If they are 3D, then rotation is absolute 3D rotation (no relation to player camera).
 If paths applied here do not match existing paths in number of dimensions, existing paths will be removed first.
 
 
-rgbPath
-Sets one or more paths which will control the color of the particles over time.
+rgbPath / rgbPaths pathname, pathname...
+Controls color.
 
-alphaPath
-Sets one or more paths which will control the alpha / transparency of the particles over time.
+
+alphaPath / rgbPaths pathname, pathname...
+Controls alpha / transparency.
+
+
+animationPath / animationPaths pathname, pathname...
+Controls animation.

@@ -1,11 +1,7 @@
 package com.fantasticsource.customparticles.client.path;
 
 import com.fantasticsource.customparticles.FileWordParser;
-import com.fantasticsource.tools.Tools;
-import com.fantasticsource.tools.component.path.CPath;
-import com.fantasticsource.tools.component.path.CPathConstant;
-import com.fantasticsource.tools.component.path.CPathLinear;
-import com.fantasticsource.tools.component.path.CPathSinuous;
+import com.fantasticsource.tools.component.path.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -48,6 +44,15 @@ public class PathRegistry extends FileWordParser
             case "sinuous":
                 if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 sinuous(args);
+                if (currentObject == null) throw new IllegalArgumentException("Failed to load path: " + currentObjectName);
+                else if (!PATHS.containsKey(currentObjectName)) PATHS.put(currentObjectName, (CPath) currentObject);
+                break;
+
+            case "randompos":
+            case "randomposition":
+            case "randomconstant":
+                if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
+                randomConstant(args);
                 if (currentObject == null) throw new IllegalArgumentException("Failed to load path: " + currentObjectName);
                 else if (!PATHS.containsKey(currentObjectName)) PATHS.put(currentObjectName, (CPath) currentObject);
                 break;
@@ -126,6 +131,17 @@ public class PathRegistry extends FileWordParser
         double[] doubles = new double[args.size()];
         for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
         mostRecent = new CPathSinuous(thetaPerSec, thetaOffset, doubles);
+        currentObject = mostRecent;
+    }
+
+    public void randomConstant(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for path!");
+
+
+        double[] doubles = new double[args.size()];
+        for (int i = 0; i < doubles.length; i++) doubles[i] = Double.parseDouble(args.get(i));
+        mostRecent = new CPathRandomConstant(doubles);
         currentObject = mostRecent;
     }
 

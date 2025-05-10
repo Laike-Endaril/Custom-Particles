@@ -107,6 +107,11 @@ public class FactoryRegistry extends FileWordParser
                     alphaPaths(args);
                     break;
 
+                case "animationpath":
+                case "animationpaths":
+                    animationPaths(args);
+                    break;
+
 
                 case "":
                     break;
@@ -334,29 +339,36 @@ public class FactoryRegistry extends FileWordParser
 
     public void motionPaths(ArrayList<String> args)
     {
-        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for motionPaths!");
 
         for (String arg : args) ((CustomParticleFactory) currentObject).motionPaths.add(PathRegistry.PATHS.get(arg));
     }
 
     public void rotationPaths(ArrayList<String> args)
     {
-        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for rotationPaths!");
 
         for (String arg : args) ((CustomParticleFactory) currentObject).rotationPaths.add(PathRegistry.PATHS.get(arg));
     }
 
     public void rgbPaths(ArrayList<String> args)
     {
-        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for rgbPaths!");
 
         for (String arg : args) ((CustomParticleFactory) currentObject).rgbPaths.add(PathRegistry.PATHS.get(arg));
     }
 
     public void alphaPaths(ArrayList<String> args)
     {
-        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for alphaPaths!");
 
         for (String arg : args) ((CustomParticleFactory) currentObject).alphaPaths.add(PathRegistry.PATHS.get(arg));
+    }
+
+    public void animationPaths(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for animationPaths!");
+
+        for (String arg : args) ((CustomParticleFactory) currentObject).animationPaths.add(PathRegistry.PATHS.get(arg));
     }
 }

@@ -53,7 +53,7 @@ public abstract class CustomParticleFactory
 
     public SpriteMetaData spriteMetaData;
     public boolean useFoliageColor = false, useFacingRotation = false;
-    public final ArrayList<CPath> motionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>();
+    public final ArrayList<CPath> motionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>(), animationPaths = new ArrayList<>();
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
     protected int cullDistanceSquared = -1;
@@ -168,6 +168,17 @@ public abstract class CustomParticleFactory
                 particle.alphaData = data;
             }
             particle.alphaData.paths.addAll(alphaPaths);
+        }
+
+        if (animationPaths.size() > 0)
+        {
+            if (particle.animationData == null)
+            {
+                CPath.CPathData data = new CPath.CPathData(0);
+                data.paths = new ArrayList<>();
+                particle.animationData = data;
+            }
+            particle.animationData.paths.addAll(animationPaths);
         }
     }
 
