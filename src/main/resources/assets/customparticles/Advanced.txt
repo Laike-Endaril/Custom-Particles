@@ -120,8 +120,8 @@ Unless otherwise noted, for functions in this section which can take multiple pa
 
 
 
-positionPath / positionPaths <pathname, pathname...>
-Sets one or more paths which will control the position / motion of the particles.
+motionPath / motionPaths <pathname, pathname...>
+Sets one or more paths which will control the motion of the particles.
 
 
 rotationPath / rotationPaths <pathname, pathname...>

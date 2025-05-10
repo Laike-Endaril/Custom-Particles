@@ -52,7 +52,7 @@ public abstract class CustomParticleFactory
 
     public SpriteMetaData spriteMetaData;
     public boolean useFoliageColor = false;
-    public final ArrayList<CPath> positionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>();
+    public final ArrayList<CPath> motionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>();
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
     protected int cullDistanceSquared = -1;
@@ -113,7 +113,7 @@ public abstract class CustomParticleFactory
         particle.spriteMetaData = spriteMetaData;
         particle.useFoliageColor = useFoliageColor;
 
-        particle.positionData.paths.addAll(positionPaths);
+        particle.positionData.paths.addAll(motionPaths);
 
         if (rotationPaths.size() > 0)
         {

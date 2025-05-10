@@ -83,9 +83,9 @@ public class FactoryRegistry extends FileWordParser
                     break;
 
 
-                case "positionpath":
-                case "positionpaths":
-                    positionPaths(args);
+                case "motionPath":
+                case "motionPaths":
+                    motionPaths(args);
                     break;
 
                 case "rotationpath":
@@ -313,11 +313,11 @@ public class FactoryRegistry extends FileWordParser
     }
 
 
-    public void positionPaths(ArrayList<String> args)
+    public void motionPaths(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
 
-        for (String arg : args) ((CustomParticleFactory) currentObject).positionPaths.add(PathRegistry.PATHS.get(arg));
+        for (String arg : args) ((CustomParticleFactory) currentObject).motionPaths.add(PathRegistry.PATHS.get(arg));
     }
 
     public void rotationPaths(ArrayList<String> args)
