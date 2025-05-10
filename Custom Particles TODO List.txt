@@ -2,8 +2,6 @@ Make logo and release
 
 Move path parser to library?
 
-Add "wisp" particle factory type
-
 Make block emitters use the sides of the block's bounding boxes, and only check for space if they need to (if the face is touching an adjacent blockspace)
 
 Add command to reload settings during runtime, or do it automatically via file name / size detection
