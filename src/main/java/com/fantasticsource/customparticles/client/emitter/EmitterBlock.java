@@ -39,7 +39,7 @@ public class EmitterBlock extends CustomParticleEmitter
     @Override
     public boolean triggerFactories(int x, int y, int z, Object obj)
     {
-        if (!super.triggerFactories(x, y, z, obj)) return false;
+        if (!canTriggerMainChecks(x, y, z, obj)) return false;
 
 
         if (!(obj instanceof IBlockState)) return false;
@@ -65,7 +65,7 @@ public class EmitterBlock extends CustomParticleEmitter
                 {
                     case TOP:
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).up());
-                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
                             factory.createInternal(x + Tools.random(1d), y + 1.01, z + Tools.random(1d), this, FACING_ROTATION_TOP);
                             spawned = true;
@@ -74,7 +74,7 @@ public class EmitterBlock extends CustomParticleEmitter
 
                     case BOTTOM:
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).down());
-                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
                             factory.createInternal(x + Tools.random(1d), y - 0.01, z + Tools.random(1d), this, FACING_ROTATION_BOTTOM);
                             spawned = true;
@@ -83,7 +83,7 @@ public class EmitterBlock extends CustomParticleEmitter
 
                     case NORTH:
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).north());
-                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
                             factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z - 0.01, this, FACING_ROTATION_NORTH);
                             spawned = true;
@@ -92,7 +92,7 @@ public class EmitterBlock extends CustomParticleEmitter
 
                     case SOUTH:
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).south());
-                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
                             factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + 1.01, this, FACING_ROTATION_SOUTH);
                             spawned = true;
@@ -101,7 +101,7 @@ public class EmitterBlock extends CustomParticleEmitter
 
                     case WEST:
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).west());
-                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
                             factory.createInternal(x - 0.01, y + Tools.random(1d), z + Tools.random(1d), this, FACING_ROTATION_WEST);
                             spawned = true;
@@ -110,7 +110,7 @@ public class EmitterBlock extends CustomParticleEmitter
 
                     case EAST:
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).east());
-                        if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
+                        if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
                             factory.createInternal(x + 1.01, y + Tools.random(1d), z + Tools.random(1d), this, FACING_ROTATION_EAST);
                             spawned = true;

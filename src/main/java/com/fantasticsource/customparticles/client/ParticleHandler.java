@@ -79,7 +79,7 @@ public class ParticleHandler
             EntityPlayer player = Minecraft.getMinecraft().player;
             for (Map.Entry<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> entry : EMITTERS.entrySet())
             {
-                if (entry.getKey() == EmitterBlock.class)
+                if (EmitterBlock.class.isAssignableFrom(entry.getKey()))
                 {
                     BlockPos playerPos = player.getPosition();
                     int x = playerPos.getX(), z = playerPos.getZ(), eyeY = (int) (player.posY + player.eyeHeight);
