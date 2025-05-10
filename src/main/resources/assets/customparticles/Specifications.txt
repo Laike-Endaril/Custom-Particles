@@ -145,6 +145,14 @@ If the particle is at least this far away from the player, destroy it (default 3
 
 
 
+useFacingRotation
+true / false
+Whether to start the particle with 3D rotation based on facing (implementation depends on emitter type spawning the particle; block emitters should be obvious)
+
+
+
+
+
 terminalVelocityMult / terminalVelocityMultiplier
 terminalVelocityMult 2
 For leaf factories

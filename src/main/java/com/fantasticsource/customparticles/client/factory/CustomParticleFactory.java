@@ -52,7 +52,7 @@ public abstract class CustomParticleFactory
 
 
     public SpriteMetaData spriteMetaData;
-    public boolean useFoliageColor = false;
+    public boolean useFoliageColor = false, useFacingRotation = false;
     public final ArrayList<CPath> motionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>();
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
@@ -105,7 +105,7 @@ public abstract class CustomParticleFactory
     }
 
 
-    public final void createInternal(double x, double y, double z, CustomParticleEmitter emitter, Object... args)
+    public final void createInternal(double x, double y, double z, CustomParticleEmitter emitter, CPath facingRotationPath)
     {
         PathedParticle particle = create(x, y, z);
 
@@ -116,19 +116,36 @@ public abstract class CustomParticleFactory
 
         particle.positionData.paths.addAll(motionPaths);
 
-        if (rotationPaths.size() > 0)
+        if (rotationPaths.size() > 0 || useFacingRotation)
         {
+            ArrayList<CPath> rotations = new ArrayList<>(rotationPaths);
+            if (useFacingRotation) rotations.add(facingRotationPath);
+
             if (particle.rotationData == null)
             {
                 CPath.CPathData data = new CPath.CPathData(0);
                 data.paths = new ArrayList<>();
                 particle.rotationData = data;
             }
-            else if (particle.rotationData.paths != null && particle.rotationData.paths.size() > 0 && particle.rotationData.paths.get(0).getRelativePosition(0).values.length != rotationPaths.get(0).getRelativePosition(0).values.length)
+            else
             {
-                particle.rotationData.paths.clear();
+                int rotationDims = 1;
+                for (CPath path : rotations)
+                {
+                    if (path.getRelativePosition(0).values.length >= 3)
+                    {
+                        rotationDims = 3;
+                        break;
+                    }
+                }
+
+                if (particle.rotationData.paths != null && particle.rotationData.paths.size() > 0 && particle.rotationData.paths.get(0).getRelativePosition(0).values.length < rotationDims)
+                {
+                    particle.rotationData.paths.clear();
+                }
             }
-            particle.rotationData.paths.addAll(rotationPaths);
+
+            particle.rotationData.paths.addAll(rotations);
         }
 
         if (rgbPaths.size() > 0)

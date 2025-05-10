@@ -82,6 +82,10 @@ public class FactoryRegistry extends FileWordParser
                     delayedFunctions.add(() -> spriteMetaData(args2));
                     break;
 
+                case "usefacingrotation":
+                    useFacingRotation(args);
+                    break;
+
 
                 case "motionpath":
                 case "motionpaths":
@@ -310,6 +314,21 @@ public class FactoryRegistry extends FileWordParser
         {
             ((CustomParticleFactory) currentObject).spriteMetaData = new SpriteMetaData(Integer.parseInt(args.get(0)), Integer.parseInt(args.get(1)), Integer.parseInt(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Integer.parseInt(args.get(5)), Boolean.parseBoolean(args.get(6)), Integer.parseInt(args.get(7)));
         }
+    }
+
+    public void useFacingRotation(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for useFacingRotation!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'useFoliageColor' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        ((CustomParticleFactory) currentObject).useFacingRotation = Boolean.parseBoolean(args.get(0));
     }
 
 

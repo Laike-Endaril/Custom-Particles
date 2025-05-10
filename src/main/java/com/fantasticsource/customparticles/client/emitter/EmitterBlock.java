@@ -3,6 +3,8 @@ package com.fantasticsource.customparticles.client.emitter;
 import com.fantasticsource.customparticles.client.factory.CustomParticleFactory;
 import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
 import com.fantasticsource.tools.Tools;
+import com.fantasticsource.tools.component.path.CPath;
+import com.fantasticsource.tools.component.path.CPathConstant;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -13,7 +15,15 @@ import java.util.ArrayList;
 
 public class EmitterBlock extends CustomParticleEmitter
 {
-    private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
+    protected static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
+    protected static final CPath
+            FACING_ROTATION_NORTH = new CPathConstant(0, 0, 0),
+            FACING_ROTATION_WEST = new CPathConstant(Math.PI * 0.5, 0, 0),
+            FACING_ROTATION_SOUTH = new CPathConstant(Math.PI, 0, 0),
+            FACING_ROTATION_EAST = new CPathConstant(Math.PI * 1.5, 0, 0),
+            FACING_ROTATION_TOP = new CPathConstant(Math.PI, Math.PI * 0.5, 0),
+            FACING_ROTATION_BOTTOM = new CPathConstant(Math.PI, -Math.PI * 0.5, 0);
+
 
     public RegistryRegexBlockFilter blockFilter;
     public boolean isWhitelist;
@@ -57,7 +67,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).up());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + Tools.random(1d), y + 1.01, z + Tools.random(1d), this, mode);
+                            factory.createInternal(x + Tools.random(1d), y + 1.01, z + Tools.random(1d), this, FACING_ROTATION_TOP);
                             spawned = true;
                         }
                         break;
@@ -66,7 +76,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).down());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + Tools.random(1d), y - 0.01, z + Tools.random(1d), this, mode);
+                            factory.createInternal(x + Tools.random(1d), y - 0.01, z + Tools.random(1d), this, FACING_ROTATION_BOTTOM);
                             spawned = true;
                         }
                         break;
@@ -75,7 +85,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).north());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z - 0.01, this, mode);
+                            factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z - 0.01, this, FACING_ROTATION_NORTH);
                             spawned = true;
                         }
                         break;
@@ -84,7 +94,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).south());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + 1.01, this, mode);
+                            factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + 1.01, this, FACING_ROTATION_SOUTH);
                             spawned = true;
                         }
                         break;
@@ -93,7 +103,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).west());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x - 0.01, y + Tools.random(1d), z + Tools.random(1d), this, mode);
+                            factory.createInternal(x - 0.01, y + Tools.random(1d), z + Tools.random(1d), this, FACING_ROTATION_WEST);
                             spawned = true;
                         }
                         break;
@@ -102,13 +112,13 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).east());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + 1.01, y + Tools.random(1d), z + Tools.random(1d), this, mode);
+                            factory.createInternal(x + 1.01, y + Tools.random(1d), z + Tools.random(1d), this, FACING_ROTATION_EAST);
                             spawned = true;
                         }
                         break;
 
                     case INSIDE:
-                        factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + Tools.random(1d), this, mode);
+                        factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + Tools.random(1d), this, FACING_ROTATION_NORTH);
                         spawned = true;
                         break;
                 }
