@@ -57,7 +57,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).up());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + Tools.random(1d), y + 1.01, z + Tools.random(1d));
+                            factory.createInternal(x + Tools.random(1d), y + 1.01, z + Tools.random(1d), this, mode);
                             spawned = true;
                         }
                         break;
@@ -66,7 +66,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).down());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + Tools.random(1d), y - 0.01, z + Tools.random(1d));
+                            factory.createInternal(x + Tools.random(1d), y - 0.01, z + Tools.random(1d), this, mode);
                             spawned = true;
                         }
                         break;
@@ -75,7 +75,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).north());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z - 0.01);
+                            factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z - 0.01, this, mode);
                             spawned = true;
                         }
                         break;
@@ -84,7 +84,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).south());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + 1.01);
+                            factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + 1.01, this, mode);
                             spawned = true;
                         }
                         break;
@@ -93,7 +93,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).west());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x - 0.01, y + Tools.random(1d), z + Tools.random(1d));
+                            factory.createInternal(x - 0.01, y + Tools.random(1d), z + Tools.random(1d), this, mode);
                             spawned = true;
                         }
                         break;
@@ -102,13 +102,13 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).east());
                         if (!adjacent.getMaterial().blocksMovement() || !adjacent.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB))
                         {
-                            factory.createInternal(x + 1.01, y + Tools.random(1d), z + Tools.random(1d));
+                            factory.createInternal(x + 1.01, y + Tools.random(1d), z + Tools.random(1d), this, mode);
                             spawned = true;
                         }
                         break;
 
                     case INSIDE:
-                        factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + Tools.random(1d));
+                        factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + Tools.random(1d), this, mode);
                         spawned = true;
                         break;
                 }

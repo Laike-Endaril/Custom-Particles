@@ -1,5 +1,6 @@
 package com.fantasticsource.customparticles.client.factory;
 
+import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
 import com.fantasticsource.mctools.particles.PathedParticle;
 import com.fantasticsource.mctools.particles.PathedParticleSharedRenderData;
 import com.fantasticsource.tools.SpriteMetaData;
@@ -104,7 +105,7 @@ public abstract class CustomParticleFactory
     }
 
 
-    public final void createInternal(double x, double y, double z)
+    public final void createInternal(double x, double y, double z, CustomParticleEmitter emitter, Object... args)
     {
         PathedParticle particle = create(x, y, z);
 
