@@ -256,7 +256,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) currentObject).setBlendSourceFactor(args.get(0));
+        ((CustomParticleFactory) currentObject).setBlendSourceFactor(args.get(0).toUpperCase());
     }
 
     public void blendDestinationFactor(ArrayList<String> args)
@@ -271,7 +271,7 @@ public class FactoryRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleFactory) currentObject).setBlendDestinationFactor(args.get(0));
+        ((CustomParticleFactory) currentObject).setBlendDestinationFactor(args.get(0).toUpperCase());
     }
 
     public void texture(ArrayList<String> args)
