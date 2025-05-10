@@ -53,6 +53,16 @@ public class PathRegistry extends FileWordParser
                 mult(args);
                 break;
 
+            case "lowlimit":
+                if (currentObject == null) throw new IllegalArgumentException("No main path is defined yet!");
+                lowLimit(args);
+                break;
+
+            case "highlimit":
+                if (currentObject == null) throw new IllegalArgumentException("No main path is defined yet!");
+                highLimit(args);
+                break;
+
 
             case "{":
                 stack.push((CPath) currentObject);
@@ -101,7 +111,6 @@ public class PathRegistry extends FileWordParser
     {
         if (args.size() == 0) throw new IllegalArgumentException("Missing argument!");
 
-
         ((CPath) currentObject).add(transformCurrent(args));
     }
 
@@ -109,8 +118,21 @@ public class PathRegistry extends FileWordParser
     {
         if (args.size() == 0) throw new IllegalArgumentException("Missing argument!");
 
-
         ((CPath) currentObject).mult(transformCurrent(args));
+    }
+
+    public void lowLimit(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument!");
+
+        ((CPath) currentObject).lowLimit(transformCurrent(args));
+    }
+
+    public void highLimit(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument!");
+
+        ((CPath) currentObject).highLimit(transformCurrent(args));
     }
 
 

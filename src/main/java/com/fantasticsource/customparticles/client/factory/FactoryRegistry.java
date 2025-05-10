@@ -93,6 +93,16 @@ public class FactoryRegistry extends FileWordParser
                     rotationPaths(args);
                     break;
 
+                case "rgbpath":
+                case "rgbpaths":
+                    rgbPaths(args);
+                    break;
+
+                case "alphapath":
+                case "alphapaths":
+                    alphaPaths(args);
+                    break;
+
 
                 case "":
                     break;
@@ -310,11 +320,24 @@ public class FactoryRegistry extends FileWordParser
         for (String arg : args) ((CustomParticleFactory) currentObject).positionPaths.add(PathRegistry.PATHS.get(arg));
     }
 
-
     public void rotationPaths(ArrayList<String> args)
     {
         if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
 
         for (String arg : args) ((CustomParticleFactory) currentObject).rotationPaths.add(PathRegistry.PATHS.get(arg));
+    }
+
+    public void rgbPaths(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+
+        for (String arg : args) ((CustomParticleFactory) currentObject).rgbPaths.add(PathRegistry.PATHS.get(arg));
+    }
+
+    public void alphaPaths(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+
+        for (String arg : args) ((CustomParticleFactory) currentObject).alphaPaths.add(PathRegistry.PATHS.get(arg));
     }
 }

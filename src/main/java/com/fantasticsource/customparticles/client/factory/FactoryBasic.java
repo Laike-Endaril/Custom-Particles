@@ -17,7 +17,7 @@ public class FactoryBasic extends CustomParticleFactory
 
         factory = args ->
         {
-            PathedParticle particle = new PathedParticle(90, particleRenderData);
+            PathedParticle particle = new PathedParticle(60, particleRenderData);
             particle.positionPath(new CPathConstant((double) args[0], (double) args[1], (Double) args[2]));
             return particle;
         };

@@ -101,6 +101,8 @@ Mathematical: 1s * ((1s + 2) * -1s), where s is seconds
 
 add
 mult
+lowLimit
+highLimit
 
 
 
@@ -119,11 +121,18 @@ Unless otherwise noted, for functions in this section which can take multiple pa
 
 
 positionPath / positionPaths <pathname, pathname...>
-Sets one or more paths which will control the motion of the particles.  The paths run simultaneously and their results are added together.
+Sets one or more paths which will control the position / motion of the particles.
 
 
 rotationPath / rotationPaths <pathname, pathname...>
-Sets one or more paths which will control the rotation of the particles.  The paths run simultaneously and their results are added together.
+Sets one or more paths which will control the rotation of the particles.
 Either all paths should be 1D, or all paths should be 3D.
 If they are 1D, then particles always face the player as normal, and rotation is applied to roll.
 If they are 3D, then rotation is absolute 3D rotation (no relation to player camera).
+
+
+rgbPath
+Sets one or more paths which will control the color of the particles over time.
+
+alphaPath
+Sets one or more paths which will control the alpha / transparency of the particles over time.

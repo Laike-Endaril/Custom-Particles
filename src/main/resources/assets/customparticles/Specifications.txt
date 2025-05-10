@@ -245,3 +245,9 @@ A list of all biomes detected the last time the game was run can be found in con
 biomesAreWhitelist
 true / false
 See above.
+
+
+
+
+
+If you're ready for more complex systems, check out Advanced.txt
