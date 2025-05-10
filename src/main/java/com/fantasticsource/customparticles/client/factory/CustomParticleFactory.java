@@ -123,6 +123,10 @@ public abstract class CustomParticleFactory
                 data.paths = new ArrayList<>();
                 particle.rotationData = data;
             }
+            else if (particle.rotationData.paths != null && particle.rotationData.paths.size() > 0 && particle.rotationData.paths.get(0).getRelativePosition(0).values.length != rotationPaths.get(0).getRelativePosition(0).values.length)
+            {
+                particle.rotationData.paths.clear();
+            }
             particle.rotationData.paths.addAll(rotationPaths);
         }
 

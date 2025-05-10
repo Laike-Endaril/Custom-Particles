@@ -129,6 +129,7 @@ Sets one or more paths which will control the rotation of the particles.
 Either all paths should be 1D, or all paths should be 3D.
 If they are 1D, then particles always face the player as normal, and rotation is applied to roll.
 If they are 3D, then rotation is absolute 3D rotation (no relation to player camera).
+If paths applied here do not match existing paths in number of dimensions, existing paths will be removed first.
 
 
 rgbPath

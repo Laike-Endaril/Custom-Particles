@@ -63,6 +63,7 @@ public class FactoryLeaf extends CustomParticleFactory
             particle.useFoliageColor = useFoliageColor;
 
             particle.rotationPath(new CPathConstant(parent.rotationData.getRelativePosition(parent.currentRenderMillis(0))));
+            if (parent.rgbData != null) particle.rgbPath(new CPathConstant(parent.rgbData.getRelativePosition(parent.currentRenderMillis(0))));
 
             particle.alphaPath(pathFade);
 
