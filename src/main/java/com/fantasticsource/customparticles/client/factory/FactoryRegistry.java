@@ -83,8 +83,8 @@ public class FactoryRegistry extends FileWordParser
                     break;
 
 
-                case "motionPath":
-                case "motionPaths":
+                case "motionpath":
+                case "motionpaths":
                     motionPaths(args);
                     break;
 
