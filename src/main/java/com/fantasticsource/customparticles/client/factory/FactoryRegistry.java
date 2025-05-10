@@ -144,6 +144,16 @@ public class FactoryRegistry extends FileWordParser
                 FACTORIES.put(currentObjectName, (CustomParticleFactory) currentObject);
                 break;
 
+            case "basicrune":
+            case "basicrunes":
+            case "normalrune":
+            case "normalrunes":
+            case "regularrune":
+            case "regularrunes":
+                currentObject = new FactoryBasicRunes();
+                FACTORIES.put(currentObjectName, (CustomParticleFactory) currentObject);
+                break;
+
             case "leaf":
             case "leaves":
                 currentObject = new FactoryLeaf();

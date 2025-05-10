@@ -21,6 +21,7 @@ template <type> [maxAge]
 
 Type can be one of the following:
 basic / normal / regular - A particle that simply appears, then disappears 3 seconds later (no built-in motion)
+basicRune / basicRunes / normalRune / normalRunes / regularRune / regularRunes - Similar to "basic", but automatically chooses a random vanilla rune as the texture / animation
 leaf / leaves - A particle that can fall and spin.
 
 Max age is optional, and is the particle lifetime in seconds (decimals allowed; converted to ticks internally)
