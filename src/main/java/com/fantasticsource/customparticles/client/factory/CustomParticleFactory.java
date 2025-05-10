@@ -113,7 +113,17 @@ public abstract class CustomParticleFactory
         particle.spriteMetaData = spriteMetaData;
 
         particle.positionData.paths.addAll(positionPaths);
-        particle.rotationData.paths.addAll(rotationPaths);
+
+        if (rotationPaths.size() > 0)
+        {
+            if (particle.rotationData == null)
+            {
+                CPath.CPathData data = new CPath.CPathData(0);
+                data.paths = new ArrayList<>();
+                particle.rotationData = data;
+            }
+            particle.rotationData.paths.addAll(rotationPaths);
+        }
 
         particle.useFoliageColor = useFoliageColor;
     }

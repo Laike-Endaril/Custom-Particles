@@ -118,6 +118,13 @@ public class FactoryRegistry extends FileWordParser
 
         switch (args.get(0))
         {
+            case "basic":
+            case "normal":
+            case "regular":
+                currentObject = new FactoryBasic();
+                FACTORIES.put(currentObjectName, (CustomParticleFactory) currentObject);
+                break;
+
             case "leaf":
             case "leaves":
                 currentObject = new FactoryLeaf();

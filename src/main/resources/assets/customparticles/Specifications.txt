@@ -18,6 +18,7 @@ IF YOU HAVEN'T GONE THROUGH THE TUTORIAL YET, DO THAT FIRST!!!
 
 
 template
+basic / normal / regular - A particle that simply appears, then disappears 3 seconds later (no built-in motion)
 leaf / leaves - A particle that can fall and spin.
 
 
