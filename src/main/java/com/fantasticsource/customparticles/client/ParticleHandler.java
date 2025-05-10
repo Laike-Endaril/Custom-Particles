@@ -33,7 +33,8 @@ public class ParticleHandler
     public static final File
             PATHS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "paths"),
             FACTORIES_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "factories"),
-            EMITTERS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "emitters");
+            EMITTERS_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "emitters"),
+            EMITTERS_DISABLED_DIR = new File(MCTools.getConfigDir() + MODID + File.separator + "emittersdisabled");
 
     private static final BlockPos.MutableBlockPos MUT_POS = new BlockPos.MutableBlockPos();
 
@@ -66,6 +67,8 @@ public class ParticleHandler
 
             EMITTERS_DIR.mkdirs();
             new EmitterRegistry().tryLoad(EMITTERS_DIR);
+
+            EMITTERS_DISABLED_DIR.mkdirs();
 
             initialized = true;
         }
