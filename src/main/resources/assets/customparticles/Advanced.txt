@@ -105,8 +105,8 @@ Mathematical: 1s * ((1s + 2) * -1s), where s is seconds
 
 add
 mult
-lowLimit
-highLimit
+lowLimit (limits the result of the transformed path to no lower than the result of the transforming path)
+highLimit (limits the result of the transformed path to no higher than the result of the transforming path)
 
 
 
@@ -124,11 +124,11 @@ Unless otherwise noted, for functions in this section which can take multiple pa
 
 
 
-motionPath / motionPaths pathname, pathname...
+motionPath / motionPaths <pathName> [pathName...]
 Controls motion.
 
 
-rotationPath / rotationPaths pathname, pathname...
+rotationPath / rotation <pathName> [pathName...]
 Controls rotation.
 Either all paths should be 1D, or all paths should be 3D.
 If they are 1D, then particles always face the player as normal, and rotation is applied to roll.
@@ -136,13 +136,13 @@ If they are 3D, then rotation is absolute 3D rotation (no relation to player cam
 If paths applied here do not match existing paths in number of dimensions, existing paths will be removed first.
 
 
-rgbPath / rgbPaths pathname, pathname...
+rgbPath / rgbPaths <pathName> [pathName...]
 Controls color.
 
 
-alphaPath / rgbPaths pathname, pathname...
+alphaPath / alphaPaths <pathName> [pathName...]
 Controls alpha / transparency.
 
 
-animationPath / animationPaths pathname, pathname...
+animationPath / animationPaths <pathName> [pathName...]
 Controls animation.

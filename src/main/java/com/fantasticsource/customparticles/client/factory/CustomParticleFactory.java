@@ -56,7 +56,7 @@ public abstract class CustomParticleFactory
     public final ArrayList<CPath> motionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>(), animationPaths = new ArrayList<>();
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
-    protected int cullDistanceSquared = -1;
+    protected int cullDistanceSquared = -1, maxAge = -1;
     protected double startingRotationMin, startingRotationMax, spinRate;
 
 
@@ -108,6 +108,7 @@ public abstract class CustomParticleFactory
     public final void createInternal(double x, double y, double z, CustomParticleEmitter emitter, CPath facingRotationPath)
     {
         PathedParticle particle = create(x, y, z);
+
 
         if (cullDistanceSquared != -1) particle.cullDistanceSquared = cullDistanceSquared;
 

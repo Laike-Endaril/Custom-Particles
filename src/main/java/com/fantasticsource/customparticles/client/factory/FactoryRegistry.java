@@ -127,10 +127,10 @@ public class FactoryRegistry extends FileWordParser
     {
         if (args.size() == 0) throw new IllegalArgumentException("Missing argument for factory template!");
 
-        if (args.size() > 1)
+        if (args.size() > 2)
         {
             Iterator<String> iterator = args.iterator();
-            String error = "'template' function only takes 1 argument!  Arguments given: " + iterator.next();
+            String error = "'template' function only takes 1 or 2 arguments!  Arguments given: " + iterator.next();
             while (iterator.hasNext()) error += ", " + iterator.next();
             throw new IllegalArgumentException(error);
         }
@@ -152,6 +152,11 @@ public class FactoryRegistry extends FileWordParser
 
             default:
                 throw new IllegalArgumentException("Invalid template name: " + args.get(0));
+        }
+
+        if (args.size() > 1)
+        {
+            ((CustomParticleFactory) currentObject).maxAge = (int) (Double.parseDouble(args.get(1)) * 20);
         }
     }
 

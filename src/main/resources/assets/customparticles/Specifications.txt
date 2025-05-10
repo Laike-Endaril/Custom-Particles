@@ -17,13 +17,17 @@ IF YOU HAVEN'T GONE THROUGH THE TUTORIAL YET, DO THAT FIRST!!!
 
 
 
-template
+template <type> [maxAge]
+
+Type can be one of the following:
 basic / normal / regular - A particle that simply appears, then disappears 3 seconds later (no built-in motion)
 leaf / leaves - A particle that can fall and spin.
 
+Max age is optional, and is the particle lifetime in seconds (decimals allowed; converted to ticks internally)
 
 
-tex / texture
+
+tex / texture <textureName>
 Which texture to use for the particles from this factory.
 This can be a block texture (from the texture atlas) or a texture file.
 
@@ -49,7 +53,7 @@ The only time that the PNG layout should be used for block textures is when you 
 
 
 
-spriteMeta / spriteMetaData
+spriteMeta / spriteMetaData <totalTexW, totalTexH, frame1X1, frame1Y1, frame1X2, frame1Y2, [...see below]>
 Defines the frame (part of the texture) to use, or multiple frames (animation).
 Note that when using the block texture layout, "spriteMetaData" generally does not need to be specified (generally SHOULD NOT be specified).
 Also note that for the PNG texture layout, if not specified, it will use the full texture.
@@ -72,32 +76,27 @@ This format allows you to define animations that are not in a sequence in the te
 
 
 
-useFoliageColor
-true / false
+useFoliageColor <true / false>
 Whether to use the biome foliage color.
 
 
 
-startingAngle 45
-Particles spawn rotated 45* (counter-clockwise).
-
-startingAngle 0 90
-Particles spawn rotated somewhere between 0* and 90*.
+startingAngle <minDegrees> [maxDegrees]
+Particles spawn rotated minDegrees, or if maxDegrees is also give, somewhere between the two.
 
 
 
-spinRate 360
-If the particle spawned at the maximum possible angle, rotate 360* per second in that same direction (scales based on min starting angle -> actual randomized starting angle <- max starting angle).
+spinRate <degreesPerSecond>
+If the particle spawned at the maximum possible angle, rotate at the given value in that same direction (scales based actual starting angle vs min and max possible starting angles).
 
 
 
-useBlockLight
-true / false
+useBlockLight <true / false>
 Whether to use block lighting values (shadow / light when true) or not (fullbright when false).
 
 
 
-blendSrcFactor / blendSourceFactor
+blendSrcFactor / blendSourceFactor <mode>
 GL_ZERO
 GL_ONE
 GL_SRC_COLOR
@@ -119,7 +118,7 @@ Or google "glblendfunc".
 
 
 
-blendDstFactor / blendDestinationFactor
+blendDstFactor / blendDestinationFactor <mode>
 GL_ZERO
 GL_ONE
 GL_SRC_COLOR
@@ -140,30 +139,27 @@ Or google "glblendfunc".
 
 
 
-cullDistance / cullingDistance
+cullDistance / cullingDistance <distanceInBlocks>
 If the particle is at least this far away from the player, destroy it (default 30).
 
 
 
-useFacingRotation
-true / false
+useFacingRotation <true / false>
 Whether to start the particle with 3D rotation based on facing (implementation depends on emitter type spawning the particle; block emitters should be obvious)
 
 
 
 
 
-terminalVelocityMult / terminalVelocityMultiplier
-terminalVelocityMult 2
+terminalVelocityMult / terminalVelocityMultiplier <multiplier>
 For leaf factories
-Top speed is twice as fast as the default.
+Multiplies the top speed by this value.
 
 
 
-terminalVelocityDelayMult / terminalVelocityDelayMultiplier
-terminalVelocityDelayMult 2
+terminalVelocityDelayMult / terminalVelocityDelayMultiplier <multiplier>
 For leaf factories
-It takes twice as long to reach top speed compared to the default.
+Multiplies the time it takes to reach max speed by this amount
 
 
 
@@ -175,7 +171,9 @@ It takes twice as long to reach top speed compared to the default.
 
 
 
-template
+template <type> <typeArguments>
+
+Type can be one of the following (each type may have different arguments; see details below):
 block / blocks
 
 template block lava true
@@ -193,12 +191,12 @@ Regex and oredict can be combined in all ways.
 
 
 
-factory / factories <factoryname, factoryname...>
+factory / factories <factoryname> [factoryname...]
 Tells the emitter which factories to use for spawning particles (see TUTORIAL.txt)
 
 
 
-mode / modes
+mode / modes <mode> [mode...]
 top
 bottom
 north
@@ -213,7 +211,9 @@ For block emitters, "inside" will spawn particles INSIDE THAT BLOCK, EVEN IF OBS
 
 
 
-require / requires / requirement / requirements
+require / requires / requirement / requirements <requirementType> [requirementType...]
+
+Requirement type can be one of the following:
 slimeChunk
 fullSolidBlock
 
@@ -223,7 +223,7 @@ For block emitters, fullSolidBlock makes an emitter only spawn particles if the 
 
 
 
-dimension / dimensions
+dimension / dimensions <dimensionID> [dimensionID...]
 
 Dimension filter; if "dimensionsAreWhitelist" (below) is "true", then the emitter will only spawn particles in these dimensions.
 If "dimensionsAreWhitelist" is "false" then the emitter will only spawn particles if NOT in these dimensions.
@@ -233,13 +233,12 @@ Eg "dimensions 0 1" is the overworld ("0") and the end ("1").  For modded dimens
 
 
 
-dimensionsAreWhitelist
-true / false
+dimensionsAreWhitelist <true / false>
 See above.
 
 
 
-biome / biomes
+biome / biomes <biomeRegistryName> [biomeRegistryName...]
 
 Biome filter; if "biomesAreWhitelist" (below) is "true", then the emitter will only spawn particles in these biomes.
 If "dimensionsAreWhitelist" is "false" then the emitter will only spawn particles if NOT in these biomes.
@@ -250,8 +249,7 @@ A list of all biomes detected the last time the game was run can be found in con
 
 
 
-biomesAreWhitelist
-true / false
+biomesAreWhitelist <true / false>
 See above.
 
 
