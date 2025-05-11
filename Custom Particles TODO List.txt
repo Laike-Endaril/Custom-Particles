@@ -1,7 +1,8 @@
+Control range of block-finding checks with cull distance settings (currently in factory, but might want to move to emitter for this)
+Add density control, make sure to scale based on total blocks in block-finding range
+
 Add weather checks
 Rain strength and thunder strength filters (<min> [max] for each)
-
-Add density control
 
 Improve heap garbage generation on the added thread
 
