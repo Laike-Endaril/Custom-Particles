@@ -3,6 +3,8 @@ Rain strength and thunder strength filters (<min> [max] for each)
 
 Add density control
 
+Improve heap garbage generation on the added thread
+
 Look into a full rewrite for rendering *AND PHYSICS* on GPU side via SSBO and compute shader (and other shaders)
 
 Make logo and release
