@@ -43,12 +43,13 @@ public class EmitterWallFall extends EmitterBlock
         if (blockFilter.matches((IBlockState) obj) != isWhitelist) return false;
 
 
-        IBlockState stateAbove = Minecraft.getMinecraft().world.getBlockState(new BlockPos(x, y + 1, z));
+        Minecraft minecraft = Minecraft.getMinecraft();
+        World world = minecraft.world;
+        IBlockState stateAbove = world.getBlockState(new BlockPos(x, y + 1, z));
         boolean additionalChecks = blockFilter.matches(stateAbove) == isWhitelist; //If the block above was valid for spawning not accounting for horizontal adjacents, do checks on above adjacents for face-based spawns
         boolean good;
 
 
-        World world = Minecraft.getMinecraft().world;
         boolean spawned = false;
         IBlockState adjacent, aboveAdjacent;
         ArrayList<OffsetMode> modeQueue = new ArrayList<>();
@@ -77,7 +78,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z - 0.01, x, z, FACING_ROTATION_NORTH);
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z - 0.01, x, z, FACING_ROTATION_NORTH));
                                 spawned = true;
                             }
                         }
@@ -95,7 +96,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z + 1.01, x, z, FACING_ROTATION_SOUTH);
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z + 1.01, x, z, FACING_ROTATION_SOUTH));
                                 spawned = true;
                             }
                         }
@@ -113,7 +114,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                triggerRecursive(world, factory, x - 0.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, FACING_ROTATION_WEST);
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x - 0.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, FACING_ROTATION_WEST));
                                 spawned = true;
                             }
                         }
@@ -131,7 +132,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                triggerRecursive(world, factory, x + 1.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, FACING_ROTATION_EAST);
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + 1.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, FACING_ROTATION_EAST));
                                 spawned = true;
                             }
                         }
