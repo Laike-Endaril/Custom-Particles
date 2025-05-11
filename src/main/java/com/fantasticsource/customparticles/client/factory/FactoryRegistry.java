@@ -55,11 +55,19 @@ public class FactoryRegistry extends FileWordParser
                     useBlockLight(args);
                     break;
 
+                case "blendsource":
+                case "blendsrc":
+                case "sourcefactor":
+                case "srcfactor":
                 case "blendsrcfactor":
                 case "blendsourcefactor":
                     blendSourceFactor(args);
                     break;
 
+                case "blenddestination":
+                case "blenddst":
+                case "destinationfactor":
+                case "dstfactor":
                 case "blenddstfactor":
                 case "blenddestinationfactor":
                     blendDestinationFactor(args);

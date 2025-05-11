@@ -97,7 +97,7 @@ Whether to use block lighting values (shadow / light when true) or not (fullbrig
 
 
 
-blendSrcFactor / blendSourceFactor <mode>
+blendSource / blendSrc / sourceFactor / srcFactor / blendSrcFactor / blendSourceFactor <mode>
 GL_ZERO
 GL_ONE
 GL_SRC_COLOR
@@ -119,7 +119,7 @@ Or google "glblendfunc".
 
 
 
-blendDstFactor / blendDestinationFactor <mode>
+blendDestination / blendDst / destinationFactor / dstFactor / blendDstFactor / blendDestinationFactor <mode>
 GL_ZERO
 GL_ONE
 GL_SRC_COLOR
