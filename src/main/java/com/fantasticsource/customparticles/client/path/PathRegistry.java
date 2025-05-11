@@ -49,8 +49,11 @@ public class PathRegistry extends FileWordParser
                 break;
 
             case "randompos":
+            case "posrandom":
             case "randomposition":
+            case "positionrandom":
             case "randomconstant":
+            case "constantrandom":
                 if (currentObject != null) throw new IllegalArgumentException("Only one main path can be defined per file!");
                 randomConstant(args);
                 if (currentObject == null) throw new IllegalArgumentException("Failed to load path: " + currentObjectName);

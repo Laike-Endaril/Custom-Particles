@@ -90,7 +90,7 @@ public class ParticleHandler
                     //Simulate vanilla to some extent, at least for now
                     //Changing amount
                     //Changing ranges, since the default culling distance on these is 30
-                    for (int i = 0; i < 100; i++)
+                    for (int i = 0; i < 150; i++)
                     {
                         xx = x - 15 + Tools.random(31);
                         yy = eyeY - 15 + Tools.random(31);
