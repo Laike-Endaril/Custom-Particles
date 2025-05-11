@@ -1,8 +1,9 @@
+Add weather checks
+Rain strength and thunder strength filters (<min> [max] for each)
+
 Add density control
 
 Look into a full rewrite for rendering *AND PHYSICS* on GPU side via SSBO and compute shader (and other shaders)
-
-Rain strength and thunder strength filters (min OR min and max for each)
 
 Make logo and release
 
