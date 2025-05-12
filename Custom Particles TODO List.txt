@@ -11,6 +11,8 @@ Rain strength and thunder strength filters (<min> [max] for each)
 Improve heap garbage generation on the added thread
 
 Look into a full rewrite for rendering *AND PHYSICS* on GPU side via SSBO and compute shader (and other shaders)
+Take a look at this as a possible reference:
+https://github.com/Ender-Development/EnderModpackTweaks/blob/master/src/main/java/io/enderdev/endermodpacktweaks/features/healthbar/HealthBarInstancingHelper.java
 
 Make logo and release
 
