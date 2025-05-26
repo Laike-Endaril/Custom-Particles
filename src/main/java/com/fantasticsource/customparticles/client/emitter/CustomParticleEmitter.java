@@ -66,14 +66,17 @@ public abstract class CustomParticleEmitter
     }
 
 
-    public final boolean canTriggerMainChecks(int x, int y, int z)
+    public final boolean canTriggerMainChecks(int x, int y, int z, Object obj)
     {
         World world = Minecraft.getMinecraft().world;
         if (world == null) return false;
 
 
         if (dimensions.size() > 0 && dimensions.contains(world.provider.getDimension()) != dimensionsAreWhitelist) return false;
-        if (biomes.size() > 0 && biomes.contains(world.getBiome(MUT_POS.setPos(x, y, z))) != biomesAreWhitelist) return false;
+
+
+        MUT_POS.setPos(x, y, z);
+        if (biomes.size() > 0 && biomes.contains(world.getBiome(MUT_POS)) != biomesAreWhitelist) return false;
 
 
         for (Requirement requirement : requirements)
@@ -81,11 +84,11 @@ public abstract class CustomParticleEmitter
             switch (requirement)
             {
                 case SLIMECHUNK:
-                    if (y >= 40 || world.getChunkFromBlockCoords(MUT_POS.setPos(x, y, z)).getRandomWithSeed(987234911L).nextInt(10) != 0) return false;
+                    if (y >= 40 || world.getChunkFromBlockCoords(MUT_POS).getRandomWithSeed(987234911L).nextInt(10) != 0) return false;
                     break;
 
                 case FULLSOLIDBLOCK:
-                    IBlockState blockState = world.getBlockState(MUT_POS.setPos(x, y, z));
+                    IBlockState blockState = (IBlockState) obj;
                     if (!blockState.getMaterial().blocksMovement() || !blockState.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB)) return false;
                     break;
             }

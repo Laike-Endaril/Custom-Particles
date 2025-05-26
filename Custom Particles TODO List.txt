@@ -1,6 +1,8 @@
 NOTES =========================================================================================================================
 
 A lot of the logic is moved to another thread, so it won't show up on profiling for the normal threads
+Watch out for "Tick-based particle emitters skipped x ticks in the last second" in the console
+"/omni threads" can be used for very rough profiling
 
 
 
