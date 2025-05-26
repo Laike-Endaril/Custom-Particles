@@ -6,6 +6,7 @@ import com.fantasticsource.customparticles.client.emitter.EmitterBlock;
 import com.fantasticsource.customparticles.client.emitter.EmitterRegistry;
 import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.customparticles.client.path.PathRegistry;
+import com.fantasticsource.mctools.ClientTickTimer;
 import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.tools.Tools;
 import net.minecraft.client.Minecraft;
@@ -31,6 +32,7 @@ import static com.fantasticsource.customparticles.CustomParticles.MODID;
 public class ParticleHandler
 {
     protected static volatile boolean tickEmitters = false;
+    protected static int tickEmitterSkips = 0;
 
 
     public static final File
@@ -78,6 +80,12 @@ public class ParticleHandler
             thread.start();
         }
 
+        if (tickEmitters && !Minecraft.getMinecraft().isGamePaused()) tickEmitterSkips++;
+        if (ClientTickTimer.currentTick() % 20 == 0)
+        {
+            if (tickEmitterSkips > 0) System.err.println("Tick-based particle emitters skipped " + tickEmitterSkips + " tick(s) in the last second");
+            tickEmitterSkips = 0;
+        }
         tickEmitters = true;
     }
 

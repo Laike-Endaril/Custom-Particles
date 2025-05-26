@@ -1,3 +1,11 @@
+NOTES =========================================================================================================================
+
+A lot of the logic is moved to another thread, so it won't show up on profiling for the normal threads
+
+
+
+TODO ==========================================================================================================================
+
 Cache blockstate results for each blockstate filter?
 
 Control range of block-finding checks with cull distance settings (currently in factory, but might want to move to emitter for this)
