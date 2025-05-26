@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
-@Mod(modid = CustomParticles.MODID, name = CustomParticles.NAME, version = CustomParticles.VERSION, dependencies = "required-after:fantasticlib@[1.12.2.061,)")
+@Mod(modid = CustomParticles.MODID, name = CustomParticles.NAME, version = CustomParticles.VERSION, dependencies = "required-after:fantasticlib@[1.12.2.063,)")
 public class CustomParticles
 {
     public static final String MODID = "customparticles";

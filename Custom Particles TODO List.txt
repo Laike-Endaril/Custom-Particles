@@ -1,5 +1,3 @@
-UPDATE LIB BEFORE NEXT RELEASE, to fix yaw calcs on (not yet used) paths that access entity yaw values
-
 Cache blockstate results for each blockstate filter?
 
 Control range of block-finding checks with cull distance settings (currently in factory, but might want to move to emitter for this)
