@@ -2,7 +2,7 @@ package com.fantasticsource.customparticles.client.emitter;
 
 import com.fantasticsource.customparticles.client.factory.CustomParticleFactory;
 import com.fantasticsource.mctools.ClientTickTimer;
-import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
+import com.fantasticsource.mctools.blocks.AdvancedBlockFilter;
 import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.component.path.CPath;
 import net.minecraft.block.Block;
@@ -18,7 +18,7 @@ public class EmitterWallFall extends EmitterBlock
     public final int gridWidthPerBlock, gridHeightPerBlock, ticksPerMove;
     public final double gridSectorW, gridSectorH, halfGridSectorW, halfGridSectorH;
 
-    public EmitterWallFall(RegistryRegexBlockFilter filter, boolean isWhitelist, int gridWidthPerBlock, int gridHeightPerBlock, double secondsPerMove)
+    public EmitterWallFall(AdvancedBlockFilter filter, boolean isWhitelist, int gridWidthPerBlock, int gridHeightPerBlock, double secondsPerMove)
     {
         //TODO make this thing move in a direction until the block behind it is one it's not allowed on via the block filter
         //TODO along that path, make it periodically spawn runes in its wake

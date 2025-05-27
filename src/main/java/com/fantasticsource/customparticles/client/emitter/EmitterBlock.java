@@ -1,7 +1,7 @@
 package com.fantasticsource.customparticles.client.emitter;
 
 import com.fantasticsource.customparticles.client.factory.CustomParticleFactory;
-import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
+import com.fantasticsource.mctools.blocks.AdvancedBlockFilter;
 import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.component.path.CPath;
 import com.fantasticsource.tools.component.path.CPathConstant;
@@ -25,11 +25,11 @@ public class EmitterBlock extends CustomParticleEmitter
             FACING_ROTATION_BOTTOM = new CPathConstant(Math.PI, -Math.PI * 0.5, 0);
 
 
-    public RegistryRegexBlockFilter blockFilter;
+    public AdvancedBlockFilter blockFilter;
     public boolean isWhitelist;
 
 
-    public EmitterBlock(RegistryRegexBlockFilter filter, boolean isWhitelist)
+    public EmitterBlock(AdvancedBlockFilter filter, boolean isWhitelist)
     {
         this.blockFilter = filter;
         this.isWhitelist = isWhitelist;

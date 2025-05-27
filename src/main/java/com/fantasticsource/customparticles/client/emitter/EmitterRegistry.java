@@ -2,7 +2,7 @@ package com.fantasticsource.customparticles.client.emitter;
 
 import com.fantasticsource.customparticles.FileWordParser;
 import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
-import com.fantasticsource.mctools.blocks.RegistryRegexBlockFilter;
+import com.fantasticsource.mctools.blocks.AdvancedBlockFilter;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -94,7 +94,7 @@ public class EmitterRegistry extends FileWordParser
                     throw new IllegalArgumentException(error);
                 }
 
-                currentObject = new EmitterBlock(RegistryRegexBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)));
+                currentObject = new EmitterBlock(AdvancedBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)));
                 EMITTERS.put(currentObjectName, (CustomParticleEmitter) currentObject);
                 break;
 
@@ -111,7 +111,7 @@ public class EmitterRegistry extends FileWordParser
                     throw new IllegalArgumentException(error);
                 }
 
-                currentObject = new EmitterWallFall(RegistryRegexBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Double.parseDouble(args.get(5)));
+                currentObject = new EmitterWallFall(AdvancedBlockFilter.getInstance(args.get(1)), Boolean.parseBoolean(args.get(2)), Integer.parseInt(args.get(3)), Integer.parseInt(args.get(4)), Double.parseDouble(args.get(5)));
                 EMITTERS.put(currentObjectName, (CustomParticleEmitter) currentObject);
                 break;
 
