@@ -14,23 +14,26 @@ Add density control, make sure to scale based on total blocks in block-finding r
 Add weather checks
 Rain strength and thunder strength filters (<min> [max] for each)
 
-Improve heap garbage generation on the added thread
+Spawners...
+* Entity (projectiles, bleeding/dripping)
+* Entity collision (arrow hitting ground/water)
+* Entity hit
+* Block hit
+* Item (eg. weapon trails, or a flaming sword, hopefully still flaming when on a display rack, etc)
 
 Look into a full rewrite for rendering *AND PHYSICS* on GPU side via SSBO and compute shader (and other shaders)
 Take a look at this as a possible reference:
 https://github.com/Ender-Development/EnderModpackTweaks/blob/master/src/main/java/io/enderdev/endermodpacktweaks/features/healthbar/HealthBarInstancingHelper.java
-
-Make logo and release
-
-Move path parser to library?
-
-Make block emitters use the sides of the block's bounding boxes, and only check for space if they need to (if the face is touching an adjacent blockspace)
 
 Add command to reload settings during runtime, or do it automatically via file name / size detection
 
 Add line number, line position printout for parsing errors
 
 
+
+Make block emitters use the sides of the block's bounding boxes...?
+...and check for space internally...?
+...and only check for adjacent block space if they need to (if the face is touching an adjacent blockspace)?
 
 Make Winds of Time mod (wind mechanics API) and hook into it
 Add wind multipliers for particles (random between min and max)
