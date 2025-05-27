@@ -21,6 +21,8 @@ Spawners...
 * Block hit
 * Item (eg. weapon trails, or a flaming sword, hopefully still flaming when on a display rack, etc)
 
+Add better block color matching feature for block spawners? (wondering if eg. some modded leaf blocks use a pre-colored texture instead of block coloring?)
+
 Look into a full rewrite for rendering *AND PHYSICS* on GPU side via SSBO and compute shader (and other shaders)
 Take a look at this as a possible reference:
 https://github.com/Ender-Development/EnderModpackTweaks/blob/master/src/main/java/io/enderdev/endermodpacktweaks/features/healthbar/HealthBarInstancingHelper.java
