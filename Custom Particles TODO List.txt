@@ -8,7 +8,6 @@ Watch out for "Tick-based particle emitters skipped x ticks in the last second" 
 
 TODO ==========================================================================================================================
 
-The main EMITTERS map used in ParticleHandler.emitterLogicLoop() should have keys of "type" and values of ExplicitPriorityQueue, ordered by emitter cull distance (furthest to nearest)
 Use a per-client-tick cache for blockstate results (one main cycle is one client tick, so it can be a local method cache in emitterLogicLoop() or one that is kept but cleared at the start of it)
 
 Control range of block-finding checks with cull distance settings (currently in factory, but might want to move to emitter for this)
