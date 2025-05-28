@@ -139,24 +139,27 @@ public class ParticleHandler
 
 
                 world = minecraft.world;
-                player = Minecraft.getMinecraft().player;
-                x = player.posX;
-                y = (int) (player.posY + player.eyeHeight);
-                z = player.posZ;
-
-                for (Map.Entry<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> entry : EMITTERS.entrySet())
+                player = minecraft.player;
+                if (world != null && player != null)
                 {
-                    //All emitters of a specific type (see CustomParticleEmitter.getType())
-                    if (entry.getKey() == EmitterBlock.class)
+                    x = player.posX;
+                    y = (int) (player.posY + player.eyeHeight);
+                    z = player.posZ;
+
+                    for (Map.Entry<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> entry : EMITTERS.entrySet())
                     {
-                        for (CustomParticleEmitter emitter : entry.getValue())
+                        //All emitters of a specific type (see CustomParticleEmitter.getType())
+                        if (entry.getKey() == EmitterBlock.class)
                         {
-                            //All block emitters
-                            for (int i = (int) (emitter.density * emitter.cullDistanceCubed * SPHERE_DENSITY_MULTIPLIER); i >= 0; i--)
+                            for (CustomParticleEmitter emitter : entry.getValue())
                             {
-                                pos = Tools.randomWithinSphere(emitter.cullDistance);
-                                obj = world.getBlockState(mutPos.setPos(x + pos[0], y + pos[1], z + pos[2]));
-                                emitter.triggerFactories(mutPos.getX(), mutPos.getY(), mutPos.getZ(), obj);
+                                //All block emitters
+                                for (int i = (int) (emitter.density * emitter.cullDistanceCubed * SPHERE_DENSITY_MULTIPLIER); i >= 0; i--)
+                                {
+                                    pos = Tools.randomWithinSphere(emitter.cullDistance);
+                                    obj = world.getBlockState(mutPos.setPos(x + pos[0], y + pos[1], z + pos[2]));
+                                    emitter.triggerFactories(mutPos.getX(), mutPos.getY(), mutPos.getZ(), obj);
+                                }
                             }
                         }
                     }
