@@ -8,9 +8,9 @@ Watch out for "Tick-based particle emitters skipped x ticks in the last second" 
 
 TODO ==========================================================================================================================
 
-Use a per-client-tick cache for blockstate results (one main cycle is one client tick, so it can be a local method cache in emitterLogicLoop() or one that is kept but cleared at the start of it)
+Fix particles spawning outside their cull radius
 
-Add density control, make sure to scale based on total blocks in block-finding range
+Use a per-client-tick cache for blockstate results (one main cycle is one client tick, so it can be a local method cache in emitterLogicLoop() or one that is kept but cleared at the start of it)
 
 
 

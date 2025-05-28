@@ -9,7 +9,6 @@ import com.fantasticsource.customparticles.client.path.PathRegistry;
 import com.fantasticsource.mctools.ClientTickTimer;
 import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.tools.Tools;
-import com.fantasticsource.tools.datastructures.VectorN;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -32,7 +31,8 @@ import static com.fantasticsource.customparticles.CustomParticles.MODID;
 @SideOnly(Side.CLIENT)
 public class ParticleHandler
 {
-    protected static VectorN workingVec = new VectorN(1, 1, 1);
+    public static final double SPHERE_DENSITY_MULTIPLIER = 0.0001;
+
     protected static volatile boolean tickEmitters = false;
     protected static int tickEmitterSkips = 0;
 
@@ -130,6 +130,7 @@ public class ParticleHandler
         BlockPos.MutableBlockPos mutPos = new BlockPos.MutableBlockPos();
         double[] pos;
         double x, y, z;
+        Object obj;
         while (true)
         {
             if (tickEmitters && !minecraft.isGamePaused())
@@ -151,13 +152,7 @@ public class ParticleHandler
                         for (CustomParticleEmitter emitter : entry.getValue())
                         {
                             //All block emitters
-
-
-                            Object obj;
-                            //Simulate vanilla to some extent, at least for now
-                            //Changing amount
-                            //Changing ranges, since the default culling distance on these is 30
-                            for (int i = 0; i < 150; i++)
+                            for (int i = (int) (emitter.density * emitter.cullDistanceCubed * SPHERE_DENSITY_MULTIPLIER); i >= 0; i--)
                             {
                                 pos = Tools.randomWithinSphere(emitter.cullDistance);
                                 obj = world.getBlockState(mutPos.setPos(x + pos[0], y + pos[1], z + pos[2]));

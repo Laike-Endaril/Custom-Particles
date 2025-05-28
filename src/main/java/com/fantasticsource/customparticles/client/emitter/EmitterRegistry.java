@@ -1,7 +1,6 @@
 package com.fantasticsource.customparticles.client.emitter;
 
 import com.fantasticsource.customparticles.FileWordParser;
-import com.fantasticsource.customparticles.client.factory.CustomParticleFactory;
 import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.mctools.blocks.AdvancedBlockFilter;
 import net.minecraft.util.ResourceLocation;
@@ -69,7 +68,13 @@ public class EmitterRegistry extends FileWordParser
 
                 case "culldistance":
                 case "cullingdistance":
+                case "cull":
+                case "culling":
                     cullingDistance(args);
+                    break;
+
+                case "density":
+                    density(args);
                     break;
 
 
@@ -204,6 +209,21 @@ public class EmitterRegistry extends FileWordParser
             throw new IllegalArgumentException(error);
         }
 
-        ((CustomParticleEmitter) currentObject).setCullingDistance(Integer.parseInt(args.get(0)));
+        ((CustomParticleEmitter) currentObject).setCullingDistance(Double.parseDouble(args.get(0)));
+    }
+
+    public void density(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for density!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'density' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        ((CustomParticleEmitter) currentObject).density = Double.parseDouble(args.get(0));
     }
 }

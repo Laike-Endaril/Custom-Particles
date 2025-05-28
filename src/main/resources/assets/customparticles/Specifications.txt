@@ -219,8 +219,13 @@ For block emitters, fullSolidBlock makes an emitter only spawn particles if the 
 
 
 
-cullDistance / cullingDistance <distanceInBlocks>
+cullDistance / cullingDistance / cull / culling <distanceInBlocks>
 If the particle is at least this far away from the player, destroy it (default 30).
+
+
+
+density <amount>
+How much the emitter spawns particles (default 100)
 
 
 
