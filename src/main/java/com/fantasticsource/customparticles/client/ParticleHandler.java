@@ -9,6 +9,7 @@ import com.fantasticsource.customparticles.client.path.PathRegistry;
 import com.fantasticsource.mctools.ClientTickTimer;
 import com.fantasticsource.mctools.MCTools;
 import com.fantasticsource.tools.Tools;
+import com.fantasticsource.tools.datastructures.VectorN;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
@@ -31,6 +32,7 @@ import static com.fantasticsource.customparticles.CustomParticles.MODID;
 @SideOnly(Side.CLIENT)
 public class ParticleHandler
 {
+    protected static VectorN workingVec = new VectorN(1, 1, 1);
     protected static volatile boolean tickEmitters = false;
     protected static int tickEmitterSkips = 0;
 
@@ -125,64 +127,41 @@ public class ParticleHandler
         Minecraft minecraft = Minecraft.getMinecraft();
         World world;
         EntityPlayer player;
-        CustomParticleEmitter emitter;
         BlockPos.MutableBlockPos mutPos = new BlockPos.MutableBlockPos();
+        double[] pos;
+        double x, y, z;
         while (true)
         {
             if (tickEmitters && !minecraft.isGamePaused())
             {
                 tickEmitters = false;
+
+
                 world = minecraft.world;
                 player = Minecraft.getMinecraft().player;
+                x = player.posX;
+                y = (int) (player.posY + player.eyeHeight);
+                z = player.posZ;
 
                 for (Map.Entry<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> entry : EMITTERS.entrySet())
                 {
                     //All emitters of a specific type (see CustomParticleEmitter.getType())
                     if (entry.getKey() == EmitterBlock.class)
                     {
-                        BlockPos playerPos = player.getPosition();
-                        int x = playerPos.getX(), z = playerPos.getZ(), eyeY = (int) (player.posY + player.eyeHeight);
-                        int xx, yy, zz;
-                        Object obj;
-                        ArrayList<CustomParticleEmitter> list = new ArrayList<>();
-                        //Simulate vanilla to some extent, at least for now
-                        //Changing amount
-                        //Changing ranges, since the default culling distance on these is 30
-                        for (int i = 0; i < 150; i++)
+                        for (CustomParticleEmitter emitter : entry.getValue())
                         {
-                            xx = x - 15 + Tools.random(31);
-                            yy = eyeY - 15 + Tools.random(31);
-                            zz = z - 15 + Tools.random(31);
-                            obj = world.getBlockState(mutPos.setPos(xx, yy, zz));
+                            //All block emitters
 
-                            list.addAll(entry.getValue());
-                            while (list.size() > 0)
+
+                            Object obj;
+                            //Simulate vanilla to some extent, at least for now
+                            //Changing amount
+                            //Changing ranges, since the default culling distance on these is 30
+                            for (int i = 0; i < 150; i++)
                             {
-                                emitter = Tools.choose(list);
-                                if (emitter.triggerFactories(xx, yy, zz, obj))
-                                {
-                                    list.clear();
-                                    break;
-                                }
-                                else list.remove(emitter);
-                            }
-
-
-                            xx = x - 30 + Tools.random(61);
-                            yy = eyeY - 30 + Tools.random(61);
-                            zz = z - 30 + Tools.random(61);
-                            obj = world.getBlockState(mutPos.setPos(xx, yy, zz));
-
-                            list.addAll(entry.getValue());
-                            while (list.size() > 0)
-                            {
-                                emitter = Tools.choose(list);
-                                if (emitter.triggerFactories(xx, yy, zz, obj))
-                                {
-                                    list.clear();
-                                    break;
-                                }
-                                else list.remove(emitter);
+                                pos = Tools.randomWithinSphere(emitter.cullDistance);
+                                obj = world.getBlockState(mutPos.setPos(x + pos[0], y + pos[1], z + pos[2]));
+                                emitter.triggerFactories(mutPos.getX(), mutPos.getY(), mutPos.getZ(), obj);
                             }
                         }
                     }

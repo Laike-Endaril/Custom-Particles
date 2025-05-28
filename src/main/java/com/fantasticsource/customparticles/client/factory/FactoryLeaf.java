@@ -40,10 +40,11 @@ public class FactoryLeaf extends CustomParticleFactory
 
         groundLeafFactory = args ->
         {
-            PathedParticle particle = new PathedParticle(leafFadeTicks, particleRenderData);
-            if (cullDistanceSquared != -1) particle.cullDistanceSquared = cullDistanceSquared;
-
             PathedParticle parent = (PathedParticle) args[0];
+
+            PathedParticle particle = new PathedParticle(leafFadeTicks, particleRenderData);
+            particle.cullDistanceSquared = parent.cullDistanceSquared;
+
             Vec3d deathPos = parent.deathPos;
             double x = deathPos.x, y = deathPos.y, z = deathPos.z;
             if (parent.getAge() != parent.maxAge)

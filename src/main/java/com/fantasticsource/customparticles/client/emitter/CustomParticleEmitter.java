@@ -42,7 +42,7 @@ public abstract class CustomParticleEmitter
     public final HashSet<Biome> biomes = new HashSet<>();
 
     public boolean dimensionsAreWhitelist = true, biomesAreWhitelist = true;
-    public int cullDistanceSquared = -1;
+    public int cullDistance = 30, cullDistanceSquared = 900;
 
 
     public CustomParticleEmitter()
@@ -69,6 +69,7 @@ public abstract class CustomParticleEmitter
 
     public void setCullingDistance(int cullDistance)
     {
+        this.cullDistance = cullDistance;
         cullDistanceSquared = cullDistance >= (Integer.MAX_VALUE >> 1) ? Integer.MAX_VALUE : cullDistance << 1;
     }
 
