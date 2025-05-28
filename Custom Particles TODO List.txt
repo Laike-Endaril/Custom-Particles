@@ -5,14 +5,17 @@ Watch out for "Tick-based particle emitters skipped x ticks in the last second" 
 "/omni threads" can be used for very rough profiling
 
 
+OpenGL does not seem to have a way to correctly order pixels for fragment renders built-in, so...
+...if a rendering issue comes up with further particles rendering on top of closer particles, I'll basically need to sort particle rendering by distance
+...unless I decide to go full shader and do my own z-ordered-pixel-queue-per-fragment implementation (not likely)
+
+
 
 TODO ==========================================================================================================================
 
 Update lib and req before release
 
 Fix wallfall continuing past applicable blocks
-
-Check blending; is it actually rendered correctly?
 
 Make leaf type have a more randomized flight path via CPathRandomConstant
 Do I still need to add CPathRandomConstant to scripting support?

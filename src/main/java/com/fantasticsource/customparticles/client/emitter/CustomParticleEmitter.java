@@ -48,7 +48,7 @@ public abstract class CustomParticleEmitter
     public double density = 100;
 
     protected double cullDistance = 30, cullDistanceSquared = 900, cullDistanceCubed = 27000,
-            maxSpawnDistance = -1, maxSpawnDistanceSquared = 841, maxSpawnDistanceCubed = 24389;
+            maxSpawnDistance = 20, maxSpawnDistanceSquared = 400, maxSpawnDistanceCubed = 8000;
 
 
     public CustomParticleEmitter()
@@ -80,19 +80,13 @@ public abstract class CustomParticleEmitter
         this.cullDistance = cullDistance;
         cullDistanceSquared = cullDistance * cullDistance;
         cullDistanceCubed = cullDistanceSquared * cullDistance;
-
-        if (maxSpawnDistance == -1)
-        {
-            //-1 means "default" aka "set via cull distance - 1"
-            setMaxSpawnDistance(cullDistance / 1.5);
-            maxSpawnDistance = -1;
-        }
     }
 
     public double getCullDistanceSquared()
     {
         return cullDistanceSquared;
     }
+
 
     public void setMaxSpawnDistance(double maxSpawnDistance)
     {
@@ -105,7 +99,6 @@ public abstract class CustomParticleEmitter
 
     public double getMaxSpawnDistance()
     {
-        if (maxSpawnDistance == -1) return cullDistance;
         return Tools.min(maxSpawnDistance, cullDistance);
     }
 
@@ -118,6 +111,7 @@ public abstract class CustomParticleEmitter
     {
         return Tools.min(maxSpawnDistanceCubed, cullDistanceCubed);
     }
+
 
     public final boolean canTriggerMainChecks(int x, int y, int z, Object obj)
     {
