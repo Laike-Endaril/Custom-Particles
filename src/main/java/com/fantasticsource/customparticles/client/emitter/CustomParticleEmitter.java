@@ -47,7 +47,7 @@ public abstract class CustomParticleEmitter
 
     public CustomParticleEmitter()
     {
-        ParticleHandler.EMITTERS.computeIfAbsent(getClass(), o -> new ArrayList<>()).add(this);
+        ParticleHandler.EMITTERS.computeIfAbsent(getType(), o -> new ArrayList<>()).add(this);
     }
 
 
@@ -103,6 +103,9 @@ public abstract class CustomParticleEmitter
 
         return true;
     }
+
+
+    public abstract Class<? extends CustomParticleEmitter> getType();
 
     public abstract boolean triggerFactories(int x, int y, int z, Object obj);
 }

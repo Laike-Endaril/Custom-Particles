@@ -137,7 +137,8 @@ public class ParticleHandler
 
                 for (Map.Entry<Class<? extends CustomParticleEmitter>, ArrayList<CustomParticleEmitter>> entry : EMITTERS.entrySet())
                 {
-                    if (EmitterBlock.class.isAssignableFrom(entry.getKey()))
+                    //All emitters of a specific type (see CustomParticleEmitter.getType())
+                    if (entry.getKey() == EmitterBlock.class)
                     {
                         BlockPos playerPos = player.getPosition();
                         int x = playerPos.getX(), z = playerPos.getZ(), eyeY = (int) (player.posY + player.eyeHeight);

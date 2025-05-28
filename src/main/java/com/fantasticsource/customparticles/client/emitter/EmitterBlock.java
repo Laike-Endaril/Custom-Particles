@@ -37,6 +37,12 @@ public class EmitterBlock extends CustomParticleEmitter
 
 
     @Override
+    public Class<? extends CustomParticleEmitter> getType()
+    {
+        return EmitterBlock.class;
+    }
+
+    @Override
     public boolean triggerFactories(int x, int y, int z, Object obj)
     {
         if (!canTriggerMainChecks(x, y, z, obj)) return false;
