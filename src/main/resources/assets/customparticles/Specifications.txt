@@ -140,11 +140,6 @@ Or google "glblendfunc".
 
 
 
-cullDistance / cullingDistance <distanceInBlocks>
-If the particle is at least this far away from the player, destroy it (default 30).
-
-
-
 useFacingRotation <true / false>
 Whether to start the particle with 3D rotation based on facing (implementation depends on emitter type spawning the particle; block emitters should be obvious)
 
@@ -221,6 +216,11 @@ fullSolidBlock
 Sets additional requirements for the emitter to be able to trigger.
 slimeChunk makes an emitter only spawn particles when inside a slime chunk, and below y=40.
 For block emitters, fullSolidBlock makes an emitter only spawn particles if the emitter is attached to a full, solid block (via the block filter).
+
+
+
+cullDistance / cullingDistance <distanceInBlocks>
+If the particle is at least this far away from the player, destroy it (default 30).
 
 
 

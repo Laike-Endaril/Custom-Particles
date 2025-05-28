@@ -78,11 +78,6 @@ public class FactoryRegistry extends FileWordParser
                     texture(args);
                     break;
 
-                case "culldistance":
-                case "cullingdistance":
-                    cullingDistance(args);
-                    break;
-
                 case "spritemeta":
                 case "spritemetadata":
                     //Needs to be applied after texture function in some cases to work correctly
@@ -311,21 +306,6 @@ public class FactoryRegistry extends FileWordParser
 
         ((CustomParticleFactory) currentObject).spriteMetaData = null;
         ((CustomParticleFactory) currentObject).setTexture(args.get(0));
-    }
-
-    public void cullingDistance(ArrayList<String> args)
-    {
-        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
-
-        if (args.size() > 1)
-        {
-            Iterator<String> iterator = args.iterator();
-            String error = "'cullingDistance' function only takes 1 argument!  Arguments given: " + iterator.next();
-            while (iterator.hasNext()) error += ", " + iterator.next();
-            throw new IllegalArgumentException(error);
-        }
-
-        ((CustomParticleFactory) currentObject).setCullingDistance(Integer.parseInt(args.get(0)));
     }
 
     public void spriteMetaData(ArrayList<String> args)

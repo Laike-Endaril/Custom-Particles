@@ -1,6 +1,7 @@
 package com.fantasticsource.customparticles.client.emitter;
 
 import com.fantasticsource.customparticles.FileWordParser;
+import com.fantasticsource.customparticles.client.factory.CustomParticleFactory;
 import com.fantasticsource.customparticles.client.factory.FactoryRegistry;
 import com.fantasticsource.mctools.blocks.AdvancedBlockFilter;
 import net.minecraft.util.ResourceLocation;
@@ -64,6 +65,11 @@ public class EmitterRegistry extends FileWordParser
 
                 case "biomesarewhitelist":
                     biomesAreWhitelist(args);
+                    break;
+
+                case "culldistance":
+                case "cullingdistance":
+                    cullingDistance(args);
                     break;
 
 
@@ -184,5 +190,20 @@ public class EmitterRegistry extends FileWordParser
         }
 
         ((CustomParticleEmitter) currentObject).biomesAreWhitelist = Boolean.parseBoolean(args.get(0));
+    }
+
+    public void cullingDistance(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for cullingDistance!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'cullingDistance' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        ((CustomParticleEmitter) currentObject).setCullingDistance(Integer.parseInt(args.get(0)));
     }
 }

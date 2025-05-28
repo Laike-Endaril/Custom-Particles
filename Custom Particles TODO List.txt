@@ -8,8 +8,14 @@ Watch out for "Tick-based particle emitters skipped x ticks in the last second" 
 
 TODO ==========================================================================================================================
 
+Change emitter groups to use a "type" instead of their class (eg. EmitterBlock and EmitterWallFall will have the same "type")
+The main EMITTERS map used in ParticleHandler.emitterLogicLoop() should have keys of "type" and values of ExplicitPriorityQueue, ordered by emitter cull distance (furthest to nearest)
+Use a per-client-tick cache for blockstate results (one main cycle is one client tick, so it can be a local method cache in emitterLogicLoop() or one that is kept but cleared at the start of it)
+
 Control range of block-finding checks with cull distance settings (currently in factory, but might want to move to emitter for this)
 Add density control, make sure to scale based on total blocks in block-finding range
+
+
 
 Add weather checks
 Rain strength and thunder strength filters (<min> [max] for each)

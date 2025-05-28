@@ -56,7 +56,7 @@ public abstract class CustomParticleFactory
     public final ArrayList<CPath> motionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>(), animationPaths = new ArrayList<>();
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
-    protected int cullDistanceSquared = -1, maxAge = -1;
+    protected int maxAge = -1;
     protected double startingRotationMin, startingRotationMax, spinRate;
 
 
@@ -87,12 +87,6 @@ public abstract class CustomParticleFactory
     }
 
 
-    public void setCullingDistance(int cullDistance)
-    {
-        cullDistanceSquared = cullDistance >= (Integer.MAX_VALUE >> 1) ? Integer.MAX_VALUE : cullDistance << 1;
-    }
-
-
     public void setStartingAngle(double minDegrees, double maxDegrees)
     {
         startingRotationMin = -Tools.degtorad(minDegrees);
@@ -110,7 +104,7 @@ public abstract class CustomParticleFactory
         PathedParticle particle = create(x, y, z);
 
 
-        if (cullDistanceSquared != -1) particle.cullDistanceSquared = cullDistanceSquared;
+        if (emitter.cullDistanceSquared != -1) particle.cullDistanceSquared = emitter.cullDistanceSquared;
 
         particle.spriteMetaData = spriteMetaData;
         particle.useFoliageColor = useFoliageColor;
