@@ -73,6 +73,10 @@ public class EmitterRegistry extends FileWordParser
                     cullingDistance(args);
                     break;
 
+                case "maxspawndistance":
+                    maxSpawnDistance(args);
+                    break;
+
                 case "density":
                     density(args);
                     break;
@@ -210,6 +214,21 @@ public class EmitterRegistry extends FileWordParser
         }
 
         ((CustomParticleEmitter) currentObject).setCullingDistance(Double.parseDouble(args.get(0)));
+    }
+
+    public void maxSpawnDistance(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for maxSpawnDistance!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'maxSpawnDistance' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        ((CustomParticleEmitter) currentObject).setMaxSpawnDistance(Double.parseDouble(args.get(0)));
     }
 
     public void density(ArrayList<String> args)

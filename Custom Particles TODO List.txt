@@ -8,7 +8,14 @@ Watch out for "Tick-based particle emitters skipped x ticks in the last second" 
 
 TODO ==========================================================================================================================
 
-Fix particles spawning outside their cull radius
+Update lib and req before release
+
+Fix wallfall continuing past applicable blocks
+
+Check blending; is it actually rendered correctly?
+
+Make leaf type have a more randomized flight path via CPathRandomConstant
+Do I still need to add CPathRandomConstant to scripting support?
 
 Use a per-client-tick cache for blockstate results (one main cycle is one client tick, so it can be a local method cache in emitterLogicLoop() or one that is kept but cleared at the start of it)
 

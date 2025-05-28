@@ -2,9 +2,12 @@ package com.fantasticsource.customparticles.client.emitter;
 
 import com.fantasticsource.customparticles.client.ParticleHandler;
 import com.fantasticsource.customparticles.client.factory.CustomParticleFactory;
+import com.fantasticsource.tools.Tools;
+import com.fantasticsource.tools.component.path.CPath;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -42,7 +45,10 @@ public abstract class CustomParticleEmitter
     public final HashSet<Biome> biomes = new HashSet<>();
 
     public boolean dimensionsAreWhitelist = true, biomesAreWhitelist = true;
-    public double cullDistance = 30, cullDistanceSquared = 900, cullDistanceCubed = 27000, density = 100;
+    public double density = 100;
+
+    protected double cullDistance = 30, cullDistanceSquared = 900, cullDistanceCubed = 27000,
+            maxSpawnDistance = -1, maxSpawnDistanceSquared = 841, maxSpawnDistanceCubed = 24389;
 
 
     public CustomParticleEmitter()
@@ -69,11 +75,49 @@ public abstract class CustomParticleEmitter
 
     public void setCullingDistance(double cullDistance)
     {
+        if (cullDistance <= 0) throw new IllegalArgumentException("Cull distance must be greater than 0!");
+
         this.cullDistance = cullDistance;
         cullDistanceSquared = cullDistance * cullDistance;
         cullDistanceCubed = cullDistanceSquared * cullDistance;
+
+        if (maxSpawnDistance == -1)
+        {
+            //-1 means "default" aka "set via cull distance - 1"
+            setMaxSpawnDistance(cullDistance / 1.5);
+            maxSpawnDistance = -1;
+        }
     }
 
+    public double getCullDistanceSquared()
+    {
+        return cullDistanceSquared;
+    }
+
+    public void setMaxSpawnDistance(double maxSpawnDistance)
+    {
+        if (maxSpawnDistance <= 0) throw new IllegalArgumentException("Max spawn distance must be greater than 0!");
+
+        this.maxSpawnDistance = maxSpawnDistance;
+        maxSpawnDistanceSquared = maxSpawnDistance * maxSpawnDistance;
+        maxSpawnDistanceCubed = maxSpawnDistanceSquared * maxSpawnDistance;
+    }
+
+    public double getMaxSpawnDistance()
+    {
+        if (maxSpawnDistance == -1) return cullDistance;
+        return Tools.min(maxSpawnDistance, cullDistance);
+    }
+
+    public double getMaxSpawnDistanceSquared()
+    {
+        return Tools.min(maxSpawnDistanceSquared, cullDistanceSquared);
+    }
+
+    public double getMaxSpawnDistanceCubed()
+    {
+        return Tools.min(maxSpawnDistanceCubed, cullDistanceCubed);
+    }
 
     public final boolean canTriggerMainChecks(int x, int y, int z, Object obj)
     {
@@ -110,4 +154,13 @@ public abstract class CustomParticleEmitter
     public abstract Class<? extends CustomParticleEmitter> getType();
 
     public abstract boolean triggerFactories(int x, int y, int z, Object obj);
+
+    public boolean trySpawn(double x, double y, double z, Minecraft minecraft, EntityPlayer player, CustomParticleFactory factory, CPath facingRotationPath)
+    {
+        if (player.getPositionVector().squareDistanceTo(x, y - player.eyeHeight, z) > getMaxSpawnDistanceSquared()) return false;
+
+        if (Thread.currentThread().getName().equals("Client thread")) factory.createInternal(x, y, z, this, facingRotationPath);
+        else minecraft.addScheduledTask(() -> factory.createInternal(x, y, z, this, facingRotationPath));
+        return true;
+    }
 }

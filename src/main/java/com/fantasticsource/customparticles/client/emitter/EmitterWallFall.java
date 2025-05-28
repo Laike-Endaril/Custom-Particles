@@ -148,7 +148,8 @@ public class EmitterWallFall extends EmitterBlock
 
     protected void triggerRecursive(World world, CustomParticleFactory factory, double x, double y, double z, int mainColumnX, int mainColumnZ, Object obj, CPath facingRotation)
     {
-        if (world != Minecraft.getMinecraft().world) return;
+        Minecraft minecraft = Minecraft.getMinecraft();
+        if (world != minecraft.world) return;
 
         if (!canTriggerMainChecks(mainColumnX, (int) y, mainColumnZ, obj)) return;
         if (blockFilter.matches((IBlockState) obj) != isWhitelist) return;
@@ -157,6 +158,7 @@ public class EmitterWallFall extends EmitterBlock
         if (adjacent.getMaterial().blocksMovement() && Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS))) return;
 
 
+        trySpawn(x, y, z, minecraft, minecraft.player, factory, facingRotation);
         factory.createInternal(x, y, z, this, facingRotation);
         ClientTickTimer.schedule(ticksPerMove, () -> triggerRecursive(world, factory, x, y - gridSectorH, z, mainColumnX, mainColumnZ, obj, facingRotation));
     }

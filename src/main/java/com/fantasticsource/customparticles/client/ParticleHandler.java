@@ -154,9 +154,9 @@ public class ParticleHandler
                             for (CustomParticleEmitter emitter : entry.getValue())
                             {
                                 //All block emitters
-                                for (int i = (int) (emitter.density * emitter.cullDistanceCubed * SPHERE_DENSITY_MULTIPLIER); i >= 0; i--)
+                                for (int i = (int) (emitter.density * emitter.getMaxSpawnDistanceCubed() * SPHERE_DENSITY_MULTIPLIER); i >= 0; i--)
                                 {
-                                    pos = Tools.randomWithinSphere(emitter.cullDistance);
+                                    pos = Tools.randomWithinSphere(emitter.getMaxSpawnDistance());
                                     obj = world.getBlockState(mutPos.setPos(x + pos[0], y + pos[1], z + pos[2]));
                                     emitter.triggerFactories(mutPos.getX(), mutPos.getY(), mutPos.getZ(), obj);
                                 }

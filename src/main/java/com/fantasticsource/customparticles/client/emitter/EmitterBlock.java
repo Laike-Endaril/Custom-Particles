@@ -8,6 +8,7 @@ import com.fantasticsource.tools.component.path.CPathConstant;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -54,6 +55,10 @@ public class EmitterBlock extends CustomParticleEmitter
 
         Minecraft minecraft = Minecraft.getMinecraft();
         World world = minecraft.world;
+        EntityPlayer player = minecraft.player;
+        if (world == null || player == null) return false;
+
+
         boolean spawned = false;
         IBlockState adjacent;
         ArrayList<OffsetMode> modeQueue = new ArrayList<>();
@@ -74,8 +79,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).up());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            minecraft.addScheduledTask(() -> factory.createInternal(x + Tools.random(1d), y + 1.01, z + Tools.random(1d), this, FACING_ROTATION_TOP));
-                            spawned = true;
+                            if (trySpawn(x + Tools.random(), y + 1.01, z + Tools.random(), minecraft, player, factory, FACING_ROTATION_TOP)) spawned = true;
                         }
                         break;
 
@@ -83,8 +87,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).down());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            minecraft.addScheduledTask(() -> factory.createInternal(x + Tools.random(1d), y - 0.01, z + Tools.random(1d), this, FACING_ROTATION_BOTTOM));
-                            spawned = true;
+                            if (trySpawn(x + Tools.random(), y - 0.01, z + Tools.random(), minecraft, player, factory, FACING_ROTATION_BOTTOM)) spawned = true;
                         }
                         break;
 
@@ -92,8 +95,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).north());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            minecraft.addScheduledTask(() -> factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z - 0.01, this, FACING_ROTATION_NORTH));
-                            spawned = true;
+                            if (trySpawn(x + Tools.random(), y + Tools.random(), z - 0.01, minecraft, player, factory, FACING_ROTATION_NORTH)) spawned = true;
                         }
                         break;
 
@@ -101,8 +103,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).south());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            minecraft.addScheduledTask(() -> factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + 1.01, this, FACING_ROTATION_SOUTH));
-                            spawned = true;
+                            if (trySpawn(x + Tools.random(), y + Tools.random(), z + 1.01, minecraft, player, factory, FACING_ROTATION_SOUTH)) spawned = true;
                         }
                         break;
 
@@ -110,8 +111,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).west());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            minecraft.addScheduledTask(() -> factory.createInternal(x - 0.01, y + Tools.random(1d), z + Tools.random(1d), this, FACING_ROTATION_WEST));
-                            spawned = true;
+                            if (trySpawn(x - 0.01, y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_WEST)) spawned = true;
                         }
                         break;
 
@@ -119,14 +119,12 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).east());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            minecraft.addScheduledTask(() -> factory.createInternal(x + 1.01, y + Tools.random(1d), z + Tools.random(1d), this, FACING_ROTATION_EAST));
-                            spawned = true;
+                            if (trySpawn(x + 1.01, y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_EAST)) spawned = true;
                         }
                         break;
 
                     case INSIDE:
-                        minecraft.addScheduledTask(() -> factory.createInternal(x + Tools.random(1d), y + Tools.random(1d), z + Tools.random(1d), this, FACING_ROTATION_NORTH));
-                        spawned = true;
+                        if (trySpawn(x + Tools.random(), y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_NORTH)) spawned = true;
                         break;
                 }
             }
@@ -135,4 +133,6 @@ public class EmitterBlock extends CustomParticleEmitter
 
         return spawned;
     }
+
+
 }

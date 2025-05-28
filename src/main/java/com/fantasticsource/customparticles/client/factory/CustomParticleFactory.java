@@ -104,7 +104,7 @@ public abstract class CustomParticleFactory
         PathedParticle particle = create(x, y, z);
 
 
-        if (emitter.cullDistanceSquared != -1) particle.cullDistanceSquared = (int) emitter.cullDistanceSquared;
+        particle.cullDistanceSquared = emitter.getCullDistanceSquared();
 
         particle.spriteMetaData = spriteMetaData;
         particle.useFoliageColor = useFoliageColor;

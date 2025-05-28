@@ -224,8 +224,13 @@ If the particle is at least this far away from the player, destroy it (default 3
 
 
 
+maxSpawnDistance <distanceInBlocks>
+The maximum distance at which the emitter can spawn particles.
+
+
+
 density <amount>
-How much the emitter spawns particles (default 100)
+How much the emitter spawns particles (default 100).
 
 
 
