@@ -160,6 +160,10 @@ public class EmitterWallFall extends EmitterBlock
 
         trySpawn(x, y, z, minecraft, minecraft.player, factory, facingRotation);
         factory.createInternal(x, y, z, this, facingRotation);
-        ClientTickTimer.schedule(ticksPerMove, () -> triggerRecursive(world, factory, x, y - gridSectorH, z, mainColumnX, mainColumnZ, obj, facingRotation));
+
+
+        double yy = y - gridSectorH;
+        Object nextObj = ((int) y != (int) yy) ? world.getBlockState(MUT_POS.setPos(mainColumnX, yy, mainColumnZ)) : obj;
+        ClientTickTimer.schedule(ticksPerMove, () -> triggerRecursive(world, factory, x, yy, z, mainColumnX, mainColumnZ, nextObj, facingRotation));
     }
 }

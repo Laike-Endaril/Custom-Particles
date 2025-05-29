@@ -18,8 +18,6 @@ TODO ===========================================================================
 
 Update lib and req before release
 
-Fix wallfall continuing past applicable blocks
-
 Make leaf type have a more randomized flight path via CPathRandomConstant
 Do I still need to add CPathRandomConstant to scripting support?
 
