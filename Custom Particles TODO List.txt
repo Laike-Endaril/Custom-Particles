@@ -8,6 +8,17 @@ Watch out for "Tick-based particle emitters skipped x ticks in the last second" 
 
 TODO ==========================================================================================================================
 
+Improve on the main block filter syntax to support property checks
+This should allow for checking whether leaves are decayable or not (wanted for issue #1)
+Unsure whether this will help with leaf color matching for things like the Natura sakura (probably not?)
+
+Add better block color matching feature for block spawners? (wondering if eg. some modded leaf blocks use a pre-colored texture instead of block coloring?)
+
+Add weather checks...
+Rain strength <min> [max]
+Thunder strength <min> [max]
+
+
 OpenGL does not seem to have a way to correctly order pixels for fragment renders built-in, so there is a rendering issue with further particles rendering on top of closer particles
 I'll basically need to sort particle rendering by distance (furthest-to-nearest) to fix this
 
@@ -16,8 +27,10 @@ I might be able to fix this with different timing to trigger the main render loo
 
 
 
-Add weather checks
-Rain strength and thunder strength filters (<min> [max] for each)
+This could be useful for something later
+minecraft.getBlockColors().getColor()
+
+
 
 Spawners...
 * Entity (projectiles, bleeding/dripping)
@@ -26,13 +39,12 @@ Spawners...
 * Block hit
 * Item (eg. weapon trails, or a flaming sword, hopefully still flaming when on a display rack, etc)
 
-Add better block color matching feature for block spawners? (wondering if eg. some modded leaf blocks use a pre-colored texture instead of block coloring?)
-
 Look into a full rewrite for rendering *AND PHYSICS* on GPU side via SSBO and compute shader (and other shaders)
 Take a look at this as a possible reference:
 https://github.com/Ender-Development/EnderModpackTweaks/blob/master/src/main/java/io/enderdev/endermodpacktweaks/features/healthbar/HealthBarInstancingHelper.java
 
 Add command to reload settings during runtime, or do it automatically via file name / size detection
+Might want to do soft-errors first
 
 Add line number, line position printout for parsing errors
 
@@ -41,6 +53,8 @@ Add line number, line position printout for parsing errors
 Make block emitters use the sides of the block's bounding boxes...?
 ...and check for space internally...?
 ...and only check for adjacent block space if they need to (if the face is touching an adjacent blockspace)?
+
+
 
 Make Winds of Time mod (wind mechanics API) and hook into it
 Add wind multipliers for particles (random between min and max)
