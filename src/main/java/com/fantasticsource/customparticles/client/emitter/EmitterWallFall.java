@@ -159,7 +159,6 @@ public class EmitterWallFall extends EmitterBlock
 
 
         trySpawn(x, y, z, minecraft, minecraft.player, factory, facingRotation);
-        factory.createInternal(x, y, z, this, facingRotation);
 
 
         double yy = y - gridSectorH;
