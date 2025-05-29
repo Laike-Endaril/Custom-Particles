@@ -10,6 +10,9 @@ OpenGL does not seem to have a way to correctly order pixels for fragment render
 ...unless I decide to go full shader and do my own z-ordered-pixel-queue-per-fragment implementation (not likely)
 
 
+Particles currently render in front of translucent blocks even when inside / behind them (but not solid or cutout blocks, thanks to the z buffer)
+
+
 
 TODO ==========================================================================================================================
 
