@@ -14,8 +14,6 @@ I'll basically need to sort particle rendering by distance (furthest-to-nearest)
 Particles currently render in front of translucent blocks even when inside / behind them (but not solid or cutout blocks, thanks to the z buffer)
 I might be able to fix this with different timing to trigger the main render loop in PathedParticleManager
 
-Make leaf type have a more randomized flight path via CPathRandomConstant
-
 
 
 Add weather checks

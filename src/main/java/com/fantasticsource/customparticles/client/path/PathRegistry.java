@@ -183,7 +183,7 @@ public class PathRegistry extends FileWordParser
         CPath oldPath = (CPath) currentObject;
         currentObject = null;
 
-        handleFunction(args.remove(0), args);
+        handleFunction(args.remove(0).toLowerCase(), args);
         CPath result = (CPath) currentObject;
         currentObject = oldPath;
 
