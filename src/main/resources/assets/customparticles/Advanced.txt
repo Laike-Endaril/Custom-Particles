@@ -33,6 +33,9 @@ randomConstant / randomPosition / randomPos
 Returns a set of random values between 0 and the given arguments.  Will always return the same values for the same calling particle.
 
 
+sin / sine / sinuous <thetaPerSecond, thetaStartingOffset, values...>
+This path type has 2 additional arguments (the first 2), so a 3D version of it would be 5 arguments.
+Each value (all arguments after the 2nd) is the amplitude of the sine motion in that direction.
 
 
 
