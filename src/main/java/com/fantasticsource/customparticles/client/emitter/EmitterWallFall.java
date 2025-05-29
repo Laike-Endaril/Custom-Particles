@@ -34,13 +34,13 @@ public class EmitterWallFall extends EmitterBlock
     }
 
     @Override
-    public boolean triggerFactories(int x, int y, int z, Object obj)
+    public boolean triggerFactories(int x, int y, int z, Object source)
     {
-        if (!canTriggerMainChecks(x, y, z, obj)) return false;
+        if (!canTriggerMainChecks(x, y, z, source)) return false;
 
 
-        if (!(obj instanceof IBlockState)) return false;
-        if (blockFilter.matches((IBlockState) obj) != isWhitelist) return false;
+        if (!(source instanceof IBlockState)) return false;
+        if (blockFilter.matches((IBlockState) source) != isWhitelist) return false;
 
 
         Minecraft minecraft = Minecraft.getMinecraft();
@@ -78,7 +78,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z - 0.01, x, z, obj, FACING_ROTATION_NORTH));
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z - 0.01, x, z, source, FACING_ROTATION_NORTH));
                                 spawned = true;
                             }
                         }
@@ -96,7 +96,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z + 1.01, x, z, obj, FACING_ROTATION_SOUTH));
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z + 1.01, x, z, source, FACING_ROTATION_SOUTH));
                                 spawned = true;
                             }
                         }
@@ -114,7 +114,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x - 0.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, obj, FACING_ROTATION_WEST));
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x - 0.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, source, FACING_ROTATION_WEST));
                                 spawned = true;
                             }
                         }
@@ -132,7 +132,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + 1.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, obj, FACING_ROTATION_EAST));
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + 1.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, source, FACING_ROTATION_EAST));
                                 spawned = true;
                             }
                         }
@@ -158,7 +158,7 @@ public class EmitterWallFall extends EmitterBlock
         if (adjacent.getMaterial().blocksMovement() && Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS))) return;
 
 
-        trySpawn(x, y, z, minecraft, minecraft.player, factory, facingRotation);
+        trySpawn(x, y, z, minecraft, minecraft.player, factory, facingRotation, obj);
 
 
         double yy = y - gridSectorH;

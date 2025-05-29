@@ -99,9 +99,9 @@ public abstract class CustomParticleFactory
     }
 
 
-    public final void createInternal(double x, double y, double z, CustomParticleEmitter emitter, CPath facingRotationPath)
+    public final void createInternal(double x, double y, double z, CustomParticleEmitter emitter, CPath facingRotationPath, Object source)
     {
-        PathedParticle particle = create(x, y, z);
+        PathedParticle particle = create(x, y, z, source);
 
 
         particle.cullDistanceSquared = emitter.getCullDistanceSquared();
@@ -177,5 +177,5 @@ public abstract class CustomParticleFactory
         }
     }
 
-    public abstract PathedParticle create(double x, double y, double z);
+    public abstract PathedParticle create(double x, double y, double z, Object source);
 }

@@ -25,7 +25,7 @@ public class FactoryBasic extends CustomParticleFactory
 
 
     @Override
-    public PathedParticle create(double x, double y, double z)
+    public PathedParticle create(double x, double y, double z, Object source)
     {
         return factory.create(x, y, z);
     }

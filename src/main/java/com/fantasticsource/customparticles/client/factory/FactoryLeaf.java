@@ -112,7 +112,7 @@ public class FactoryLeaf extends CustomParticleFactory
 
 
     @Override
-    public PathedParticle create(double x, double y, double z)
+    public PathedParticle create(double x, double y, double z, Object source)
     {
         return fallingLeafFactory.create(x, y, z);
     }
