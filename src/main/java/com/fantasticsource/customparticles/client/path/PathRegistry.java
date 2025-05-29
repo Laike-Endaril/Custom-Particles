@@ -10,7 +10,15 @@ import java.util.Stack;
 public class PathRegistry extends FileWordParser
 {
     //Only allow direct creation of transforming paths; do NOT allow reference to PATHS map from a transformation (avoid circular logic and other complex issues)
-    public static final LinkedHashMap<String, CPath> PATHS = new LinkedHashMap<>();
+    protected static final LinkedHashMap<String, CPath> PATHS = new LinkedHashMap<>();
+
+    public static CPath getPath(String name, String caller)
+    {
+        CPath result = PATHS.get(name);
+        if (result == null) throw new IllegalArgumentException("Path not found: " + name + " (Called from: " + caller + ")");
+        return result;
+    }
+
 
     protected final Stack<CPath> stack = new Stack<>();
     protected CPath mostRecent;
