@@ -136,7 +136,7 @@ public abstract class CustomParticleEmitter
 
                 case FULLSOLIDBLOCK:
                     IBlockState blockState = (IBlockState) obj;
-                    if (!blockState.getMaterial().blocksMovement() || !blockState.getCollisionBoundingBox(world, MUT_POS).equals(Block.FULL_BLOCK_AABB)) return false;
+                    if (!blockState.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(blockState.getCollisionBoundingBox(world, MUT_POS))) return false;
                     break;
             }
         }
