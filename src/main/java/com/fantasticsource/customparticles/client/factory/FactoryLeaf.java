@@ -1,5 +1,6 @@
 package com.fantasticsource.customparticles.client.factory;
 
+import com.fantasticsource.customparticles.AdvancedBlockColors;
 import com.fantasticsource.mctools.particles.PathedParticle;
 import com.fantasticsource.mctools.particles.PathedParticleFactory;
 import com.fantasticsource.tools.SpriteMetaData;
@@ -7,7 +8,10 @@ import com.fantasticsource.tools.component.path.CPath;
 import com.fantasticsource.tools.component.path.CPathAccelerateToTerminalVel;
 import com.fantasticsource.tools.component.path.CPathConstant;
 import com.fantasticsource.tools.component.path.CPathLinear;
+import com.fantasticsource.tools.datastructures.Color;
 import com.fantasticsource.tools.datastructures.VectorN;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import static com.fantasticsource.customparticles.CustomParticles.MODID;
@@ -75,7 +79,8 @@ public class FactoryLeaf extends CustomParticleFactory
         fallingLeafFactory = args ->
         {
             PathedParticle particle = new PathedParticle(maxAge == -1 ? 200 : maxAge, particleRenderData);
-            particle.positionPath(new CPathConstant((double) args[0], (double) args[1], (double) args[2]));
+            double x = (double) args[0], y = (double) args[1], z = (double) args[2];
+            particle.positionPath(new CPathConstant(x, y, z));
 
             particle.positionPath(pathFall);
 
@@ -87,6 +92,11 @@ public class FactoryLeaf extends CustomParticleFactory
             particle.dieOnSolidsAndLiquids();
 
             particle.addOnDeathParticles(groundLeafFactory);
+
+            //TODO Move this to emitter logic
+            //TODO Add a "blockColor" boolean for the feature to the config script functionality
+            Color color = AdvancedBlockColors.getBlockColor(new BlockPos(x, y, z), (IBlockState) args[3]);
+            particle.rgbPath(new CPathConstant(color.rf(), color.gf(), color.bf()));
 
             return particle;
         };
@@ -114,6 +124,6 @@ public class FactoryLeaf extends CustomParticleFactory
     @Override
     public PathedParticle create(double x, double y, double z, Object source)
     {
-        return fallingLeafFactory.create(x, y, z);
+        return fallingLeafFactory.create(x, y, z, source);
     }
 }
