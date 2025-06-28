@@ -1,12 +1,20 @@
 package com.fantasticsource.customparticles.client.factory;
 
 import com.fantasticsource.customparticles.client.emitter.CustomParticleEmitter;
+import com.fantasticsource.customparticles.client.emitter.EmitterBlock;
+import com.fantasticsource.mctools.blocks.AdvancedBlockColors;
 import com.fantasticsource.mctools.particles.PathedParticle;
 import com.fantasticsource.mctools.particles.PathedParticleSharedRenderData;
 import com.fantasticsource.tools.SpriteMetaData;
 import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.component.path.CPath;
+import com.fantasticsource.tools.component.path.CPathConstant;
+import com.fantasticsource.tools.datastructures.Color;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.biome.BiomeColorHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -52,7 +60,7 @@ public abstract class CustomParticleFactory
 
 
     public SpriteMetaData spriteMetaData;
-    public boolean useFoliageColor = false, useFacingRotation = false;
+    public boolean useFoliageColor = false, useBlockColor = false, useFacingRotation = false;
     public final ArrayList<CPath> motionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>(), animationPaths = new ArrayList<>();
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
@@ -99,7 +107,7 @@ public abstract class CustomParticleFactory
     }
 
 
-    public final void createInternal(double x, double y, double z, CustomParticleEmitter emitter, CPath facingRotationPath, Object source)
+    public final void createInternal(double x, double y, double z, CustomParticleEmitter emitter, CPath facingRotationPath, Object source, BlockPos sourcePos)
     {
         PathedParticle particle = create(x, y, z, source);
 
@@ -107,7 +115,6 @@ public abstract class CustomParticleFactory
         particle.cullDistanceSquared = emitter.getCullDistanceSquared();
 
         particle.spriteMetaData = spriteMetaData;
-        particle.useFoliageColor = useFoliageColor;
 
         particle.positionData.paths.addAll(motionPaths);
 
@@ -143,25 +150,52 @@ public abstract class CustomParticleFactory
             particle.rotationData.paths.addAll(rotations);
         }
 
+
+        if (useFoliageColor)
+        {
+            if (particle.rgbData == null)
+            {
+                particle.rgbData = new CPath.CPathData(0);
+                particle.rgbData.paths = new ArrayList<>();
+            }
+
+            int c = BiomeColorHelper.getFoliageColorAtPos(Minecraft.getMinecraft().world, sourcePos);
+            particle.rgbData.paths.add(new CPathConstant(((c >> 16) & 255) / 255d, ((c >> 8) & 255) / 255d, (c & 255) / 255d));
+        }
+
+        if (useBlockColor)
+        {
+            if (particle.rgbData == null)
+            {
+                particle.rgbData = new CPath.CPathData(0);
+                particle.rgbData.paths = new ArrayList<>();
+            }
+
+            IBlockState state = emitter instanceof EmitterBlock ? (IBlockState) source : Minecraft.getMinecraft().world.getBlockState(sourcePos);
+            Color c = AdvancedBlockColors.getBlockColor(sourcePos, state);
+            particle.rgbData.paths.add(new CPathConstant(c.rf(), c.gf(), c.bf()));
+        }
+
         if (rgbPaths.size() > 0)
         {
             if (particle.rgbData == null)
             {
-                CPath.CPathData data = new CPath.CPathData(0);
-                data.paths = new ArrayList<>();
-                particle.rgbData = data;
+                particle.rgbData = new CPath.CPathData(0);
+                particle.rgbData.paths = new ArrayList<>();
             }
+
             particle.rgbData.paths.addAll(rgbPaths);
         }
+
 
         if (alphaPaths.size() > 0)
         {
             if (particle.alphaData == null)
             {
-                CPath.CPathData data = new CPath.CPathData(0);
-                data.paths = new ArrayList<>();
-                particle.alphaData = data;
+                particle.alphaData = new CPath.CPathData(0);
+                particle.alphaData.paths = new ArrayList<>();
             }
+
             particle.alphaData.paths.addAll(alphaPaths);
         }
 
@@ -169,10 +203,10 @@ public abstract class CustomParticleFactory
         {
             if (particle.animationData == null)
             {
-                CPath.CPathData data = new CPath.CPathData(0);
-                data.paths = new ArrayList<>();
-                particle.animationData = data;
+                particle.animationData = new CPath.CPathData(0);
+                particle.animationData.paths = new ArrayList<>();
             }
+
             particle.animationData.paths.addAll(animationPaths);
         }
     }

@@ -149,12 +149,12 @@ public abstract class CustomParticleEmitter
 
     public abstract boolean triggerFactories(int x, int y, int z, Object source);
 
-    public boolean trySpawn(double x, double y, double z, Minecraft minecraft, EntityPlayer player, CustomParticleFactory factory, CPath facingRotationPath, Object source)
+    public boolean trySpawn(double x, double y, double z, Minecraft minecraft, EntityPlayer player, CustomParticleFactory factory, CPath facingRotationPath, Object source, BlockPos sourcePos)
     {
         if (player.getPositionVector().squareDistanceTo(x, y - player.eyeHeight, z) > getMaxSpawnDistanceSquared()) return false;
 
-        if (Thread.currentThread().getName().equals("Client thread")) factory.createInternal(x, y, z, this, facingRotationPath, source);
-        else minecraft.addScheduledTask(() -> factory.createInternal(x, y, z, this, facingRotationPath, source));
+        if (Thread.currentThread().getName().equals("Client thread")) factory.createInternal(x, y, z, this, facingRotationPath, source, sourcePos);
+        else minecraft.addScheduledTask(() -> factory.createInternal(x, y, z, this, facingRotationPath, source, sourcePos));
         return true;
     }
 }

@@ -1,6 +1,5 @@
 package com.fantasticsource.customparticles.client.factory;
 
-import com.fantasticsource.customparticles.AdvancedBlockColors;
 import com.fantasticsource.mctools.particles.PathedParticle;
 import com.fantasticsource.mctools.particles.PathedParticleFactory;
 import com.fantasticsource.tools.SpriteMetaData;
@@ -8,10 +7,7 @@ import com.fantasticsource.tools.component.path.CPath;
 import com.fantasticsource.tools.component.path.CPathAccelerateToTerminalVel;
 import com.fantasticsource.tools.component.path.CPathConstant;
 import com.fantasticsource.tools.component.path.CPathLinear;
-import com.fantasticsource.tools.datastructures.Color;
 import com.fantasticsource.tools.datastructures.VectorN;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import static com.fantasticsource.customparticles.CustomParticles.MODID;
@@ -27,7 +23,7 @@ public class FactoryLeaf extends CustomParticleFactory
 
     public FactoryLeaf()
     {
-        useFoliageColor = true;
+        useBlockColor = true;
         useBlockLight(true);
 
         setTexture(MODID + ":textures/particles.png");
@@ -65,7 +61,6 @@ public class FactoryLeaf extends CustomParticleFactory
             particle.positionPath(new CPathConstant(x, y, z));
 
             particle.spriteMetaData = spriteMetaData;
-            particle.useFoliageColor = useFoliageColor;
 
             particle.rotationPath(new CPathConstant(parent.rotationData.getRelativePosition(parent.currentRenderMillis(0))));
             if (parent.rgbData != null) particle.rgbPath(new CPathConstant(parent.rgbData.getRelativePosition(parent.currentRenderMillis(0))));
@@ -93,10 +88,8 @@ public class FactoryLeaf extends CustomParticleFactory
 
             particle.addOnDeathParticles(groundLeafFactory);
 
-            //TODO Move this to emitter logic
-            //TODO Add a "blockColor" boolean for the feature to the config script functionality
-            Color color = AdvancedBlockColors.getBlockColor(new BlockPos(x, y, z), (IBlockState) args[3]);
-            particle.rgbPath(new CPathConstant(color.rf(), color.gf(), color.bf()));
+//            Color color = AdvancedBlockColors.getBlockColor(new BlockPos(x, y, z), (IBlockState) args[3]);
+//            particle.rgbPath(new CPathConstant(color.rf(), color.gf(), color.bf()));
 
             return particle;
         };

@@ -29,16 +29,9 @@ public class FactoryRegistry extends FileWordParser
             if (currentObject == null) throw new IllegalArgumentException("Template function must be called before any other function!");
             switch (function)
             {
-                case "usefoliagecolor":
-                    useFoliageColor(args);
-                    break;
-
-                case "startingangle":
-                    startingAngle(args);
-                    break;
-
-                case "spinrate":
-                    spinRate(args);
+                case "motionpath":
+                case "motionpaths":
+                    motionPaths(args);
                     break;
 
                 case "terminalvelocitymultiplier":
@@ -51,9 +44,65 @@ public class FactoryRegistry extends FileWordParser
                     terminalVelocityDelayMult(args);
                     break;
 
+
+                case "rotationpath":
+                case "rotationpaths":
+                    rotationPaths(args);
+                    break;
+
+                case "usefacingrotation":
+                    useFacingRotation(args);
+                    break;
+
+                case "startingangle":
+                    startingAngle(args);
+                    break;
+
+                case "spinrate":
+                    spinRate(args);
+                    break;
+
+
+                case "rgbpath":
+                case "rgbpaths":
+                    rgbPaths(args);
+                    break;
+
+                case "alphapath":
+                case "alphapaths":
+                    alphaPaths(args);
+                    break;
+
+                case "usefoliagecolor":
+                    useFoliageColor(args);
+                    break;
+
+                case "useblockcolor":
+                    useBlockColor(args);
+                    break;
+
                 case "useblocklight":
                     useBlockLight(args);
                     break;
+
+
+                case "tex":
+                case "texture":
+                    texture(args);
+                    break;
+
+                case "spritemeta":
+                case "spritemetadata":
+                    //Needs to be applied after texture function in some cases to work correctly
+                    ArrayList<String> args2 = new ArrayList<>(args);
+                    delayedFunctions.add(() -> spriteMetaData(args2));
+                    break;
+
+                case "animationpath":
+                case "animationpaths":
+                    animationPaths(args);
+                    break;
+
 
                 case "blendsource":
                 case "blendsrc":
@@ -71,48 +120,6 @@ public class FactoryRegistry extends FileWordParser
                 case "blenddstfactor":
                 case "blenddestinationfactor":
                     blendDestinationFactor(args);
-                    break;
-
-                case "tex":
-                case "texture":
-                    texture(args);
-                    break;
-
-                case "spritemeta":
-                case "spritemetadata":
-                    //Needs to be applied after texture function in some cases to work correctly
-                    ArrayList<String> args2 = new ArrayList<>(args);
-                    delayedFunctions.add(() -> spriteMetaData(args2));
-                    break;
-
-                case "usefacingrotation":
-                    useFacingRotation(args);
-                    break;
-
-
-                case "motionpath":
-                case "motionpaths":
-                    motionPaths(args);
-                    break;
-
-                case "rotationpath":
-                case "rotationpaths":
-                    rotationPaths(args);
-                    break;
-
-                case "rgbpath":
-                case "rgbpaths":
-                    rgbPaths(args);
-                    break;
-
-                case "alphapath":
-                case "alphapaths":
-                    alphaPaths(args);
-                    break;
-
-                case "animationpath":
-                case "animationpaths":
-                    animationPaths(args);
                     break;
 
 
@@ -163,6 +170,7 @@ public class FactoryRegistry extends FileWordParser
                 FACTORIES.put(currentObjectName, (CustomParticleFactory) currentObject);
                 break;
 
+
             default:
                 throw new IllegalArgumentException("Invalid template name: " + args.get(0));
         }
@@ -186,6 +194,21 @@ public class FactoryRegistry extends FileWordParser
         }
 
         ((CustomParticleFactory) currentObject).useFoliageColor = Boolean.parseBoolean(args.get(0));
+    }
+
+    public void useBlockColor(ArrayList<String> args)
+    {
+        if (args.size() == 0) throw new IllegalArgumentException("Missing argument for useBlockColor!");
+
+        if (args.size() > 1)
+        {
+            Iterator<String> iterator = args.iterator();
+            String error = "'useBlockColor' function only takes 1 argument!  Arguments given: " + iterator.next();
+            while (iterator.hasNext()) error += ", " + iterator.next();
+            throw new IllegalArgumentException(error);
+        }
+
+        ((CustomParticleFactory) currentObject).useBlockColor = Boolean.parseBoolean(args.get(0));
     }
 
     public void startingAngle(ArrayList<String> args)

@@ -54,6 +54,7 @@ public class EmitterWallFall extends EmitterBlock
         IBlockState adjacent, aboveAdjacent;
         ArrayList<OffsetMode> modeQueue = new ArrayList<>();
         ArrayList<CustomParticleFactory> factoryQueue = new ArrayList<>(factories);
+        BlockPos sourcePos = new BlockPos(x, y, z);
         while (!spawned && factoryQueue.size() > 0)
         {
             CustomParticleFactory factory = Tools.choose(factoryQueue);
@@ -78,7 +79,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z - 0.01, x, z, source, FACING_ROTATION_NORTH));
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z - 0.01, x, z, FACING_ROTATION_NORTH, source, sourcePos));
                                 spawned = true;
                             }
                         }
@@ -96,7 +97,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z + 1.01, x, z, source, FACING_ROTATION_SOUTH));
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), y + 1 - halfGridSectorH, z + 1.01, x, z, FACING_ROTATION_SOUTH, source, sourcePos));
                                 spawned = true;
                             }
                         }
@@ -114,7 +115,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x - 0.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, source, FACING_ROTATION_WEST));
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x - 0.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, FACING_ROTATION_WEST, source, sourcePos));
                                 spawned = true;
                             }
                         }
@@ -132,7 +133,7 @@ public class EmitterWallFall extends EmitterBlock
                             }
                             if (good)
                             {
-                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + 1.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, source, FACING_ROTATION_EAST));
+                                minecraft.addScheduledTask(() -> triggerRecursive(world, factory, x + 1.01, y + 1 - halfGridSectorH, z + halfGridSectorW + gridSectorW * Tools.random(gridWidthPerBlock), x, z, FACING_ROTATION_EAST, source, sourcePos));
                                 spawned = true;
                             }
                         }
@@ -146,23 +147,34 @@ public class EmitterWallFall extends EmitterBlock
     }
 
 
-    protected void triggerRecursive(World world, CustomParticleFactory factory, double x, double y, double z, int mainColumnX, int mainColumnZ, Object obj, CPath facingRotation)
+    protected void triggerRecursive(World world, CustomParticleFactory factory, double x, double y, double z, int mainColumnX, int mainColumnZ, CPath facingRotation, Object source, BlockPos sourcePos)
     {
         Minecraft minecraft = Minecraft.getMinecraft();
         if (world != minecraft.world) return;
 
-        if (!canTriggerMainChecks(mainColumnX, (int) y, mainColumnZ, obj)) return;
-        if (blockFilter.matches((IBlockState) obj) != isWhitelist) return;
+        if (!canTriggerMainChecks(mainColumnX, (int) y, mainColumnZ, source)) return;
+        if (blockFilter.matches((IBlockState) source) != isWhitelist) return;
 
         IBlockState adjacent = world.getBlockState(MUT_POS.setPos(x, y, z));
         if (adjacent.getMaterial().blocksMovement() && Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS))) return;
 
 
-        trySpawn(x, y, z, minecraft, minecraft.player, factory, facingRotation, obj);
+        trySpawn(x, y, z, minecraft, minecraft.player, factory, facingRotation, source, sourcePos);
 
 
         double yy = y - gridSectorH;
-        Object nextObj = ((int) y != (int) yy) ? world.getBlockState(MUT_POS.setPos(mainColumnX, yy, mainColumnZ)) : obj;
-        ClientTickTimer.schedule(ticksPerMove, () -> triggerRecursive(world, factory, x, yy, z, mainColumnX, mainColumnZ, nextObj, facingRotation));
+        BlockPos nextSourcePos;
+        Object nextSource;
+        if ((int) y != yy)
+        {
+            nextSourcePos = new BlockPos(mainColumnX, yy, mainColumnZ);
+            nextSource = world.getBlockState(nextSourcePos);
+        }
+        else
+        {
+            nextSourcePos = sourcePos;
+            nextSource = source;
+        }
+        ClientTickTimer.schedule(ticksPerMove, () -> triggerRecursive(world, factory, x, yy, z, mainColumnX, mainColumnZ, facingRotation, nextSource, nextSourcePos));
     }
 }

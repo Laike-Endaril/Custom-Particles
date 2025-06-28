@@ -63,6 +63,7 @@ public class EmitterBlock extends CustomParticleEmitter
         IBlockState adjacent;
         ArrayList<OffsetMode> modeQueue = new ArrayList<>();
         ArrayList<CustomParticleFactory> factoryQueue = new ArrayList<>(factories);
+        BlockPos sourcePos = new BlockPos(x, y, z);
         while (!spawned && factoryQueue.size() > 0)
         {
             CustomParticleFactory factory = Tools.choose(factoryQueue);
@@ -79,7 +80,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).up());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            if (trySpawn(x + Tools.random(), y + 1.01, z + Tools.random(), minecraft, player, factory, FACING_ROTATION_TOP, source)) spawned = true;
+                            if (trySpawn(x + Tools.random(), y + 1.01, z + Tools.random(), minecraft, player, factory, FACING_ROTATION_TOP, source, sourcePos)) spawned = true;
                         }
                         break;
 
@@ -87,7 +88,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).down());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            if (trySpawn(x + Tools.random(), y - 0.01, z + Tools.random(), minecraft, player, factory, FACING_ROTATION_BOTTOM, source)) spawned = true;
+                            if (trySpawn(x + Tools.random(), y - 0.01, z + Tools.random(), minecraft, player, factory, FACING_ROTATION_BOTTOM, source, sourcePos)) spawned = true;
                         }
                         break;
 
@@ -95,7 +96,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).north());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            if (trySpawn(x + Tools.random(), y + Tools.random(), z - 0.01, minecraft, player, factory, FACING_ROTATION_NORTH, source)) spawned = true;
+                            if (trySpawn(x + Tools.random(), y + Tools.random(), z - 0.01, minecraft, player, factory, FACING_ROTATION_NORTH, source, sourcePos)) spawned = true;
                         }
                         break;
 
@@ -103,7 +104,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).south());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            if (trySpawn(x + Tools.random(), y + Tools.random(), z + 1.01, minecraft, player, factory, FACING_ROTATION_SOUTH, source)) spawned = true;
+                            if (trySpawn(x + Tools.random(), y + Tools.random(), z + 1.01, minecraft, player, factory, FACING_ROTATION_SOUTH, source, sourcePos)) spawned = true;
                         }
                         break;
 
@@ -111,7 +112,7 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).west());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            if (trySpawn(x - 0.01, y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_WEST, source)) spawned = true;
+                            if (trySpawn(x - 0.01, y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_WEST, source, sourcePos)) spawned = true;
                         }
                         break;
 
@@ -119,12 +120,12 @@ public class EmitterBlock extends CustomParticleEmitter
                         adjacent = world.getBlockState(MUT_POS.setPos(x, y, z).east());
                         if (!adjacent.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(adjacent.getCollisionBoundingBox(world, MUT_POS)))
                         {
-                            if (trySpawn(x + 1.01, y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_EAST, source)) spawned = true;
+                            if (trySpawn(x + 1.01, y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_EAST, source, sourcePos)) spawned = true;
                         }
                         break;
 
                     case INSIDE:
-                        if (trySpawn(x + Tools.random(), y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_NORTH, source)) spawned = true;
+                        if (trySpawn(x + Tools.random(), y + Tools.random(), z + Tools.random(), minecraft, player, factory, FACING_ROTATION_NORTH, source, sourcePos)) spawned = true;
                         break;
                 }
             }

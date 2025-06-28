@@ -11,10 +11,6 @@ Probably only when the block they're currently in "can't see sky"
 
 TODO ==========================================================================================================================
 
-Take care of TODOs in FactoryLeaf
-
-Move AdvancedBlockColors to library?
-
 Fix leaves "hitting invisible ground" after they fall far enough (reach end of lifetime)
 Instead, they should fade out during fall and disappear
 Ie. work the fadeout into the original particle and...

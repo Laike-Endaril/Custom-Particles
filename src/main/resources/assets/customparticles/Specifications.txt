@@ -79,6 +79,14 @@ This format allows you to define animations that are not in a sequence in the te
 
 useFoliageColor <true / false>
 Whether to use the biome foliage color.
+For block-type emitters, this is the foliage oolor of the block the particle is emitted from
+For other emitters, this is the foliage color of the block the particle spawns in
+
+useBlockColor <true / false>
+Whether to match the block color
+For block-type emitters, this is the oolor of the block the particle is emitted from
+For other emitters, this is the color of the block the particle spawns in
+This includes average texture color, foliage, grass, water, and other block colors, based on what the particular block in question would normally use to render itself
 
 
 
