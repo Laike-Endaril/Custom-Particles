@@ -41,6 +41,8 @@ public class FactoryLeaf extends CustomParticleFactory
         groundLeafFactory = args ->
         {
             PathedParticle parent = (PathedParticle) args[0];
+            if (parent.getAge() >= parent.maxAge) return null;
+
 
             PathedParticle particle = new PathedParticle(leafFadeTicks, particleRenderData);
             particle.cullDistanceSquared = parent.cullDistanceSquared;
