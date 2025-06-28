@@ -17,15 +17,10 @@ Ie. work the fadeout into the original particle and...
 ...transfer fade and lifetime to child particle accordingly OR...
 ...don't use a child particle at all, and instead, on death trigger, alter existing particle and "revive" it if lifetime is > 0 (and it isn't already "on the ground" eg. check position path)
 
-Move foliage and grass color applications to creation instead of render; better performance AND makes more sense
-
 Particles currently render in front of translucent blocks even when inside / behind them (but not solid or cutout blocks, thanks to the z buffer)
 There is a similar issue with fog from the Fogger mod
 I might be able to fix this with different timing to trigger the main render loop in PathedParticleManager
 Move rendering to sometime before TRANSLUCENT blocks are rendered
-
-Improve on the main block filter syntax to support property checks
-This should allow for checking whether leaves are decayable or not (wanted for issue #1)
 
 Add weather checks...
 Rain strength <min> [max]
@@ -35,6 +30,9 @@ Thunder strength <min> [max]
 
 OpenGL does not seem to have a way to correctly order pixels for fragment renders built-in, so there is a rendering issue with further particles rendering on top of closer particles
 I'll basically need to sort particle rendering by distance (furthest-to-nearest) to fix this
+
+Improve on the main block filter syntax to support property checks
+This should allow for checking whether leaves are decayable or not (wanted for issue #1)
 
 
 

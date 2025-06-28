@@ -88,9 +88,6 @@ public class FactoryLeaf extends CustomParticleFactory
 
             particle.addOnDeathParticles(groundLeafFactory);
 
-//            Color color = AdvancedBlockColors.getBlockColor(new BlockPos(x, y, z), (IBlockState) args[3]);
-//            particle.rgbPath(new CPathConstant(color.rf(), color.gf(), color.bf()));
-
             return particle;
         };
     }
