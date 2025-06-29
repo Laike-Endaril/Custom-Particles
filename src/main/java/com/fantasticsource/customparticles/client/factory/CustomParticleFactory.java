@@ -64,8 +64,20 @@ public abstract class CustomParticleFactory
     public final ArrayList<CPath> motionPaths = new ArrayList<>(), rotationPaths = new ArrayList<>(), rgbPaths = new ArrayList<>(), alphaPaths = new ArrayList<>(), animationPaths = new ArrayList<>();
 
     protected PathedParticleSharedRenderData particleRenderData = new PathedParticleSharedRenderData(false, GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, "textures/particle/particles.png");
-    protected int maxAge = 60;
     protected double startingRotationMin, startingRotationMax, spinRate;
+
+    private int maxAge = 60;
+
+
+    public void setMaxAge(int maxAge)
+    {
+        this.maxAge = maxAge;
+    }
+
+    public int getMaxAge()
+    {
+        return maxAge;
+    }
 
 
     public void useBlockLight(boolean useBlockLight)

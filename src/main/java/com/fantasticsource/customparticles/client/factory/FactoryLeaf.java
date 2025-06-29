@@ -25,7 +25,7 @@ public class FactoryLeaf extends CustomParticleFactory
 
     public FactoryLeaf()
     {
-        maxAge = 200;
+        setMaxAge(200);
 
         useBlockColor = true;
         useBlockLight(true);
@@ -48,8 +48,8 @@ public class FactoryLeaf extends CustomParticleFactory
             if (parent.age >= parent.maxAge) return null;
 
 
-            PathedParticle particle = new PathedParticle(maxAge, particleRenderData);
-            particle.age = Tools.max(parent.age, maxAge - leafFadeTicks * 2);
+            PathedParticle particle = new PathedParticle(getMaxAge(), particleRenderData);
+            particle.age = Tools.max(parent.age, getMaxAge() - leafFadeTicks * 2);
 
             particle.cullDistanceSquared = parent.cullDistanceSquared;
 
@@ -80,7 +80,7 @@ public class FactoryLeaf extends CustomParticleFactory
 
         fallingLeafFactory = args ->
         {
-            PathedParticle particle = new PathedParticle(maxAge, particleRenderData);
+            PathedParticle particle = new PathedParticle(getMaxAge(), particleRenderData);
             double x = (double) args[0], y = (double) args[1], z = (double) args[2];
             particle.positionPath(new CPathConstant(x, y, z));
             particle.positionPath(pathFall);
@@ -101,14 +101,22 @@ public class FactoryLeaf extends CustomParticleFactory
     }
 
 
+    @Override
+    public void setMaxAge(int maxAge)
+    {
+        super.setMaxAge(maxAge);
+        setOnGroundFadeTicks(leafFadeTicks);
+    }
+
+
     public void setOnGroundFadeTicks(int leafFadeTicks)
     {
-        leafFadeTicks = Tools.min(Tools.max(leafFadeTicks, 0), maxAge);
+        leafFadeTicks = Tools.min(Tools.max(leafFadeTicks, 0), getMaxAge());
         this.leafFadeTicks = leafFadeTicks;
 
 
         double fadeRate = 20d / leafFadeTicks;
-        ((CPathConstant) pathFade).position.values[0] = maxAge * fadeRate / 20d;
+        ((CPathConstant) pathFade).position.values[0] = getMaxAge() * fadeRate / 20d;
         ((CPathLinear) pathFadeInternal).motionPerSecond.values[0] = -fadeRate;
     }
 

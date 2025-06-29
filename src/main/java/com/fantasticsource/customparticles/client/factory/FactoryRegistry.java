@@ -177,7 +177,7 @@ public class FactoryRegistry extends FileWordParser
 
         if (args.size() > 1)
         {
-            ((CustomParticleFactory) currentObject).maxAge = (int) (Double.parseDouble(args.get(1)) * 20);
+            ((CustomParticleFactory) currentObject).setMaxAge((int) (Double.parseDouble(args.get(1)) * 20));
         }
     }
 
