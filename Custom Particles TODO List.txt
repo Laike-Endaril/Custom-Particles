@@ -11,8 +11,7 @@ Probably only when the block they're currently in "can't see sky"
 
 TODO ==========================================================================================================================
 
-Make falling leaves fade out for last bit of lifetime
-Make sure ground leaves inherit alpha
+Make sure factory templates correctly use maxAge argument when given one, since it's set after the internal factories are created
 
 Particles currently render in front of translucent blocks even when inside / behind them (but not solid or cutout blocks, thanks to the z buffer)
 There is a similar issue with fog from the Fogger mod

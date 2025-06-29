@@ -17,7 +17,7 @@ public class FactoryBasic extends CustomParticleFactory
 
         factory = args ->
         {
-            PathedParticle particle = new PathedParticle(maxAge == -1 ? 60 : maxAge, particleRenderData);
+            PathedParticle particle = new PathedParticle(maxAge, particleRenderData);
             particle.positionPath(new CPathConstant((double) args[0], (double) args[1], (Double) args[2]));
             return particle;
         };

@@ -3,6 +3,7 @@ package com.fantasticsource.customparticles.client.factory;
 import com.fantasticsource.mctools.particles.PathedParticle;
 import com.fantasticsource.mctools.particles.PathedParticleFactory;
 import com.fantasticsource.tools.SpriteMetaData;
+import com.fantasticsource.tools.Tools;
 import com.fantasticsource.tools.component.path.CPath;
 import com.fantasticsource.tools.component.path.CPathAccelerateToTerminalVel;
 import com.fantasticsource.tools.component.path.CPathConstant;
@@ -18,11 +19,14 @@ public class FactoryLeaf extends CustomParticleFactory
     public int leafFadeTicks;
     public CPath
             pathFall = new CPathAccelerateToTerminalVel(1000, 0, 0, 0),
-            pathFade = new CPathLinear(0).add(new CPathConstant(2)).highLimit(new CPathConstant(1));
+            pathFadeInternal = new CPathLinear(0),
+            pathFade = new CPathConstant(0).add(pathFadeInternal).highLimit(new CPathConstant(1));
 
 
     public FactoryLeaf()
     {
+        maxAge = 200;
+
         useBlockColor = true;
         useBlockLight(true);
 
@@ -41,24 +45,25 @@ public class FactoryLeaf extends CustomParticleFactory
         groundLeafFactory = args ->
         {
             PathedParticle parent = (PathedParticle) args[0];
-            if (parent.getAge() >= parent.maxAge) return null;
+            if (parent.age >= parent.maxAge) return null;
 
 
-            PathedParticle particle = new PathedParticle(leafFadeTicks, particleRenderData);
+            PathedParticle particle = new PathedParticle(maxAge, particleRenderData);
+            particle.age = Tools.max(parent.age, maxAge - leafFadeTicks * 2);
+
             particle.cullDistanceSquared = parent.cullDistanceSquared;
 
             Vec3d deathPos = parent.deathPos;
             double x = deathPos.x, y = deathPos.y, z = deathPos.z;
-            if (parent.getAge() != parent.maxAge)
+            if (parent.age != parent.maxAge)
             {
-                VectorN prevPos = parent.getAge() > 0 ? parent.prevPosition(0) : parent.currentPos(0);
+                VectorN prevPos = parent.age > 0 ? parent.prevPosition(0) : parent.currentPos(0);
                 if (prevPos.values[0] < x) x -= 0.01;
                 else if (prevPos.values[0] > x) x += 0.01;
                 if (prevPos.values[1] < y) y -= 0.01;
                 else if (prevPos.values[1] > y) y += 0.01;
                 if (prevPos.values[2] < z) z -= 0.01;
                 else if (prevPos.values[2] > z) z += 0.01;
-
             }
             particle.positionPath(new CPathConstant(x, y, z));
 
@@ -75,16 +80,17 @@ public class FactoryLeaf extends CustomParticleFactory
 
         fallingLeafFactory = args ->
         {
-            PathedParticle particle = new PathedParticle(maxAge == -1 ? 200 : maxAge, particleRenderData);
+            PathedParticle particle = new PathedParticle(maxAge, particleRenderData);
             double x = (double) args[0], y = (double) args[1], z = (double) args[2];
             particle.positionPath(new CPathConstant(x, y, z));
-
             particle.positionPath(pathFall);
 
             double rotationPercent = Math.random();
             double startingRotation = startingRotationMin + rotationPercent * (startingRotationMax - startingRotationMin);
             particle.rotationPath(new CPathConstant(startingRotation));
             particle.rotationPath(new CPathLinear(-spinRate * 2 * (rotationPercent - 0.5)));
+
+            particle.alphaPath(pathFade);
 
             particle.dieOnSolidsAndLiquids();
 
@@ -97,9 +103,13 @@ public class FactoryLeaf extends CustomParticleFactory
 
     public void setOnGroundFadeTicks(int leafFadeTicks)
     {
-        if (leafFadeTicks < 0) leafFadeTicks = 0;
+        leafFadeTicks = Tools.min(Tools.max(leafFadeTicks, 0), maxAge);
         this.leafFadeTicks = leafFadeTicks;
-        ((CPathLinear) pathFade).motionPerSecond.values[0] = -40d / leafFadeTicks;
+
+
+        double fadeRate = 20d / leafFadeTicks;
+        ((CPathConstant) pathFade).position.values[0] = maxAge * fadeRate / 20d;
+        ((CPathLinear) pathFadeInternal).motionPerSecond.values[0] = -fadeRate;
     }
 
     public void setTerminalVelocityMultiplier(double multiplier)
