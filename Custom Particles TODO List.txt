@@ -7,18 +7,21 @@ Watch out for "Tick-based particle emitters skipped x ticks in the last second" 
 Particles in unloaded chunk sections are rendered black when using block light level, due to a vanilla lighting bug
 Probably only when the block they're currently in "can't see sky"
 
+Particles currently render in front of translucent blocks even when inside / behind them (but not solid or cutout blocks, thanks to the z buffer)
+To fix this properly, I would need to render all translucents (blocks, entities, and particles) in furthest-to-nearest order.  That's not happening unless I rewrite minecraft's rendering engine entirely, ie. optifine-like mod.  Not doing that right now
+
 
 
 TODO ==========================================================================================================================
 
-Particles currently render in front of translucent blocks even when inside / behind them (but not solid or cutout blocks, thanks to the z buffer)
-There is a similar issue with fog from the Fogger mod
-I might be able to fix this with different timing to trigger the main render loop in PathedParticleManager
-Move rendering to sometime before TRANSLUCENT blocks are rendered
-
 Add weather checks...
 Rain strength <min> [max]
 Thunder strength <min> [max]
+
+Add example folders to resources and make them export on run, somewhere non-intrusive
+
+Particle example with ground flaking off and floating up, leaving a glowing spot behind
+Color-matched upward leaves with different texture (like a small fragment of a glass pane), plus leaving a copy of themselves on ground with glowing texture
 
 
 
