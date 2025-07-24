@@ -18,6 +18,10 @@ Add weather checks...
 Rain strength <min> [max]
 Thunder strength <min> [max]
 
+Post update
+
+
+
 Add example folders to resources and make them export on run, somewhere non-intrusive
 
 Particle example with ground flaking off and floating up, leaving a glowing spot behind
