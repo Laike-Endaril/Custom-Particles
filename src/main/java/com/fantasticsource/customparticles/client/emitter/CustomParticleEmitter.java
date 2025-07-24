@@ -34,7 +34,10 @@ public abstract class CustomParticleEmitter
     public enum Requirement
     {
         SLIMECHUNK,
-        FULLSOLIDBLOCK
+        FULLSOLIDBLOCK,
+        WEATHERCLEAR,
+        WEATHERRAIN,
+        WEATHERTHUNDER
     }
 
 
@@ -137,6 +140,18 @@ public abstract class CustomParticleEmitter
                 case FULLSOLIDBLOCK:
                     IBlockState blockState = (IBlockState) obj;
                     if (!blockState.getMaterial().blocksMovement() || !Block.FULL_BLOCK_AABB.equals(blockState.getCollisionBoundingBox(world, MUT_POS))) return false;
+                    break;
+
+                case WEATHERCLEAR:
+                    if (world.isRaining() || world.isThundering()) return false;
+                    break;
+
+                case WEATHERRAIN:
+                    if (!world.isRaining()) return false;
+                    break;
+
+                case WEATHERTHUNDER:
+                    if (!world.isThundering()) return false;
                     break;
             }
         }

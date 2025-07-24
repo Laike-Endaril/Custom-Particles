@@ -221,6 +221,9 @@ require / requires / requirement / requirements <requirementType> [requirementTy
 Requirement type can be one of the following:
 slimeChunk
 fullSolidBlock
+weatherClear
+weatherRain
+weatherThunder
 
 Sets additional requirements for the emitter to be able to trigger.
 slimeChunk makes an emitter only spawn particles when inside a slime chunk, and below y=40.
